@@ -78,7 +78,7 @@ public class LoginShop extends JFrame {
 	{
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 		//	JOptionPane.showMessageDialog(null,"connected");
 		}
 		catch(Exception e)
@@ -139,9 +139,9 @@ public class LoginShop extends JFrame {
                     String d1, d2;
                     d1 = txtUserId.getText();
                     d2 = new String(txtPassword.getText());
-                    con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
+                    con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
                     stmt =con.createStatement();
-                    rs = ((java.sql.Statement) stmt).executeQuery("select * from Login");
+                    rs = ((java.sql.Statement) stmt).executeQuery("select * from LoginData");
                     while (rs.next()) {
                         String uname = rs.getString(1);
                         String pass = rs.getString(2);

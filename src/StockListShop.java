@@ -73,8 +73,8 @@ public class StockListShop extends JFrame {
 			public void actionPerformed(ActionEvent e)
 			{
 				try {
-					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
-					String sql="select *from Stock where Category='Electronics' ORDER BY Product_Name ASC";
+					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+					String sql="select *from StockData where Category='Electronics' ORDER BY Product_Name ASC";
 					ps=con.prepareStatement(sql);
 					rs=ps.executeQuery();
 					table.setModel(DbUtils.resultSetToTableModel(rs));
@@ -114,8 +114,8 @@ public class StockListShop extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				try {
-					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
-					String sql="select *from Stock where Category='Electricals' ORDER BY Product_Name ASC";
+					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+					String sql="select *from StockData where Category='Electricals' ORDER BY Product_Name ASC";
 					ps=con.prepareStatement(sql);
 					rs=ps.executeQuery();
 					table.setModel(DbUtils.resultSetToTableModel(rs));

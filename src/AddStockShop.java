@@ -22,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -62,12 +63,33 @@ public class AddStockShop extends JFrame {
 	   private JTextField txtSerialNo;
 	   private JTextField txtModuleNo;
 	   
-	   
+	   public void StockData()
+		{
+			try {
+				DatabaseMetaData d=con.getMetaData();
+				ResultSet rs=d.getTables(null,null,"StockData",null);
+				if(rs.next())
+				{
+		//			JOptionPane.showMessageDialog(null,"StockData table exist");
+				}
+				else 
+				{
+					String Create_Table="create table StockData(Product_Name varchar(100),Category varchar(30),Price int,Quantity int,Serial_No varchar(50),Module_No varchar(50))";
+					PreparedStatement ps=con.prepareStatement(Create_Table);
+					ps.executeUpdate();
+			//		JOptionPane.showMessageDialog(null,"StockData created successfully!");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 		public void ShowData()
 		{
 			try {
-				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
-				String sql="select *from Stock ORDER BY Product_Name ASC";
+				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+				String sql="select *from StockData ORDER BY Product_Name ASC";
 				ps=con.prepareStatement(sql);
 				rs=ps.executeQuery();
 				table.setModel(DbUtils.resultSetToTableModel(rs));
@@ -102,7 +124,7 @@ public class AddStockShop extends JFrame {
 		txtProductName = new JTextField();
 		txtProductName.setForeground(new Color(0, 0, 128));
 		txtProductName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		txtProductName.setBounds(151, 27, 361, 23);
+		txtProductName.setBounds(151, 27, 361, 25);
 		contentPane.add(txtProductName);
 		txtProductName.setColumns(10);
 		
@@ -115,7 +137,7 @@ public class AddStockShop extends JFrame {
 		JComboBox cbCategory = new JComboBox();
 		cbCategory.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		cbCategory.setForeground(new Color(0, 0, 128));
-		cbCategory.setBounds(151, 67, 125, 23);
+		cbCategory.setBounds(151, 67, 125, 25);
 		cbCategory.addItem("Electronics");
 		cbCategory.addItem("Electricals");
 		contentPane.add(cbCategory);
@@ -130,14 +152,14 @@ public class AddStockShop extends JFrame {
 		txtPrice.setForeground(new Color(0, 0, 128));
 		txtPrice.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtPrice.setColumns(10);
-		txtPrice.setBounds(151, 100, 125, 23);
+		txtPrice.setBounds(151, 102, 125, 25);
 		contentPane.add(txtPrice);
 		
 		txtQuantity = new JTextField();
 		txtQuantity.setForeground(new Color(0, 0, 128));
 		txtQuantity.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtQuantity.setColumns(10);
-		txtQuantity.setBounds(151, 137, 125, 23);
+		txtQuantity.setBounds(151, 137, 125, 25);
 		contentPane.add(txtQuantity);
 		
 		JLabel lblQuantity = new JLabel("Quantity:");
@@ -173,8 +195,8 @@ public class AddStockShop extends JFrame {
 			{
 				try 
 				{
-				String sql1="insert into Stock values(?,?,?,?,?,?)";	
-				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
+				String sql1="insert into StockData values(?,?,?,?,?,?)";	
+				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 				ps=con.prepareStatement(sql1);
 				ps.setString(1,txtProductName.getText());
 				String Category=(String) cbCategory.getSelectedItem();
@@ -211,8 +233,8 @@ public class AddStockShop extends JFrame {
 			{
 				try 
 				{
-				String sql3="UPDATE Stock SET Category=?,Price=?,Quantity=?,Serial_No=?,Module_No=? WHERE Product_Name=?";	
-				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
+				String sql3="UPDATE StockData SET Category=?,Price=?,Quantity=?,Serial_No=?,Module_No=? WHERE Product_Name=?";	
+				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 				ps=con.prepareStatement(sql3);
 				ps.setString(6,txtProductName.getText());
 				String s1=(String) cbCategory.getSelectedItem();
@@ -249,8 +271,8 @@ public class AddStockShop extends JFrame {
 			    {
 				try 
 				{
-				String sql2="DELETE FROM Stock WHERE Product_Name=?";	
-				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
+				String sql2="DELETE FROM StockData WHERE Product_Name=?";	
+				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 				ps=con.prepareStatement(sql2);
 				ps.setString(1,txtProductName.getText());
 				ps.executeUpdate();
@@ -293,7 +315,7 @@ public class AddStockShop extends JFrame {
 		txtSearch.setForeground(new Color(0, 0, 128));
 		txtSearch.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtSearch.setColumns(10);
-		txtSearch.setBounds(858, 26, 361, 23);
+		txtSearch.setBounds(858, 26, 361, 25);
 		contentPane.add(txtSearch);
 		
 		JButton btnSearch = new JButton("Search");
@@ -302,7 +324,7 @@ public class AddStockShop extends JFrame {
 			{
 				try 
 				{
-					String sql5="select *from Stock where Product_Name=?";
+					String sql5="select *from StockData where Product_Name=?";
 					ps=con.prepareStatement(sql5);
 					ps.setString(1,txtSearch.getText());
 					rs=ps.executeQuery();
@@ -343,7 +365,7 @@ public class AddStockShop extends JFrame {
 		JLabel lblRs = new JLabel("Rs");
 		lblRs.setForeground(Color.WHITE);
 		lblRs.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs.setBounds(278, 101, 33, 22);
+		lblRs.setBounds(278, 101, 33, 26);
 		contentPane.add(lblRs);
 		
 		JLabel lblUnits = new JLabel("Units");
@@ -362,7 +384,7 @@ public class AddStockShop extends JFrame {
 		txtSerialNo.setForeground(new Color(0, 0, 128));
 		txtSerialNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtSerialNo.setColumns(10);
-		txtSerialNo.setBounds(151, 170,230, 23);
+		txtSerialNo.setBounds(151, 170,230, 25);
 		contentPane.add(txtSerialNo);
 		
 		JLabel lblModuleNo = new JLabel("Module No:");
@@ -375,7 +397,7 @@ public class AddStockShop extends JFrame {
 		txtModuleNo.setForeground(new Color(0, 0, 128));
 		txtModuleNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtModuleNo.setColumns(10);
-		txtModuleNo.setBounds(151, 205,230, 23);
+		txtModuleNo.setBounds(151, 205,230, 25);
 		contentPane.add(txtModuleNo);
 		
 		ShowData();
@@ -384,5 +406,7 @@ public class AddStockShop extends JFrame {
 		lblNewLabel_3.setIcon(new ImageIcon(LoginShop.class.getResource("/images/wallpaper2test.jpg")));
 		lblNewLabel_3.setBounds(0,0,1366,768);
 		contentPane.add(lblNewLabel_3);
+		
+		StockData();
 	}
 }

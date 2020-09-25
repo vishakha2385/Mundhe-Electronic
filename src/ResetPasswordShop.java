@@ -63,7 +63,7 @@ public class ResetPasswordShop extends JFrame {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 		}
 		catch(Exception e)
 		{
@@ -101,8 +101,8 @@ public class ResetPasswordShop extends JFrame {
 			    {
 				try 
 				{
-				String sql3="UPDATE Login SET Password=? WHERE Password=?";	
-				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
+				String sql3="UPDATE LoginData SET Password=? WHERE Password=?";	
+				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 				ps=con.prepareStatement(sql3);
 				ps.setString(2,txtExistingPassword.getText());
 				ps.setString(1,txtNewPassword.getText());

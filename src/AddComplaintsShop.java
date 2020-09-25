@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.Toolkit;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -48,14 +49,34 @@ public class AddComplaintsShop extends JFrame {
 	   PreparedStatement ps;
 	   ResultSet rs;
 	   
-	   
-	   
+	   public void StockData()
+		{
+			try {
+				DatabaseMetaData d=con.getMetaData();
+				ResultSet rs=d.getTables(null,null,"ComplaintsData",null);
+				if(rs.next())
+				{
+	//				JOptionPane.showMessageDialog(null,"ComplaintsData table exist");
+				}
+				else 
+				{
+					String Create_Table="create table ComplaintsData(Customer_Name varchar(100),Address varchar(100),Contact varchar(30),Product varchar(100),Serial_No varchar(50),Module_No varchar(50),Category varchar(30))";
+					PreparedStatement ps=con.prepareStatement(Create_Table);
+					ps.executeUpdate();
+	//				JOptionPane.showMessageDialog(null,"ComplaintsData created successfully!");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 	   
 		public void ShowData()
 		{
 			try {
-				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
-				String sql="select Customer_Name,Address,Contact,Product,Serial_No,Module_No,Category from Complaints";
+				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+				String sql="select Customer_Name,Address,Contact,Product,Serial_No,Module_No,Category from ComplaintsData";
 				ps=con.prepareStatement(sql);
 				rs=ps.executeQuery();
 				table.setModel(DbUtils.resultSetToTableModel(rs));
@@ -86,7 +107,20 @@ public class AddComplaintsShop extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AddComplaintsShop() {
+	public AddComplaintsShop()
+	{
+		
+			try 
+			{
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+				
+			} 
+			catch(Exception e)
+			{
+				
+			}
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AddComplaintsShop.class.getResource("/images/logoShop.jpg")));
 		setTitle("Complaints");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -105,7 +139,7 @@ public class AddComplaintsShop extends JFrame {
 		txtCustomerName = new JTextField();
 		txtCustomerName.setForeground(new Color(0, 0, 128));
 		txtCustomerName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		txtCustomerName.setBounds(173, 33, 426, 23);
+		txtCustomerName.setBounds(173, 33, 426, 25);
 		contentPane.add(txtCustomerName);
 		txtCustomerName.setColumns(10);
 		
@@ -113,7 +147,7 @@ public class AddComplaintsShop extends JFrame {
 		txtAddress.setForeground(new Color(0, 0, 128));
 		txtAddress.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtAddress.setColumns(10);
-		txtAddress.setBounds(173, 72, 426, 23);
+		txtAddress.setBounds(173, 72, 426, 25);
 		contentPane.add(txtAddress);
 		
 		JLabel lblAddress = new JLabel("Address:");
@@ -126,7 +160,7 @@ public class AddComplaintsShop extends JFrame {
 		txtContact.setForeground(new Color(0, 0, 128));
 		txtContact.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtContact.setColumns(10);
-		txtContact.setBounds(173, 111, 183, 23);
+		txtContact.setBounds(173, 111, 183, 25);
 		contentPane.add(txtContact);
 		
 		JLabel lblContact = new JLabel("Contact:");
@@ -139,7 +173,7 @@ public class AddComplaintsShop extends JFrame {
 		txtProduct.setForeground(new Color(0, 0, 128));
 		txtProduct.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtProduct.setColumns(10);
-		txtProduct.setBounds(173, 148, 183, 23);
+		txtProduct.setBounds(173, 148, 183, 25);
 		contentPane.add(txtProduct);
 		
 		JLabel lblProductName = new JLabel("Product Name:");
@@ -152,7 +186,7 @@ public class AddComplaintsShop extends JFrame {
 		txtSerialNo.setForeground(new Color(0, 0, 128));
 		txtSerialNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtSerialNo.setColumns(10);
-		txtSerialNo.setBounds(173, 185, 183, 23);
+		txtSerialNo.setBounds(173, 185, 183, 25);
 		contentPane.add(txtSerialNo);
 		
 		JLabel lblSerialNo = new JLabel("Serial No:");
@@ -165,7 +199,7 @@ public class AddComplaintsShop extends JFrame {
 		txtModuleNo.setForeground(new Color(0, 0, 128));
 		txtModuleNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtModuleNo.setColumns(10);
-		txtModuleNo.setBounds(173, 222, 183, 23);
+		txtModuleNo.setBounds(173, 222, 183, 25);
 		contentPane.add(txtModuleNo);
 		
 		JLabel lblModuleNo = new JLabel("Module No:");
@@ -183,7 +217,7 @@ public class AddComplaintsShop extends JFrame {
 		CategorycomboBox = new JComboBox();
 		CategorycomboBox.setForeground(new Color(0, 0, 128));
 		CategorycomboBox.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		CategorycomboBox.setBounds(173, 261, 183, 23);
+		CategorycomboBox.setBounds(173, 261, 183, 25);
 		CategorycomboBox.addItem("Send");
 		CategorycomboBox.addItem("Unsent");
 		contentPane.add(CategorycomboBox);
@@ -198,7 +232,7 @@ public class AddComplaintsShop extends JFrame {
 		txtSearch.setForeground(new Color(0, 0, 128));
 		txtSearch.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtSearch.setColumns(10);
-		txtSearch.setBounds(803, 33, 426, 23);
+		txtSearch.setBounds(803, 33, 426, 25);
 		contentPane.add(txtSearch);
 		
 		JButton btnSearch = new JButton("Search");
@@ -207,7 +241,7 @@ public class AddComplaintsShop extends JFrame {
 			{
 				try 
 				{
-					String sql5="select *from Complaints where Customer_Name=?";
+					String sql5="select *from ComplaintsData where Customer_Name=?";
 					ps=con.prepareStatement(sql5);
 					ps.setString(1,txtSearch.getText());
 					rs=ps.executeQuery();
@@ -246,7 +280,7 @@ public class AddComplaintsShop extends JFrame {
 		});
 		btnSearch.setForeground(new Color(0, 0, 128));
 		btnSearch.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnSearch.setBounds(1239, 31, 103, 25);
+		btnSearch.setBounds(1239, 31, 103, 28);
 		contentPane.add(btnSearch);
 		
 		JButton btnAdd = new JButton("Add");
@@ -257,8 +291,8 @@ try
 				
 				{
 				
-				String sql1="insert into Complaints values(?,?,?,?,?,?,?)";	
-				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
+				String sql1="insert into ComplaintsData values(?,?,?,?,?,?,?)";	
+				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 				ps=con.prepareStatement(sql1);
 				ps.setString(1,txtCustomerName.getText());
 		//		System.out.println(txtCustomerName.getText());
@@ -296,7 +330,7 @@ try
 		});
 		btnAdd.setForeground(new Color(0, 0, 128));
 		btnAdd.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnAdd.setBounds(173, 303, 103, 25);
+		btnAdd.setBounds(173, 303, 103, 28);
 		contentPane.add(btnAdd);
 		
 		JButton btnUpdate = new JButton("Update");
@@ -305,8 +339,8 @@ try
 			{
 				try 
 				{
-				String sql3="UPDATE Complaints SET Customer_Name=?,Address=?,Contact=?,Product=?,Serial_No=?,Module_No=?,Category=? WHERE Customer_Name=?";	
-				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
+				String sql3="UPDATE ComplaintsData SET Customer_Name=?,Address=?,Contact=?,Product=?,Serial_No=?,Module_No=?,Category=? WHERE Customer_Name=?";	
+				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 				ps=con.prepareStatement(sql3);
 				ps.setString(8,txtCustomerName.getText());
 				ps.setString(1,txtCustomerName.getText());
@@ -335,7 +369,7 @@ try
 		});
 		btnUpdate.setForeground(new Color(0, 0, 128));
 		btnUpdate.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnUpdate.setBounds(286, 303, 103, 25);
+		btnUpdate.setBounds(286, 303, 103, 28);
 		contentPane.add(btnUpdate);
 		
 		JButton Delete = new JButton("Delete");
@@ -347,8 +381,8 @@ try
 			    {
 			    	try 
 					{
-					String sql2="DELETE FROM Complaints WHERE Customer_Name=?";	
-					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
+					String sql2="DELETE FROM ComplaintsData WHERE Customer_Name=?";	
+					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 					ps=con.prepareStatement(sql2);
 					ps.setString(1,txtCustomerName.getText());
 					ps.executeUpdate();
@@ -370,7 +404,7 @@ try
 		});
 		Delete.setForeground(new Color(0, 0, 128));
 		Delete.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		Delete.setBounds(399, 303, 103, 25);
+		Delete.setBounds(399, 303, 103, 28);
 		contentPane.add(Delete);
 		
 		JButton btnCancel = new JButton("Cancel");
@@ -382,7 +416,7 @@ try
 		});
 		btnCancel.setForeground(new Color(0, 0, 128));
 		btnCancel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnCancel.setBounds(512, 303, 103, 25);
+		btnCancel.setBounds(512, 303, 103, 28);
 		contentPane.add(btnCancel);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -413,6 +447,7 @@ try
 		lblNewLabel_3.setBounds(0,0,1366,768);
 		contentPane.add(lblNewLabel_3);
 		
+		StockData();
 		ShowData();
 	}
 }

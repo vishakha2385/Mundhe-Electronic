@@ -51,8 +51,8 @@ public class DeleteBillShop extends JFrame {
 	{
 		try
 		{
-			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
-			String sql="select sum(Total) from Products where Invoice_No=?";
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+			String sql="select sum(Total) from ProductsData where Invoice_No=?";
 			
 			ps=con.prepareStatement(sql);
 			ps.setString(1,txtInvoiceNo.getText());
@@ -78,8 +78,8 @@ public class DeleteBillShop extends JFrame {
 	public void ShowDataInvoiceNo()
 	{
 		try {
-			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
-			String sql="select Product_No,Sr_No,Category,Products,Serial_No,Module_No,Rate_Rs,Discount,Quantity,Discount_Price,Total from Products where Invoice_No=?";
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+			String sql="select Product_No,Sr_No,Category,Products,Serial_No,Module_No,Rate_Rs,Discount,Quantity,Discount_Price,Total from ProductsData where Invoice_No=?";
 			ps=con.prepareStatement(sql);
 			ps.setString(1,txtInvoiceNo.getText());
 			rs=ps.executeQuery();
@@ -94,8 +94,8 @@ public class DeleteBillShop extends JFrame {
 	public void ShowDataCustomer()
 	{
 		try {
-			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
-			String sql="select * from CustomerInfo";
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+			String sql="select * from CustomerData";
 			ps=con.prepareStatement(sql);
 			rs=ps.executeQuery();
 			tblCustomer.setModel(DbUtils.resultSetToTableModel(rs));
@@ -145,7 +145,7 @@ public class DeleteBillShop extends JFrame {
 		txtInvoiceNo.setForeground(new Color(0, 0, 128));
 		txtInvoiceNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtInvoiceNo.setColumns(10);
-		txtInvoiceNo.setBounds(189, 26, 133, 23);
+		txtInvoiceNo.setBounds(189, 17, 133, 25);
 		contentPane.add(txtInvoiceNo);
 		
 		JButton btnSearch = new JButton("Search");
@@ -153,8 +153,8 @@ public class DeleteBillShop extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				try {
-					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
-					String s="select *from CustomerInfo,Products,Bills where CustomerInfo.Invoice_No=Bills.Invoice_No and Products.Product_No=Bills.Product_No and CustomerInfo.Invoice_No=?";
+					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+					String s="select *from CustomerData,ProductsData,BillsData where CustomerData.Invoice_No=BillsData.Invoice_No and ProductsData.Product_No=BillsData.Product_No and CustomerData.Invoice_No=?";
 				    ps=con.prepareStatement(s);
 				    ps.setString(1,txtInvoiceNo.getText());
 				    rs=ps.executeQuery();
@@ -174,7 +174,7 @@ public class DeleteBillShop extends JFrame {
 						txtTotalAmmount.setText(Total_Ammount);
 						String Pending_Ammount=rs.getString("Pending_Ammount");
 						txtPendingAmmount.setText(Pending_Ammount);
-						String Paid_Ammount=rs.getString("Paid_Ammoount");
+						String Paid_Ammount=rs.getString("Paid_Ammount");
 				//		System.out.println(Paid_Ammount);
 						txtPaidAmmount.setText(Paid_Ammount);
 					
@@ -192,7 +192,7 @@ public class DeleteBillShop extends JFrame {
 			}
 		});
 		btnSearch.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnSearch.setBounds(332, 20, 117, 25);
+		btnSearch.setBounds(332, 20, 117, 28);
 		contentPane.add(btnSearch);
 		
 		JLabel lblNewLabel = new JLabel("Date:");
@@ -205,7 +205,7 @@ public class DeleteBillShop extends JFrame {
 		txtDate.setForeground(new Color(0, 0, 128));
 		txtDate.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtDate.setColumns(10);
-		txtDate.setBounds(82, 58, 100, 23);
+		txtDate.setBounds(82, 58, 100, 25);
 		contentPane.add(txtDate);
 		
 		JLabel lblTime = new JLabel("Time:");
@@ -218,7 +218,7 @@ public class DeleteBillShop extends JFrame {
 		txtTime.setForeground(new Color(0, 0, 128));
 		txtTime.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtTime.setColumns(10);
-		txtTime.setBounds(244, 55, 104, 23);
+		txtTime.setBounds(244, 55, 104, 25);
 		contentPane.add(txtTime);
 		
 		JLabel lblCustomerName = new JLabel("Customer Name:");
@@ -231,7 +231,7 @@ public class DeleteBillShop extends JFrame {
 		txtCustomerName.setForeground(new Color(0, 0, 128));
 		txtCustomerName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtCustomerName.setColumns(10);
-		txtCustomerName.setBounds(188, 88, 427, 23);
+		txtCustomerName.setBounds(188, 88, 427, 25);
 		contentPane.add(txtCustomerName);
 		
 		JLabel lblAddress = new JLabel("Address:");
@@ -244,7 +244,7 @@ public class DeleteBillShop extends JFrame {
 		txtAddress.setForeground(new Color(0, 0, 128));
 		txtAddress.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtAddress.setColumns(10);
-		txtAddress.setBounds(188, 123, 427, 23);
+		txtAddress.setBounds(188, 123, 427, 25);
 		contentPane.add(txtAddress);
 		
 		JLabel lblContact = new JLabel("Contact:");
@@ -257,7 +257,7 @@ public class DeleteBillShop extends JFrame {
 		txtContact.setForeground(new Color(0, 0, 128));
 		txtContact.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtContact.setColumns(10);
-		txtContact.setBounds(188, 159, 199, 23);
+		txtContact.setBounds(188, 159, 199, 25);
 		contentPane.add(txtContact);
 		
 		JLabel lblTotalAmmount = new JLabel("Total Amount:");
@@ -270,7 +270,7 @@ public class DeleteBillShop extends JFrame {
 		txtTotalAmmount.setForeground(new Color(0, 0, 128));
 		txtTotalAmmount.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtTotalAmmount.setColumns(10);
-		txtTotalAmmount.setBounds(188, 193, 104, 23);
+		txtTotalAmmount.setBounds(188, 193, 104, 25);
 		contentPane.add(txtTotalAmmount);
 		
 		JLabel lblRs = new JLabel("Rs");
@@ -289,7 +289,7 @@ public class DeleteBillShop extends JFrame {
 		txtPaidAmmount.setForeground(new Color(0, 0, 128));
 		txtPaidAmmount.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtPaidAmmount.setColumns(10);
-		txtPaidAmmount.setBounds(188, 227, 104, 23);
+		txtPaidAmmount.setBounds(188, 227, 104, 25);
 		contentPane.add(txtPaidAmmount);
 		
 		JLabel lblRs_2 = new JLabel("Rs");
@@ -308,7 +308,7 @@ public class DeleteBillShop extends JFrame {
 		txtPendingAmmount.setForeground(new Color(0, 0, 128));
 		txtPendingAmmount.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtPendingAmmount.setColumns(10);
-		txtPendingAmmount.setBounds(188, 258, 104, 23);
+		txtPendingAmmount.setBounds(188, 258, 104, 25);
 		contentPane.add(txtPendingAmmount);
 		
 		JLabel lblRs_3 = new JLabel("Rs");
@@ -326,8 +326,8 @@ public class DeleteBillShop extends JFrame {
 			    {
 			    	try 
 					{
-					String sql2="DELETE FROM CustomerInfo WHERE Invoice_No=?";	
-					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
+					String sql2="DELETE FROM CustomerData WHERE Invoice_No=?";	
+					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 					ps=con.prepareStatement(sql2);
 					ps.setString(1,txtInvoiceNo.getText());
 					ps.executeUpdate();
@@ -346,8 +346,8 @@ public class DeleteBillShop extends JFrame {
 			    	
 			    	try 
 					{
-					String sql2="DELETE FROM Products WHERE Invoice_No=?";	
-					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
+					String sql2="DELETE FROM ProductsData WHERE Invoice_No=?";	
+					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 					ps=con.prepareStatement(sql2);
 					ps.setString(1,txtInvoiceNo.getText());
 					ps.executeUpdate();
@@ -357,8 +357,8 @@ public class DeleteBillShop extends JFrame {
 			    	
 			    	try 
 					{
-					String sql2="DELETE FROM Bills WHERE Invoice_No=?";	
-					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
+					String sql2="DELETE FROM BillsData WHERE Invoice_No=?";	
+					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 					ps=con.prepareStatement(sql2);
 					ps.setString(1,txtInvoiceNo.getText());
 					ps.executeUpdate();
@@ -372,7 +372,7 @@ public class DeleteBillShop extends JFrame {
 			}
 		});
 		btnDelete.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnDelete.setBounds(189, 299, 117, 25);
+		btnDelete.setBounds(189, 299, 117, 28);
 		contentPane.add(btnDelete);
 		
 		JButton btnCancel = new JButton("Cancel");
@@ -383,7 +383,7 @@ public class DeleteBillShop extends JFrame {
 			}
 		});
 		btnCancel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnCancel.setBounds(316, 299, 117, 25);
+		btnCancel.setBounds(316, 299, 117, 28);
 		contentPane.add(btnCancel);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -415,8 +415,8 @@ public class DeleteBillShop extends JFrame {
 				txtPendingAmmount.setText(model.getValueAt(i,6).toString());
 				
 				try {
-					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
-					String s="select *from CustomerInfo,Products,Bills where CustomerInfo.Invoice_No=Bills.Invoice_No and Products.Product_No=Bills.Product_No and CustomerInfo.Invoice_No=?";
+					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+					String s="select *from CustomerData,ProductsData,BillsData where CustomerData.Invoice_No=BillsData.Invoice_No and ProductsData.Product_No=BillsData.Product_No and CustomerData.Invoice_No=?";
 				    ps=con.prepareStatement(s);
 				    ps.setString(1,txtInvoiceNo.getText());
 				    rs=ps.executeQuery();
@@ -436,7 +436,7 @@ public class DeleteBillShop extends JFrame {
 						txtTotalAmmount.setText(Total_Ammount);
 						String Pending_Ammount=rs.getString("Pending_Ammount");
 						txtPendingAmmount.setText(Pending_Ammount);
-						String Paid_Ammount=rs.getString("Paid_Ammoount");
+						String Paid_Ammount=rs.getString("Paid_Ammount");
 				//		System.out.println(Paid_Ammount);
 						txtPaidAmmount.setText(Paid_Ammount);
 					

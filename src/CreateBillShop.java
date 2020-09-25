@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
 import java.awt.Toolkit;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -81,6 +82,129 @@ public class CreateBillShop extends JFrame {
     Statement st;
     int getValue;
     long eventMask;
+    
+    public void CustomerData()
+	{
+		try {
+			DatabaseMetaData d=con.getMetaData();
+			ResultSet rs=d.getTables(null,null,"CustomerData",null);
+			if(rs.next())
+			{
+		//		JOptionPane.showMessageDialog(null,"CustomerData table exist");
+			}
+			else 
+			{
+				String Create_Table="create table CustomerData(Invoice_No int not null auto_increment primary key,Date varchar(45),Time varchar(45),Customer_Name varchar(100),Address varchar(100),Contact varchar(45),Total_Ammount int,Paid_Ammount int,Pending_Ammount int)";
+				PreparedStatement ps=con.prepareStatement(Create_Table);
+				ps.executeUpdate();
+		//		JOptionPane.showMessageDialog(null,"CustomerData created successfully!");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+    
+    public void BillsData()
+	{
+		try {
+			DatabaseMetaData d=con.getMetaData();
+			ResultSet rs=d.getTables(null,null,"BillsData",null);
+			if(rs.next())
+			{
+	//			JOptionPane.showMessageDialog(null,"BillsData table exist");
+			}
+			else 
+			{
+				String Create_Table="create table BillsData(Invoice_No int references CustomerData,Product_No int references ProductsData)";
+				PreparedStatement ps=con.prepareStatement(Create_Table);
+				ps.executeUpdate();
+	//			JOptionPane.showMessageDialog(null,"BillsData created successfully!");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+    
+    public void ProductsData()
+	{
+		try {
+			DatabaseMetaData d=con.getMetaData();
+			ResultSet rs=d.getTables(null,null,"ProductsData",null);
+			if(rs.next())
+			{
+	//			JOptionPane.showMessageDialog(null,"ProductsData table exist");
+			}
+			else 
+			{
+				String Create_Table1="create table ProductsData(Product_No int not null auto_increment primary key,Sr_No int,Category varchar(45),Products varchar(100),Serial_No varchar(50),Module_No varchar(50),Rate_Rs int,Discount int,Quantity int,Discount_Price int,Total int,Invoice_No int,Date varchar(30),Time varchar(30))";
+				PreparedStatement ps=con.prepareStatement(Create_Table1);
+				ps.executeUpdate();
+	//			JOptionPane.showMessageDialog(null,"ProductsData created successfully!");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void InvoiceNo()
+	{
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+	//		JOptionPane.showMessageDialog(null,"connected");
+			String sql="select max(Invoice_No) from CustomerData";
+			ps=con.prepareStatement(sql);
+			rs=ps.executeQuery();
+			if(rs.next())
+			{
+				String n=rs.getString("max(Invoice_No)");
+				int n1=Integer.parseInt(n);
+		        int n2=n1+1;
+	//			System.out.println(n);
+				txtInvoiceNo.setText(String.valueOf(n2));
+			}
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void ProductNo()
+	{
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+	//		JOptionPane.showMessageDialog(null,"connected");
+			String sql1="select max(Product_No) from ProductsData";
+			ps=con.prepareStatement(sql1);
+			rs=ps.executeQuery();
+			if(rs.next())
+			{
+				String n=rs.getString("max(Product_No)");
+				int n1=Integer.parseInt(n);
+		        int n2=n1+1;
+	//			System.out.println(n);
+				txtProductNo.setText(String.valueOf(n2));
+			}
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+    
+    
     
     private void clear()
     {
@@ -234,8 +358,8 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 	{
 		try
 		{
-			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
-			String sql="select sum(Total) from Products where Invoice_No=?";
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+			String sql="select sum(Total) from ProductsData where Invoice_No=?";
 			
 			ps=con.prepareStatement(sql);
 			ps.setString(1,txtInvoiceNo.getText());
@@ -263,55 +387,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
     
     
     
-    public void GenerateNo()
-	{
-		try {
-			java.sql.Statement st=con.createStatement();
-			ResultSet rs=((java.sql.Statement) st).executeQuery("select MAX(Invoice_No) from CustomerInfo");
-			rs.next();
-			rs.getString("MAX(Invoice_No)");
-			if(rs.getString("MAX(Invoice_No)")==null)
-			{
-				txtInvoiceNo.setText("E-0000001");
-			}
-			else
-			{
-				long id=Long.parseLong(rs.getString("MAX(Invoice_No)").substring(2,rs.getString("MAX(Invoice_No)").length()));
-				id++;
-				txtInvoiceNo.setText("E-"+String.format("%07d", id));
-				
-			}
-			
-		} catch (SQLException | ClassCastException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-    
-    public void GenerateProductNo()
-   	{
-   		try {
-   			java.sql.Statement st=con.createStatement();
-   			ResultSet rs=((java.sql.Statement) st).executeQuery("select MAX(Product_No) from Products");
-   			rs.next();
-   			rs.getString("MAX(Product_No)");
-   			if(rs.getString("MAX(Product_No)")==null)
-   			{
-   				txtProductNo.setText("P-0000001");
-   			}
-   			else
-   			{
-   				long id=Long.parseLong(rs.getString("MAX(Product_No)").substring(2,rs.getString("MAX(Product_No)").length()));
-   				id++;
-   				txtProductNo.setText("P-"+String.format("%07d", id));
-   				
-   			}
-   			
-   		} catch (SQLException | ClassCastException e) {
-   			// TODO Auto-generated catch block
-   			e.printStackTrace();
-   		}
-   	}
+ //   
     
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -332,8 +408,8 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 	public void ShowDataInvoiceNo()
 	{
 		try {
-			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
-			String sql="select Product_No,Sr_No,Products,Serial_No,Module_No,Rate_Rs,Discount,Quantity,Discount_Price,Total from Products where Invoice_No=?";
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+			String sql="select Product_No,Sr_No,Products,Serial_No,Module_No,Rate_Rs,Discount,Quantity,Discount_Price,Total from ProductsData where Invoice_No=?";
 			ps=con.prepareStatement(sql);
 			ps.setString(1,txtInvoiceNo.getText());
 			rs=ps.executeQuery();
@@ -401,7 +477,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 		try 
 		{
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 			
 		} 
 		catch(Exception e)
@@ -427,7 +503,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 		txtDate = new JTextField();
 		txtDate.setForeground(new Color(0, 0, 128));
 		txtDate.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		txtDate.setBounds(82, 66, 104, 23);
+		txtDate.setBounds(82, 66, 104, 25);
 		contentPane.add(txtDate);
 		txtDate.setColumns(10);
 		
@@ -447,14 +523,14 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 		txtTime.setForeground(new Color(0, 0, 128));
 		txtTime.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtTime.setColumns(10);
-		txtTime.setBounds(271, 64, 104, 23);
+		txtTime.setBounds(271, 64, 104, 25);
 		contentPane.add(txtTime);
 		
 		txtInvoiceNo = new JTextField();
 		txtInvoiceNo.setForeground(new Color(0, 0, 128));
 		txtInvoiceNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtInvoiceNo.setColumns(10);
-		txtInvoiceNo.setBounds(173, 98, 202, 23);
+		txtInvoiceNo.setBounds(173, 98, 202, 25);
 		contentPane.add(txtInvoiceNo);
 		
 		JLabel lblCustomerName = new JLabel("Customer Name:");
@@ -467,7 +543,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 		txtCustomerName.setForeground(new Color(0, 0, 128));
 		txtCustomerName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtCustomerName.setColumns(10);
-		txtCustomerName.setBounds(173, 132, 357, 23);
+		txtCustomerName.setBounds(173, 132, 357, 25);
 		contentPane.add(txtCustomerName);
 		
 		JLabel lblAddress = new JLabel("Address:");
@@ -480,7 +556,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 		txtAddress.setForeground(new Color(0, 0, 128));
 		txtAddress.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtAddress.setColumns(10);
-		txtAddress.setBounds(173, 166, 357, 23);
+		txtAddress.setBounds(173, 166, 357, 25);
 		contentPane.add(txtAddress);
 		
 		JLabel lblContact = new JLabel("Contact:");
@@ -493,7 +569,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 		Contact.setForeground(new Color(0, 0, 128));
 		Contact.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		Contact.setColumns(10);
-		Contact.setBounds(173, 202, 199, 23);
+		Contact.setBounds(173, 202, 199, 25);
 		contentPane.add(Contact);
 		
 		JLabel lblAddCustomerDetails = new JLabel("Add Customer Details");
@@ -518,7 +594,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 		txtProductNo.setForeground(new Color(0, 0, 128));
 		txtProductNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtProductNo.setColumns(10);
-		txtProductNo.setBounds(173, 294, 104, 23);
+		txtProductNo.setBounds(173, 294, 104, 25);
 		contentPane.add(txtProductNo);
 		
 		JLabel lblSrno = new JLabel("SrNo:");
@@ -531,7 +607,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 		txtSrNo.setForeground(new Color(0, 0, 128));
 		txtSrNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtSrNo.setColumns(10);
-		txtSrNo.setBounds(173, 328, 104, 23);
+		txtSrNo.setBounds(173, 328, 104, 25);
 		contentPane.add(txtSrNo);
 		
 		JLabel lblCategory = new JLabel("Category:");
@@ -554,8 +630,8 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 			{
 				try 
 				{
-					String sql="SELECT Price,Serial_No,Module_No FROM Stock WHERE Product_Name=?";
-					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
+					String sql="SELECT Price,Serial_No,Module_No FROM StockData WHERE Product_Name=?";
+					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 					PreparedStatement ps=con.prepareStatement(sql);
 					String pname=(String) cbName.getSelectedItem();
 					
@@ -581,7 +657,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 				try
 				{
 					
-					String s="select Quantity from Stock where Product_Name=?";
+					String s="select Quantity from StockData where Product_Name=?";
 					ps=con.prepareStatement(s);
 					
 					String prod1=(String) cbName.getSelectedItem();
@@ -611,7 +687,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 		});
 		cbName.setForeground(new Color(0, 0, 128));
 		cbName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		cbName.setBounds(173, 397, 266, 23);
+		cbName.setBounds(173, 397, 266, 25);
 		contentPane.add(cbName);
 		
 		
@@ -625,8 +701,8 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 			{
 				try 
 				{
-					String sql="SELECT Product_Name FROM Stock WHERE Category=? ORDER BY Product_Name ASC";
-					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
+					String sql="SELECT Product_Name FROM StockData WHERE Category=? ORDER BY Product_Name ASC";
+					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 					PreparedStatement ps=con.prepareStatement(sql);
 					String sname=(String) cbCategory.getSelectedItem();
 					ps.setString(1,sname);
@@ -647,7 +723,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 				}
 			}
 		});
-		cbCategory.setBounds(173, 361, 134, 23);
+		cbCategory.setBounds(173, 361, 134, 25);
 		contentPane.add(cbCategory);
 		
 		JLabel lblSerialNo = new JLabel("Serial No:");
@@ -660,7 +736,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 		txtSerialNo.setForeground(new Color(0, 0, 128));
 		txtSerialNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtSerialNo.setColumns(10);
-		txtSerialNo.setBounds(173, 430, 266, 23);
+		txtSerialNo.setBounds(173, 430, 266, 25);
 		contentPane.add(txtSerialNo);
 		
 		JLabel lblModuleNo = new JLabel("Module No:");
@@ -673,7 +749,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 		txtModuleNo.setForeground(new Color(0, 0, 128));
 		txtModuleNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtModuleNo.setColumns(10);
-		txtModuleNo.setBounds(173, 464, 266, 23);
+		txtModuleNo.setBounds(173, 464, 266, 25);
 		contentPane.add(txtModuleNo);
 		
 		JLabel lblRateRs = new JLabel("Rate Rs:");
@@ -686,7 +762,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 		txtRateRs.setForeground(new Color(0, 0, 128));
 		txtRateRs.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtRateRs.setColumns(10);
-		txtRateRs.setBounds(173, 498, 104, 23);
+		txtRateRs.setBounds(173, 498, 104, 25);
 		contentPane.add(txtRateRs);
 		
 		JLabel lblDiscount = new JLabel("Discount:");
@@ -727,7 +803,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 		txtDiscount.setForeground(new Color(0, 0, 128));
 		txtDiscount.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtDiscount.setColumns(10);
-		txtDiscount.setBounds(173, 532, 104, 23);
+		txtDiscount.setBounds(173, 532, 104, 25);
 		contentPane.add(txtDiscount);
 		
 		JLabel lblQuantity = new JLabel("Quantity:");
@@ -744,7 +820,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 				try
 				{
 					
-					String s="select Quantity from Stock where Product_Name=?";
+					String s="select Quantity from StockData where Product_Name=?";
 					ps=con.prepareStatement(s);
 					
 					String prod1=(String) cbName.getSelectedItem();
@@ -801,7 +877,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 		txtQuantity.setForeground(new Color(0, 0, 128));
 		txtQuantity.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtQuantity.setColumns(10);
-		txtQuantity.setBounds(173, 566, 104, 23);
+		txtQuantity.setBounds(173, 566, 104, 25);
 		contentPane.add(txtQuantity);
 		
 		JLabel lblDiscountPrice = new JLabel("Discount Price:");
@@ -814,7 +890,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 		txtDiscountPrice.setForeground(new Color(0, 0, 128));
 		txtDiscountPrice.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtDiscountPrice.setColumns(10);
-		txtDiscountPrice.setBounds(173, 600, 104, 23);
+		txtDiscountPrice.setBounds(173, 600, 104, 25);
 		contentPane.add(txtDiscountPrice);
 		
 		JLabel lblTotal = new JLabel("Total:");
@@ -827,7 +903,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 		txtTotal.setForeground(new Color(0, 0, 128));
 		txtTotal.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtTotal.setColumns(10);
-		txtTotal.setBounds(173, 631, 104, 23);
+		txtTotal.setBounds(173, 631, 104, 25);
 		contentPane.add(txtTotal);
 		
 		JLabel lblRs = new JLabel("Rs");
@@ -869,15 +945,15 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 			    {
 			    	try 
 					{
-					String sql2="DELETE FROM Products WHERE Product_No=?";	
-					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
+					String sql2="DELETE FROM ProductsData WHERE Product_No=?";	
+					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 					ps=con.prepareStatement(sql2);
 					ps.setString(1,txtProductNo.getText());
 					ps.executeUpdate();
-			//		JOptionPane.showMessageDialog(null,"deleted from Products");
+			//		JOptionPane.showMessageDialog(null,"deleted from ProductsData");
 
 					
-					GenerateProductNo();
+					ProductNo();
 					txtSrNo.setText(null);
 				    cbCategory.setSelectedItem("Electronics");
 					txtSerialNo.setText(null);
@@ -893,14 +969,14 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 			    	
 			    	try 
 					{
-					String sql2="DELETE FROM Bills WHERE Product_No=?";	
-					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
+					String sql2="DELETE FROM BillsData WHERE Product_No=?";	
+					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 					ps=con.prepareStatement(sql2);
 					ps.setString(1,txtProductNo.getText());
 					ps.executeUpdate();
-			//		JOptionPane.showMessageDialog(null,"deleted from Bills");
+	//				JOptionPane.showMessageDialog(null,"deleted from BillsData");
 					
-					GenerateProductNo();
+					ProductNo();
 					txtSrNo.setText(null);
 				    cbCategory.setSelectedItem("Electronics");
 					txtSerialNo.setText(null);
@@ -920,7 +996,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 			}
 		});
 		btnDiscard.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnDiscard.setBounds(317, 670, 134, 25);
+		btnDiscard.setBounds(317, 670, 134, 28);
 		contentPane.add(btnDiscard);
 		
 		JButton btnAdd = new JButton("Add");
@@ -930,7 +1006,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 				try
 				{
 					
-					String sql="select Quantity from Stock where Product_Name=?";
+					String sql="select Quantity from StockData where Product_Name=?";
 					ps=con.prepareStatement(sql);
 					
 					String Prod_Name=(String) cbName.getSelectedItem();
@@ -953,8 +1029,8 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 						try 
 						{
 						
-						String sql3="UPDATE Stock SET Quantity=? WHERE Product_Name=?";	
-						con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
+						String sql3="UPDATE StockData SET Quantity=? WHERE Product_Name=?";	
+						con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 						ps=con.prepareStatement(sql3);
 						
 						String Prod=(String) cbName.getSelectedItem();
@@ -963,11 +1039,11 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 						
 						ps.setString(1,Final_Quantity);
 						ps.executeUpdate();
-				//		JOptionPane.showMessageDialog(null,"Stock updated");
+			//			JOptionPane.showMessageDialog(null,"Stock updated");
 						}
 						catch(Exception e1)
 						{
-				//			JOptionPane.showMessageDialog(null,"Stock updated failed");
+			//				JOptionPane.showMessageDialog(null,"Stock updated failed");
 						}
 					}
 					
@@ -992,8 +1068,8 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 				
 				try 
 				{
-				String sql1="insert into Products values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";	
-				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
+				String sql1="insert into ProductsData values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";	
+				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 				ps=con.prepareStatement(sql1);
 				ps.setString(1,txtProductNo.getText());
 				ps.setString(2,txtSrNo.getText());
@@ -1013,7 +1089,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 				ps.setString(14,txtTime.getText());
 				
 				ps.executeUpdate();
-	//			JOptionPane.showMessageDialog(null,"inserted into Products");
+	//			JOptionPane.showMessageDialog(null,"inserted into ProductsData");
 				
 				cbCategory.setSelectedItem("Electronics");
 				txtSrNo.setText("");
@@ -1032,28 +1108,28 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 				
 				try 
 				{
-					String sql11="insert into Bills values(?,?)";
-					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
+					String sql11="insert into BillsData values(?,?)";
+					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 					ps=con.prepareStatement(sql11);
 					ps.setString(1,txtInvoiceNo.getText());
 					ps.setString(2,txtProductNo.getText());
 					ps.executeUpdate();
-			//		JOptionPane.showMessageDialog(null,"inserted into Bills");
+		//			JOptionPane.showMessageDialog(null,"inserted into BillsData");
 				} 
 				catch(Exception e2)
 				{
-			//		JOptionPane.showMessageDialog(null,e2);
+					JOptionPane.showMessageDialog(null,e2);
 				}
 				
-				GenerateProductNo();
+		
 				ShowDataInvoiceNo();
 				total();
-				
+				ProductNo();
 				
 			}
 		});
 		btnAdd.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnAdd.setBounds(173, 670, 134, 25);
+		btnAdd.setBounds(173, 670, 134, 28);
 		contentPane.add(btnAdd);
 		
 		JButton btnNewInvoice = new JButton("New Invoice");
@@ -1064,7 +1140,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 			}
 		});
 		btnNewInvoice.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnNewInvoice.setBounds(466, 670, 134, 25);
+		btnNewInvoice.setBounds(461, 670, 177, 28);
 		contentPane.add(btnNewInvoice);
 		
 		JButton btnCancel = new JButton("Cancel");
@@ -1076,7 +1152,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 			}
 		});
 		btnCancel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnCancel.setBounds(754, 670, 134, 25);
+		btnCancel.setBounds(792, 670, 134, 28);
 		contentPane.add(btnCancel);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -1114,7 +1190,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 		txtTotalAmmount.setForeground(new Color(0, 0, 128));
 		txtTotalAmmount.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtTotalAmmount.setColumns(10);
-		txtTotalAmmount.setBounds(1208, 566, 104, 23);
+		txtTotalAmmount.setBounds(1208, 566, 104, 25);
 		contentPane.add(txtTotalAmmount);
 		
 		JLabel lblRs_4 = new JLabel("Rs");
@@ -1145,7 +1221,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 		txtPaidAmmount.setForeground(new Color(0, 0, 128));
 		txtPaidAmmount.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtPaidAmmount.setColumns(10);
-		txtPaidAmmount.setBounds(1208, 600, 104, 23);
+		txtPaidAmmount.setBounds(1208, 600, 104, 25);
 		contentPane.add(txtPaidAmmount);
 		
 		JLabel lblRs_2_1 = new JLabel("Rs");
@@ -1164,7 +1240,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 		txtPendingAmmount.setForeground(new Color(0, 0, 128));
 		txtPendingAmmount.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtPendingAmmount.setColumns(10);
-		txtPendingAmmount.setBounds(1208, 631, 104, 23);
+		txtPendingAmmount.setBounds(1208, 631, 104, 25);
 		contentPane.add(txtPendingAmmount);
 		
 		JLabel lblRs_3_1 = new JLabel("Rs");
@@ -1193,8 +1269,8 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 				
 				try 
 				{
-				String sql1="insert into CustomerInfo values(?,?,?,?,?,?,?,?,?)";	
-				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
+				String sql1="insert into CustomerData values(?,?,?,?,?,?,?,?,?)";	
+				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 				ps=con.prepareStatement(sql1);
 				ps.setString(1,txtInvoiceNo.getText());
 				ps.setString(2,txtDate.getText());
@@ -1207,7 +1283,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 				ps.setString(9,txtPendingAmmount.getText());
 				
 				ps.executeUpdate();
-		//		JOptionPane.showMessageDialog(null,"inserted into CustomerInfo");
+	//			JOptionPane.showMessageDialog(null,"inserted into CustomerData");
 				txtCustomerName.setText("");
 				Contact.setText("");
 				txtTotalAmmount.setText("");
@@ -1220,9 +1296,9 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 				
 				catch(Exception e1) 
 				{
-		//			JOptionPane.showMessageDialog(null,e1);	
+	//				JOptionPane.showMessageDialog(null,e1);	
 				}
-				GenerateNo();
+				InvoiceNo();
 				total();
 				ShowDataInvoiceNo();
 				
@@ -1231,14 +1307,14 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 			}
 		});
 		btnPrint.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnPrint.setBounds(1143, 670, 134, 25);
+		btnPrint.setBounds(1143, 670, 134, 28);
 		contentPane.add(btnPrint);
 		
 		JButton btnReset = new JButton("Reset");
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
-				GenerateProductNo();
+				ProductNo();
 				txtSrNo.setText(null);
 			    cbCategory.setSelectedItem("Electronics");
 				txtSerialNo.setText(null);
@@ -1251,13 +1327,17 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 			}
 		});
 		btnReset.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnReset.setBounds(610, 670, 134, 25);
+		btnReset.setBounds(648, 670, 134, 28);
 		contentPane.add(btnReset);
 		
-		GenerateProductNo();
-		GenerateNo();
+
 		clock();
 		date();
+		InvoiceNo();
+		CustomerData();
+		ProductNo();
+		ProductsData();
+		BillsData();
 		
 		JLabel lblNewLabel_3 = new JLabel("New label");
 		lblNewLabel_3.setIcon(new ImageIcon(LoginShop.class.getResource("/images/wallpaper2test.jpg")));

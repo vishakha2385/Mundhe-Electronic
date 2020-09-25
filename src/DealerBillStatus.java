@@ -11,8 +11,10 @@ import java.awt.Toolkit;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Color;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JScrollPane;
-import javax.swing.JComboBox;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -22,16 +24,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-
-public class BillStatus extends JFrame {
+public class DealerBillStatus extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
-    Connection con;
-    PreparedStatement ps;
-    ResultSet rs;
+
 	/**
 	 * Launch the application.
 	 */
@@ -39,7 +36,7 @@ public class BillStatus extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BillStatus frame = new BillStatus();
+					DealerBillStatus frame = new DealerBillStatus();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,13 +44,15 @@ public class BillStatus extends JFrame {
 			}
 		});
 	}
-
+	Connection con;
+	ResultSet rs;
+    PreparedStatement ps;
 	/**
 	 * Create the frame.
 	 */
-	public BillStatus() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(BillStatus.class.getResource("/images/logoShop.jpg")));
-		setTitle("Invoices Status");
+	public DealerBillStatus() {
+		setTitle("Dealer Invoices Status");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(DealerBillStatus.class.getResource("/images/logoShop.jpg")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0,0,1366,768);
 		contentPane = new JPanel();
@@ -62,39 +61,10 @@ public class BillStatus extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Invoice Status:");
-		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblNewLabel.setBounds(29, 25, 124, 27);
+		lblNewLabel.setBounds(21, 25, 124, 27);
 		contentPane.add(lblNewLabel);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(29, 62, 1299, 636);
-		contentPane.add(scrollPane);
-		
-		table = new JTable();
-		scrollPane.setViewportView(table);
-		
-		JButton btnPending = new JButton("Pending Invoices");
-		btnPending.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e)
-			{
-				try {
-					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-					String sql="select *from CustomerData where Pending_Ammount>0";
-					ps=con.prepareStatement(sql);
-					rs=ps.executeQuery();
-					table.setModel(DbUtils.resultSetToTableModel(rs));
-					
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}	
-			}
-		});
-		btnPending.setForeground(new Color(0, 0, 128));
-		btnPending.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnPending.setBounds(344, 25, 176, 28);
-		contentPane.add(btnPending);
 		
 		JButton btnPaid = new JButton("Paid Invoices");
 		btnPaid.addActionListener(new ActionListener() {
@@ -102,7 +72,7 @@ public class BillStatus extends JFrame {
 			{
 				try {
 					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-					String sql="select *from CustomerData where Pending_Ammount=0";
+					String sql="select *from DealerData where Pending_Ammount=0";
 					ps=con.prepareStatement(sql);
 					rs=ps.executeQuery();
 					table.setModel(DbUtils.resultSetToTableModel(rs));
@@ -115,8 +85,30 @@ public class BillStatus extends JFrame {
 		});
 		btnPaid.setForeground(new Color(0, 0, 128));
 		btnPaid.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnPaid.setBounds(149, 25, 176, 28);
+		btnPaid.setBounds(141, 25, 176, 28);
 		contentPane.add(btnPaid);
+		
+		JButton btnPending = new JButton("Pending Invoices");
+		btnPending.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				try {
+					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+					String sql="select *from DealerData where Pending_Ammount>0";
+					ps=con.prepareStatement(sql);
+					rs=ps.executeQuery();
+					table.setModel(DbUtils.resultSetToTableModel(rs));
+					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}	
+			}
+		});
+		btnPending.setForeground(new Color(0, 0, 128));
+		btnPending.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
+		btnPending.setBounds(332, 24, 221, 28);
+		contentPane.add(btnPending);
 		
 		JButton Cancel = new JButton("Cancel");
 		Cancel.addActionListener(new ActionListener() {
@@ -127,14 +119,19 @@ public class BillStatus extends JFrame {
 		});
 		Cancel.setForeground(new Color(0, 0, 128));
 		Cancel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		Cancel.setBounds(539, 25, 176, 28);
+		Cancel.setBounds(567, 24, 176, 28);
 		contentPane.add(Cancel);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(21, 62, 1299, 636);
+		contentPane.add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
 		
 		JLabel lblNewLabel_3 = new JLabel("New label");
 		lblNewLabel_3.setIcon(new ImageIcon(LoginShop.class.getResource("/images/wallpaper2test.jpg")));
 		lblNewLabel_3.setBounds(0,0,1366,768);
 		contentPane.add(lblNewLabel_3);
-
-		
 	}
 }

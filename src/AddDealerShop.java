@@ -22,6 +22,7 @@ import javax.swing.JTable;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -48,12 +49,38 @@ public class AddDealerShop extends JFrame {
 	Connection con;
 	PreparedStatement ps;
     ResultSet rs;
+    
+    public void DealerData()
+	{
+		try {
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+			DatabaseMetaData d=con.getMetaData();
+			ResultSet rs=d.getTables(null,null,"DealerData",null);
+			if(rs.next())
+			{
+	//			JOptionPane.showMessageDialog(null,"DealerData table exist");
+			}
+			else 
+			{
+				String Create_Table="create table DealerData(Invoice_No varchar(50),Date varchar(30),Dealer varchar(100),Category varchar(30),Total_Ammount int,Paid_Ammount int,Pending_Ammount int)";
+				PreparedStatement ps=con.prepareStatement(Create_Table);
+				ps.executeUpdate();
+	//			JOptionPane.showMessageDialog(null,"DealerData created successfully!");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+    
+
 	
 	public void ShowData()
 	{
 		try {
-			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
-			String sql="select *from DealerBillsInfo";
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+			String sql="select *from DealerData";
 			ps=con.prepareStatement(sql);
 			rs=ps.executeQuery();
 			table.setModel(DbUtils.resultSetToTableModel(rs));
@@ -63,6 +90,8 @@ public class AddDealerShop extends JFrame {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 	
 	/**
@@ -84,7 +113,19 @@ public class AddDealerShop extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AddDealerShop() {
+	public AddDealerShop()
+	{
+		try 
+		{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+			
+		} 
+		catch(Exception e)
+		{
+			
+		}
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AddDealerShop.class.getResource("/images/logoShop.jpg")));
 		setTitle("Dealer Invoices");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,14 +145,14 @@ public class AddDealerShop extends JFrame {
 		txtInvoiceNo.setForeground(new Color(0, 0, 128));
 		txtInvoiceNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtInvoiceNo.setColumns(10);
-		txtInvoiceNo.setBounds(199, 29, 119, 23);
+		txtInvoiceNo.setBounds(199, 29, 119, 25);
 		contentPane.add(txtInvoiceNo);
 		
 		txtDate = new JTextField();
 		txtDate.setForeground(new Color(0, 0, 128));
 		txtDate.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtDate.setColumns(10);
-		txtDate.setBounds(199, 68, 119, 23);
+		txtDate.setBounds(199, 68, 119, 25);
 		contentPane.add(txtDate);
 		
 		JLabel lblDealer = new JLabel("Date:");
@@ -124,7 +165,7 @@ public class AddDealerShop extends JFrame {
 		txtDealerName.setForeground(new Color(0, 0, 128));
 		txtDealerName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtDealerName.setColumns(10);
-		txtDealerName.setBounds(199, 107, 426, 23);
+		txtDealerName.setBounds(199, 107, 426, 25);
 		contentPane.add(txtDealerName);
 		
 		JLabel lblDealer_1 = new JLabel("Dealer:");
@@ -137,7 +178,7 @@ public class AddDealerShop extends JFrame {
 		txtTotalAmmount.setForeground(new Color(0, 0, 128));
 		txtTotalAmmount.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtTotalAmmount.setColumns(10);
-		txtTotalAmmount.setBounds(199, 144, 183, 23);
+		txtTotalAmmount.setBounds(199, 144, 183, 25);
 		contentPane.add(txtTotalAmmount);
 		
 		JLabel lblTotalAmmount = new JLabel("Total Amount:");
@@ -153,19 +194,19 @@ public class AddDealerShop extends JFrame {
 			{
 				String t1=txtTotalAmmount.getText();
 				int total=Integer.parseInt(t1);
-				System.out.println(total);
+				
 				String p1=txtPaidAmmount.getText();
 				int paid=Integer.parseInt(p1);
-				System.out.println(paid);
+				
 				int pending=total-paid;
-				System.out.println(pending);
+				
 				txtPendingAmmount.setText(String.valueOf(pending));
 			}
 		});
 		txtPaidAmmount.setForeground(new Color(0, 0, 128));
 		txtPaidAmmount.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtPaidAmmount.setColumns(10);
-		txtPaidAmmount.setBounds(199, 181, 183, 23);
+		txtPaidAmmount.setBounds(199, 181, 183, 25);
 		contentPane.add(txtPaidAmmount);
 		
 		JLabel lblPaidAmmount = new JLabel("Paid Amount:");
@@ -178,7 +219,7 @@ public class AddDealerShop extends JFrame {
 		txtPendingAmmount.setForeground(new Color(0, 0, 128));
 		txtPendingAmmount.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtPendingAmmount.setColumns(10);
-		txtPendingAmmount.setBounds(199, 218, 183, 23);
+		txtPendingAmmount.setBounds(199, 218, 183, 25);
 		contentPane.add(txtPendingAmmount);
 		
 		JLabel lblPendingAmmount = new JLabel("Pending Amount:");
@@ -196,7 +237,7 @@ public class AddDealerShop extends JFrame {
 		JComboBox CategorycomboBox = new JComboBox();
 		CategorycomboBox.setForeground(new Color(0, 0, 128));
 		CategorycomboBox.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		CategorycomboBox.setBounds(199, 257, 183, 23);
+		CategorycomboBox.setBounds(199, 257, 119, 25);
 		CategorycomboBox.addItem("Paid");
 		CategorycomboBox.addItem("Pending");
 		contentPane.add(CategorycomboBox);
@@ -204,14 +245,14 @@ public class AddDealerShop extends JFrame {
 		JLabel lblNewLabel_1 = new JLabel("Invoice No:");
 		lblNewLabel_1.setForeground(Color.WHITE);
 		lblNewLabel_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblNewLabel_1.setBounds(995, 31, 103, 29);
+		lblNewLabel_1.setBounds(975, 29, 103, 29);
 		contentPane.add(lblNewLabel_1);
 		
 		txtSearch = new JTextField();
 		txtSearch.setForeground(new Color(0, 0, 128));
 		txtSearch.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtSearch.setColumns(10);
-		txtSearch.setBounds(1096, 33, 133, 23);
+		txtSearch.setBounds(1076, 31, 133, 25);
 		contentPane.add(txtSearch);
 		
 		JButton btnSearch = new JButton("Search");
@@ -220,7 +261,7 @@ public class AddDealerShop extends JFrame {
 			{
 				try 
 				{
-					String sql5="select *from DealerBillsInfo where Invoice_No=?";
+					String sql5="select *from DealerData where Invoice_No=?";
 					ps=con.prepareStatement(sql5);
 					ps.setString(1,txtSearch.getText());
 					rs=ps.executeQuery();
@@ -254,7 +295,7 @@ public class AddDealerShop extends JFrame {
 		});
 		btnSearch.setForeground(new Color(0, 0, 128));
 		btnSearch.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnSearch.setBounds(1239, 31, 103, 25);
+		btnSearch.setBounds(1219, 29, 103, 28);
 		contentPane.add(btnSearch);
 		
 		JButton btnAdd = new JButton("Add");
@@ -263,8 +304,8 @@ public class AddDealerShop extends JFrame {
 			{
 				try 
 				{
-					String sql1="insert into DealerBillsInfo values(?,?,?,?,?,?,?)";	
-					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
+					String sql1="insert into DealerData values(?,?,?,?,?,?,?)";	
+					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 					ps=con.prepareStatement(sql1);
 					ps.setString(1,txtInvoiceNo.getText());
 		//			System.out.println(txtInvoiceNo.getText());
@@ -301,7 +342,7 @@ public class AddDealerShop extends JFrame {
 		});
 		btnAdd.setForeground(new Color(0, 0, 128));
 		btnAdd.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnAdd.setBounds(199, 299, 103, 25);
+		btnAdd.setBounds(199, 299, 103, 28);
 		contentPane.add(btnAdd);
 		
 		JButton btnUpdate = new JButton("Update");
@@ -310,8 +351,8 @@ public class AddDealerShop extends JFrame {
 			{
 				try 
 				{
-				String sql3="UPDATE DealerBillsInfo SET Invoice_No=?,Date=?,Dealer=?,Category=?,Total_Ammount=?,Paid_Ammount=?,Pending_Ammount=? WHERE Invoice_No=?";	
-				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
+				String sql3="UPDATE DealerData SET Invoice_No=?,Date=?,Dealer=?,Category=?,Total_Ammount=?,Paid_Ammount=?,Pending_Ammount=? WHERE Invoice_No=?";	
+				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 				ps=con.prepareStatement(sql3);
 				ps.setString(8,txtInvoiceNo.getText());
 				ps.setString(1,txtInvoiceNo.getText());
@@ -342,24 +383,24 @@ public class AddDealerShop extends JFrame {
 		});
 		btnUpdate.setForeground(new Color(0, 0, 128));
 		btnUpdate.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnUpdate.setBounds(312, 299, 103, 25);
+		btnUpdate.setBounds(312, 299, 103, 28);
 		contentPane.add(btnUpdate);
 		
 		JButton btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
-				int a=JOptionPane.showConfirmDialog(null,"Are you sure you want to delete this Bill?","Delete this Record?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+				int a=JOptionPane.showConfirmDialog(null,"Are you sure you want to delete this Invoice?","Delete this Record?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 			    if(a==JOptionPane.YES_OPTION)
 			    {
 				try 
 				{
-				String sql2="DELETE FROM DealerBillsInfo WHERE Invoice_No=?";	
-				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics","root","vishakha");
+				String sql2="DELETE FROM DealerData WHERE Invoice_No=?";	
+				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 				ps=con.prepareStatement(sql2);
 				ps.setString(1,txtInvoiceNo.getText());
 				ps.executeUpdate();
-				JOptionPane.showMessageDialog(null,"Complaint deleted successfully!");
+				JOptionPane.showMessageDialog(null,"Invoice deleted successfully!");
 
 				txtInvoiceNo.setText("");
 				txtDate.setText("");
@@ -376,7 +417,7 @@ public class AddDealerShop extends JFrame {
 		});
 		btnDelete.setForeground(new Color(0, 0, 128));
 		btnDelete.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnDelete.setBounds(425, 299, 103, 25);
+		btnDelete.setBounds(425, 299, 103, 28);
 		contentPane.add(btnDelete);
 		
 		JButton btnCancel = new JButton("Cancel");
@@ -388,7 +429,7 @@ public class AddDealerShop extends JFrame {
 		});
 		btnCancel.setForeground(new Color(0, 0, 128));
 		btnCancel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnCancel.setBounds(538, 299, 103, 25);
+		btnCancel.setBounds(538, 299, 103, 28);
 		contentPane.add(btnCancel);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -437,5 +478,7 @@ public class AddDealerShop extends JFrame {
 		lblNewLabel_3.setIcon(new ImageIcon(LoginShop.class.getResource("/images/wallpaper2test.jpg")));
 		lblNewLabel_3.setBounds(0,0,1366,768);
 		contentPane.add(lblNewLabel_3);
+		
+		DealerData();
 	}
 }

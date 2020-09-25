@@ -122,6 +122,15 @@ public class HomeShop extends JFrame {
 		});
 		mnNewMenu_2.add(mntmNewMenuItem_5);
 		
+		JMenuItem mntmNewMenuItem_11 = new JMenuItem("Dealer Invoices status");
+		mntmNewMenuItem_11.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				new DealerBillStatus().setVisible(true);
+			}
+		});
+		mnNewMenu_2.add(mntmNewMenuItem_11);
+		
 		JMenu mnNewMenu_3 = new JMenu("Complaints");
 		menuBar.add(mnNewMenu_3);
 		
