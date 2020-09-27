@@ -64,7 +64,7 @@ public class BillStatus extends JFrame {
 		JLabel lblNewLabel = new JLabel("Invoice Status:");
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblNewLabel.setBounds(29, 25, 124, 27);
+		lblNewLabel.setBounds(29, 25, 286, 27);
 		contentPane.add(lblNewLabel);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -93,7 +93,7 @@ public class BillStatus extends JFrame {
 		});
 		btnPending.setForeground(new Color(0, 0, 128));
 		btnPending.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnPending.setBounds(344, 25, 176, 28);
+		btnPending.setBounds(401, 24, 182, 28);
 		contentPane.add(btnPending);
 		
 		JButton btnPaid = new JButton("Paid Invoices");
@@ -115,7 +115,7 @@ public class BillStatus extends JFrame {
 		});
 		btnPaid.setForeground(new Color(0, 0, 128));
 		btnPaid.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnPaid.setBounds(149, 25, 176, 28);
+		btnPaid.setBounds(206, 24, 182, 28);
 		contentPane.add(btnPaid);
 		
 		JButton Cancel = new JButton("Cancel");
@@ -127,7 +127,7 @@ public class BillStatus extends JFrame {
 		});
 		Cancel.setForeground(new Color(0, 0, 128));
 		Cancel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		Cancel.setBounds(539, 25, 176, 28);
+		Cancel.setBounds(596, 24, 182, 28);
 		contentPane.add(Cancel);
 		
 		JLabel lblNewLabel_3 = new JLabel("New label");

@@ -149,7 +149,7 @@ public class IncomeShop extends JFrame {
 		contentPane.add(btnCancel);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(24, 55, 1307, 631);
+		scrollPane.setBounds(24, 98, 1307, 598);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -158,20 +158,20 @@ public class IncomeShop extends JFrame {
 		JLabel lblIncome = new JLabel("Income:");
 		lblIncome.setForeground(Color.WHITE);
 		lblIncome.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblIncome.setBounds(24, 696, 72, 24);
+		lblIncome.setBounds(24, 64, 72, 24);
 		contentPane.add(lblIncome);
 		
 		txtIncome = new JTextField();
 		txtIncome.setForeground(new Color(0, 0, 128));
 		txtIncome.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtIncome.setColumns(10);
-		txtIncome.setBounds(92, 696, 120, 25);
+		txtIncome.setBounds(92, 64, 120, 25);
 		contentPane.add(txtIncome);
 		
 		JLabel lblRs = new JLabel("Rs");
 		lblRs.setForeground(Color.WHITE);
 		lblRs.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs.setBounds(222, 696, 72, 24);
+		lblRs.setBounds(222, 64, 30, 24);
 		contentPane.add(lblRs);
 		
 		JLabel lblNewLabel_3 = new JLabel("New label");

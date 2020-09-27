@@ -65,7 +65,7 @@ public class StockListShop extends JFrame {
 		JLabel lblNewLabel = new JLabel("Category:");
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblNewLabel.setBounds(29, 29, 74, 26);
+		lblNewLabel.setBounds(29, 29, 166, 26);
 		contentPane.add(lblNewLabel);
 		
 		JButton btnElectronics = new JButton("Electronics");
@@ -87,7 +87,7 @@ public class StockListShop extends JFrame {
 		});
 		btnElectronics.setForeground(new Color(0, 0, 128));
 		btnElectronics.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnElectronics.setBounds(113, 29, 146, 28);
+		btnElectronics.setBounds(183, 29, 146, 28);
 		contentPane.add(btnElectronics);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -106,7 +106,7 @@ public class StockListShop extends JFrame {
 		});
 		btnCancel.setForeground(new Color(0, 0, 128));
 		btnCancel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnCancel.setBounds(423, 29, 146, 28);
+		btnCancel.setBounds(493, 29, 146, 28);
 		contentPane.add(btnCancel);
 		
 		JButton btnElectricals = new JButton("Electricals");
@@ -128,7 +128,7 @@ public class StockListShop extends JFrame {
 		});
 		btnElectricals.setForeground(new Color(0, 0, 128));
 		btnElectricals.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnElectricals.setBounds(268, 30, 146, 28);
+		btnElectricals.setBounds(338, 30, 146, 28);
 		contentPane.add(btnElectricals);
 		
 		JLabel lblNewLabel_3 = new JLabel("New label");

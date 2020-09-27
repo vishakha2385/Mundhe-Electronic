@@ -221,7 +221,7 @@ public class DeleteBillShop extends JFrame {
 		txtTime.setBounds(244, 55, 104, 25);
 		contentPane.add(txtTime);
 		
-		JLabel lblCustomerName = new JLabel("Customer Name:");
+		JLabel lblCustomerName = new JLabel("Customer:");
 		lblCustomerName.setForeground(Color.WHITE);
 		lblCustomerName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		lblCustomerName.setBounds(22, 89, 143, 24);

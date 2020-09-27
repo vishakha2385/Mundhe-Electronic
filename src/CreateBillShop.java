@@ -533,7 +533,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 		txtInvoiceNo.setBounds(173, 98, 202, 25);
 		contentPane.add(txtInvoiceNo);
 		
-		JLabel lblCustomerName = new JLabel("Customer Name:");
+		JLabel lblCustomerName = new JLabel("Customer:");
 		lblCustomerName.setForeground(new Color(255, 255, 255));
 		lblCustomerName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		lblCustomerName.setBounds(29, 132, 143, 24);

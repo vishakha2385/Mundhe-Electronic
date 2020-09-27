@@ -224,7 +224,7 @@ public class AddStockShop extends JFrame {
 		});
 		btnAdd.setForeground(new Color(0, 0, 128));
 		btnAdd.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnAdd.setBounds(151, 254, 90, 28);
+		btnAdd.setBounds(151, 254, 100, 28);
 		contentPane.add(btnAdd);
 		
 		JButton btnUpdate = new JButton("Update");
@@ -259,7 +259,7 @@ public class AddStockShop extends JFrame {
 		});
 		btnUpdate.setForeground(new Color(0, 0, 128));
 		btnUpdate.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnUpdate.setBounds(255, 254, 100, 28);
+		btnUpdate.setBounds(268, 254, 100, 28);
 		contentPane.add(btnUpdate);
 		
 		JButton btnDelete = new JButton("Delete");
@@ -290,7 +290,7 @@ public class AddStockShop extends JFrame {
 		});
 		btnDelete.setForeground(new Color(0, 0, 128));
 		btnDelete.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnDelete.setBounds(373, 254, 100, 28);
+		btnDelete.setBounds(386, 254, 100, 28);
 		contentPane.add(btnDelete);
 		
 		JButton btnCancel = new JButton("Cancel");
@@ -302,7 +302,7 @@ public class AddStockShop extends JFrame {
 		});
 		btnCancel.setForeground(new Color(0, 0, 128));
 		btnCancel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnCancel.setBounds(490, 254, 90, 28);
+		btnCancel.setBounds(503, 254, 100, 28);
 		contentPane.add(btnCancel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Product Name:");
