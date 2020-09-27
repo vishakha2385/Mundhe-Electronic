@@ -347,7 +347,7 @@ try
 				String sql3="UPDATE ComplaintsData SET Customer_Name=?,Address=?,Contact=?,Product=?,Serial_No=?,Module_No=?,Complaint_No=?,Category=? WHERE Customer_Name=?";	
 				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 				ps=con.prepareStatement(sql3);
-				ps.setString(8,txtCustomerName.getText());
+				ps.setString(9,txtCustomerName.getText());
 				ps.setString(1,txtCustomerName.getText());
 				ps.setString(2,txtAddress.getText());
 				ps.setString(3,txtContact.getText());
@@ -445,7 +445,7 @@ try
 				txtProduct.setText(model.getValueAt(i,3).toString());
 				txtSerialNo.setText(model.getValueAt(i,4).toString());
 				txtModuleNo.setText(model.getValueAt(i,5).toString());
-				txtComplaintNo.setText("");
+				txtComplaintNo.setText(model.getValueAt(i,6).toString());
 				CategorycomboBox.setSelectedItem(model.getValueAt(i,7).toString());
 			}
 		});
