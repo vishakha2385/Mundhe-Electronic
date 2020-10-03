@@ -122,7 +122,7 @@ public class AddComplaintsShop extends JFrame {
 				
 			}
 		
-		setIconImage(Toolkit.getDefaultToolkit().getImage(AddComplaintsShop.class.getResource("/images/logoShop.jpg")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(AddComplaintsShop.class.getResource("/images/plug.png")));
 		setTitle("Complaints");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0,0,1366,768);

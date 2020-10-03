@@ -106,7 +106,7 @@ public class AddStockShop extends JFrame {
 	 * Create the frame.
 	 */
 	public AddStockShop() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(AddStockShop.class.getResource("/images/logoShop.jpg")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(AddStockShop.class.getResource("/images/plug.png")));
 		setTitle("Add Stock");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0,0,1366,768);

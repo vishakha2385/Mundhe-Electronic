@@ -89,7 +89,7 @@ public class LoginShop extends JFrame {
 		
 		
 		setTitle("Login");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginShop.class.getResource("/images/logoShop.jpg")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginShop.class.getResource("/images/plug.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0,0,1366,768);
 		contentPane = new JPanel();

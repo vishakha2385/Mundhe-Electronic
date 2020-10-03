@@ -70,7 +70,7 @@ public class ResetPasswordShop extends JFrame {
 			e.printStackTrace();
 		}
 		
-		setIconImage(Toolkit.getDefaultToolkit().getImage(ResetPasswordShop.class.getResource("/images/logoShop.jpg")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ResetPasswordShop.class.getResource("/images/passowrd iconShop.jpg")));
 		setTitle("Change Password");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(325, 200, 690, 229);

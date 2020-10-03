@@ -52,7 +52,7 @@ public class BillStatus extends JFrame {
 	 * Create the frame.
 	 */
 	public BillStatus() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(BillStatus.class.getResource("/images/logoShop.jpg")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(BillStatus.class.getResource("/images/plug.png")));
 		setTitle("Invoices Status");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0,0,1366,768);

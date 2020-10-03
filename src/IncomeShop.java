@@ -60,7 +60,7 @@ public class IncomeShop extends JFrame {
 	 * Create the frame.
 	 */
 	public IncomeShop() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(IncomeShop.class.getResource("/images/logoShop.jpg")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(IncomeShop.class.getResource("/images/plug.png")));
 		setTitle("Income");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0,0,1366,768);

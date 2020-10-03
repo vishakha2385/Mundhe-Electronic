@@ -38,7 +38,7 @@ public class HomeShop extends JFrame {
 	 */
 	public HomeShop() {
 		setTitle("Home");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(HomeShop.class.getResource("/images/logoShop.jpg")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(HomeShop.class.getResource("/images/plug.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0,0,1366,768);
 		contentPane = new JPanel();
@@ -113,22 +113,31 @@ public class HomeShop extends JFrame {
 		JMenu mnNewMenu_2 = new JMenu("Dealers");
 		menuBar.add(mnNewMenu_2);
 		
-		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Add Dealer Invoices");
+		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Add Dealer");
 		mntmNewMenuItem_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				new AddDealerShop().setVisible(true);
+				new AddInvoice().setVisible(true);
 			}
 		});
 		mnNewMenu_2.add(mntmNewMenuItem_5);
 		
-		JMenuItem mntmNewMenuItem_11 = new JMenuItem("Dealer Invoices status");
+		JMenuItem mntmNewMenuItem_11 = new JMenuItem("Dealer Payments status");
 		mntmNewMenuItem_11.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
 				new DealerBillStatus().setVisible(true);
 			}
 		});
+		
+		JMenuItem mntmNewMenuItem_12 = new JMenuItem("Dealer List");
+		mntmNewMenuItem_12.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{
+				new DealerList().setVisible(true);
+			}
+		});
+		mnNewMenu_2.add(mntmNewMenuItem_12);
 		mnNewMenu_2.add(mntmNewMenuItem_11);
 		
 		JMenu mnNewMenu_3 = new JMenu("Complaints");

@@ -34,7 +34,7 @@ public class UpdateBill extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtTime;
-	private JTextField txtCustomerName;
+	private JTextField txtSearch;
 	private JTextField txtAddress;
 	private JTextField txtContact;
 	private JLabel lblTotalAmmount;
@@ -101,12 +101,13 @@ public class UpdateBill extends JFrame {
 		}
 	}
 	
-	public void ShowDataCustomer()
+	public void ShowCustomerInvoices()
 	{
 		try {
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-			String sql="select * from CustomerData";
+			String sql="select * from CustomerData where Customer_Name=?";
 			ps=con.prepareStatement(sql);
+			ps.setString(1,txtSearch.getText());
 			rs=ps.executeQuery();
 			tblCustomer.setModel(DbUtils.resultSetToTableModel(rs));
 			
@@ -137,7 +138,7 @@ public class UpdateBill extends JFrame {
 	 * Create the frame.
 	 */
 	public UpdateBill() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(UpdateBill.class.getResource("/images/logoShop.jpg")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(UpdateBill.class.getResource("/images/plug.png")));
 		setTitle("Update Payment");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0,0,1366,768);
@@ -168,21 +169,21 @@ public class UpdateBill extends JFrame {
 		JLabel lblInvoiceNo = new JLabel("Invoice No:");
 		lblInvoiceNo.setForeground(Color.WHITE);
 		lblInvoiceNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblInvoiceNo.setBounds(21, 21, 106, 24);
+		lblInvoiceNo.setBounds(21, 87, 106, 24);
 		contentPane.add(lblInvoiceNo);
 		
 		JLabel lblCustomerName = new JLabel("Customer Name:");
 		lblCustomerName.setForeground(Color.WHITE);
 		lblCustomerName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblCustomerName.setBounds(21, 88, 143, 24);
+		lblCustomerName.setBounds(21, 19, 143, 24);
 		contentPane.add(lblCustomerName);
 		
-		txtCustomerName = new JTextField();
-		txtCustomerName.setForeground(new Color(0, 0, 128));
-		txtCustomerName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		txtCustomerName.setColumns(10);
-		txtCustomerName.setBounds(187, 87, 427, 25);
-		contentPane.add(txtCustomerName);
+		txtSearch = new JTextField();
+		txtSearch.setForeground(new Color(0, 0, 128));
+		txtSearch.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
+		txtSearch.setColumns(10);
+		txtSearch.setBounds(187, 18, 304, 25);
+		contentPane.add(txtSearch);
 		
 		JLabel lblAddress = new JLabel("Address:");
 		lblAddress.setForeground(Color.WHITE);
@@ -295,7 +296,7 @@ public class UpdateBill extends JFrame {
 				ps.setString(9,txtInvoiceNo.getText());
 				ps.setString(1,txtDate.getText());
 				ps.setString(2,txtTime.getText());
-				ps.setString(3,txtCustomerName.getText());
+				ps.setString(3,txtSearch.getText());
 				ps.setString(4,txtAddress.getText());
 				ps.setString(5,txtContact.getText());
 				ps.setString(6,txtTotalAmmount.getText());
@@ -304,13 +305,13 @@ public class UpdateBill extends JFrame {
 				
 				
 				ps.executeUpdate();
-				ShowDataCustomer();
+				ShowCustomerInvoices();
 				JOptionPane.showMessageDialog(null,"Payment updated succefully!");
 				
 				}
 				catch(Exception e1) {}
 				ShowDataInvoiceNo();
-				ShowDataCustomer();
+				ShowCustomerInvoices();
 				total();
 				
 				
@@ -343,53 +344,38 @@ public class UpdateBill extends JFrame {
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				try {
-					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-					String s="select *from CustomerData,ProductsData,BillsData where CustomerData.Invoice_No=BillsData.Invoice_No and ProductsData.Product_No=BillsData.Product_No and CustomerData.Invoice_No=?";
-				    ps=con.prepareStatement(s);
-				    ps.setString(1,txtInvoiceNo.getText());
-				    rs=ps.executeQuery();
-				    if(rs.next())
-				    {
-				    	String Date=rs.getString("Date");
-						txtDate.setText(Date);
-						String Time=rs.getString("Time");
-						txtTime.setText(Time);
-						String Customer_Name=rs.getString("Customer_Name");
-						txtCustomerName.setText(Customer_Name);
-						String Address=rs.getString("Address");
-						txtAddress.setText(Address);
-						String Contact=rs.getString("Contact");
-						txtContact.setText(Contact);
-						String Total_Ammount=rs.getString("Total_Ammount");
-						txtTotalAmmount.setText(Total_Ammount);
-						String Pending_Ammount=rs.getString("Pending_Ammount");
-						txtPendingAmmount.setText(Pending_Ammount);
-						String Paid_Ammount=rs.getString("Paid_Ammount");
-				//		System.out.println(Paid_Ammount);
-						txtPaidAmmount.setText(Paid_Ammount);
-					
-				    }
-				    else
-				    {
-				    	JOptionPane.showMessageDialog(null,"Sorry! this Invoice is not Exist.");	
-				    }
-				    
-				} catch (SQLException e3) {
-					// TODO Auto-generated catch block
-					e3.printStackTrace();
-				}
-				ShowDataInvoiceNo();
+				ShowCustomerInvoices();
+//				try {
+//					
+//					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+//					String s="select *from CustomerData where Customer_Name=?";
+//				    ps=con.prepareStatement(s);
+//				    ps.setString(1,txtSearch.getText());
+//				    rs=ps.executeQuery();
+//				    if(rs.next())
+//				    {
+//				    	tblCustomer.setModel(DbUtils.resultSetToTableModel(rs));
+//				    }
+//				    else
+//				    {
+//				    	JOptionPane.showMessageDialog(null,"Sorry! this Cutomer is not exist.");
+//				    }
+//				    
+//				} catch (SQLException e3) {
+//					// TODO Auto-generated catch block
+//					e3.printStackTrace();
+//				}
+				
 			}
 		});
 		btnSearch.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnSearch.setBounds(331, 19, 117, 28);
+		btnSearch.setBounds(497, 17, 117, 28);
 		contentPane.add(btnSearch);
 		
 		txtInvoiceNo = new JTextField();
 		txtInvoiceNo.setForeground(new Color(0, 0, 128));
 		txtInvoiceNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		txtInvoiceNo.setBounds(188, 21, 133, 27);
+		txtInvoiceNo.setBounds(188, 87, 133, 27);
 		contentPane.add(txtInvoiceNo);
 		txtInvoiceNo.setColumns(10);
 		
@@ -414,7 +400,7 @@ public class UpdateBill extends JFrame {
 				txtInvoiceNo.setText(model.getValueAt(i,0).toString());
 				txtDate.setText(model.getValueAt(i,1).toString());
 				txtTime.setText(model.getValueAt(i,2).toString());
-				txtCustomerName.setText(model.getValueAt(i,2).toString());
+				txtSearch.setText(model.getValueAt(i,2).toString());
 				txtAddress.setText(model.getValueAt(i,2).toString());
 				txtContact.setText(model.getValueAt(i,2).toString());
 				txtTotalAmmount.setText(model.getValueAt(i,4).toString());
@@ -434,7 +420,7 @@ public class UpdateBill extends JFrame {
 						String Time=rs.getString("Time");
 						txtTime.setText(Time);
 						String Customer_Name=rs.getString("Customer_Name");
-						txtCustomerName.setText(Customer_Name);
+						txtSearch.setText(Customer_Name);
 						String Address=rs.getString("Address");
 						txtAddress.setText(Address);
 						String Contact=rs.getString("Contact");
@@ -458,12 +444,12 @@ public class UpdateBill extends JFrame {
 					e3.printStackTrace();
 				}
 				ShowDataInvoiceNo();
-				ShowDataCustomer();
+				ShowCustomerInvoices();
 			}
 		});
 		scrollPaneCustomer.setViewportView(tblCustomer);
 		
-		ShowDataCustomer();
+		//ShowDataCustomer();
 		
 		
 		JLabel lblNewLabel_3 = new JLabel("New label");

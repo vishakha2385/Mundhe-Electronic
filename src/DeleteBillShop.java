@@ -35,7 +35,7 @@ public class DeleteBillShop extends JFrame {
 	private JTextField txtInvoiceNo;
 	private JTextField txtDate;
 	private JTextField txtTime;
-	private JTextField txtCustomerName;
+	private JTextField txtSearch;
 	private JTextField txtAddress;
 	private JTextField txtContact;
 	private JTextField txtTotalAmmount;
@@ -91,12 +91,13 @@ public class DeleteBillShop extends JFrame {
 		}
 	}
 	
-	public void ShowDataCustomer()
+	public void ShowCustomerInvoices()
 	{
 		try {
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-			String sql="select * from CustomerData";
+			String sql="select * from CustomerData where Customer_Name=?";
 			ps=con.prepareStatement(sql);
+			ps.setString(1,txtSearch.getText());
 			rs=ps.executeQuery();
 			tblCustomer.setModel(DbUtils.resultSetToTableModel(rs));
 			
@@ -126,7 +127,7 @@ public class DeleteBillShop extends JFrame {
 	 * Create the frame.
 	 */
 	public DeleteBillShop() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(DeleteBillShop.class.getResource("/images/logoShop.jpg")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(DeleteBillShop.class.getResource("/images/plug.png")));
 		setTitle("Delete Invoices");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0,0,1366,768);
@@ -138,61 +139,27 @@ public class DeleteBillShop extends JFrame {
 		JLabel lblInvoiceNo = new JLabel("Invoice No:");
 		lblInvoiceNo.setForeground(Color.WHITE);
 		lblInvoiceNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblInvoiceNo.setBounds(22, 22, 106, 24);
+		lblInvoiceNo.setBounds(22, 93, 106, 24);
 		contentPane.add(lblInvoiceNo);
 		
 		txtInvoiceNo = new JTextField();
 		txtInvoiceNo.setForeground(new Color(0, 0, 128));
 		txtInvoiceNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtInvoiceNo.setColumns(10);
-		txtInvoiceNo.setBounds(189, 17, 133, 25);
+		txtInvoiceNo.setBounds(189, 88, 159, 25);
 		contentPane.add(txtInvoiceNo);
 		
 		JButton btnSearch = new JButton("Search");
 		btnSearch.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) 
+			public void actionPerformed(ActionEvent e)
 			{
-				try {
-					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-					String s="select *from CustomerData,ProductsData,BillsData where CustomerData.Invoice_No=BillsData.Invoice_No and ProductsData.Product_No=BillsData.Product_No and CustomerData.Invoice_No=?";
-				    ps=con.prepareStatement(s);
-				    ps.setString(1,txtInvoiceNo.getText());
-				    rs=ps.executeQuery();
-				    if(rs.next())
-				    {
-				    	String Date=rs.getString("Date");
-						txtDate.setText(Date);
-						String Time=rs.getString("Time");
-						txtTime.setText(Time);
-						String Customer_Name=rs.getString("Customer_Name");
-						txtCustomerName.setText(Customer_Name);
-						String Address=rs.getString("Address");
-						txtAddress.setText(Address);
-						String Contact=rs.getString("Contact");
-						txtContact.setText(Contact);
-						String Total_Ammount=rs.getString("Total_Ammount");
-						txtTotalAmmount.setText(Total_Ammount);
-						String Pending_Ammount=rs.getString("Pending_Ammount");
-						txtPendingAmmount.setText(Pending_Ammount);
-						String Paid_Ammount=rs.getString("Paid_Ammount");
-				//		System.out.println(Paid_Ammount);
-						txtPaidAmmount.setText(Paid_Ammount);
-					
-				    }
-				    else
-				    {
-				    	JOptionPane.showMessageDialog(null,"Sorry! this Invoice is not Exist.");	
-				    }
-				    
-				} catch (SQLException e3) {
-					// TODO Auto-generated catch block
-					e3.printStackTrace();
-				}
-				ShowDataInvoiceNo();
+				ShowCustomerInvoices();
+
 			}
 		});
+		
 		btnSearch.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnSearch.setBounds(332, 20, 117, 28);
+		btnSearch.setBounds(498, 20, 117, 28);
 		contentPane.add(btnSearch);
 		
 		JLabel lblNewLabel = new JLabel("Date:");
@@ -224,15 +191,15 @@ public class DeleteBillShop extends JFrame {
 		JLabel lblCustomerName = new JLabel("Customer:");
 		lblCustomerName.setForeground(Color.WHITE);
 		lblCustomerName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblCustomerName.setBounds(22, 89, 143, 24);
+		lblCustomerName.setBounds(22, 21, 143, 24);
 		contentPane.add(lblCustomerName);
 		
-		txtCustomerName = new JTextField();
-		txtCustomerName.setForeground(new Color(0, 0, 128));
-		txtCustomerName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		txtCustomerName.setColumns(10);
-		txtCustomerName.setBounds(188, 88, 427, 25);
-		contentPane.add(txtCustomerName);
+		txtSearch = new JTextField();
+		txtSearch.setForeground(new Color(0, 0, 128));
+		txtSearch.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
+		txtSearch.setColumns(10);
+		txtSearch.setBounds(188, 20, 300, 25);
+		contentPane.add(txtSearch);
 		
 		JLabel lblAddress = new JLabel("Address:");
 		lblAddress.setForeground(Color.WHITE);
@@ -335,7 +302,7 @@ public class DeleteBillShop extends JFrame {
 					txtInvoiceNo.setText("");
 					txtDate.setText("");
 					txtTime.setText("");
-					txtCustomerName.setText("");
+					txtSearch.setText("");
 					txtAddress.setText("");
 					txtContact.setText("");
 					txtTotalAmmount.setText("");
@@ -362,13 +329,13 @@ public class DeleteBillShop extends JFrame {
 					ps=con.prepareStatement(sql2);
 					ps.setString(1,txtInvoiceNo.getText());
 					ps.executeUpdate();
-			//		JOptionPane.showMessageDialog(null,"successfully deleted from Bills");
+		//			JOptionPane.showMessageDialog(null,"successfully deleted from Bills");
 					}
 					catch(Exception e1) {}
 			    }
 				
 			    ShowDataInvoiceNo();
-			    ShowDataCustomer();
+			    ShowCustomerInvoices();
 			}
 		});
 		btnDelete.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
@@ -407,56 +374,58 @@ public class DeleteBillShop extends JFrame {
 				txtInvoiceNo.setText(model.getValueAt(i,0).toString());
 				txtDate.setText(model.getValueAt(i,1).toString());
 				txtTime.setText(model.getValueAt(i,2).toString());
-				txtCustomerName.setText(model.getValueAt(i,2).toString());
+				txtSearch.setText(model.getValueAt(i,2).toString());
 				txtAddress.setText(model.getValueAt(i,2).toString());
 				txtContact.setText(model.getValueAt(i,2).toString());
 				txtTotalAmmount.setText(model.getValueAt(i,4).toString());
 				txtPaidAmmount.setText(model.getValueAt(i,5).toString());
 				txtPendingAmmount.setText(model.getValueAt(i,6).toString());
 				
-				try {
-					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-					String s="select *from CustomerData,ProductsData,BillsData where CustomerData.Invoice_No=BillsData.Invoice_No and ProductsData.Product_No=BillsData.Product_No and CustomerData.Invoice_No=?";
-				    ps=con.prepareStatement(s);
-				    ps.setString(1,txtInvoiceNo.getText());
-				    rs=ps.executeQuery();
-				    if(rs.next())
-				    {
-				    	String Date=rs.getString("Date");
-						txtDate.setText(Date);
-						String Time=rs.getString("Time");
-						txtTime.setText(Time);
-						String Customer_Name=rs.getString("Customer_Name");
-						txtCustomerName.setText(Customer_Name);
-						String Address=rs.getString("Address");
-						txtAddress.setText(Address);
-						String Contact=rs.getString("Contact");
-						txtContact.setText(Contact);
-						String Total_Ammount=rs.getString("Total_Ammount");
-						txtTotalAmmount.setText(Total_Ammount);
-						String Pending_Ammount=rs.getString("Pending_Ammount");
-						txtPendingAmmount.setText(Pending_Ammount);
-						String Paid_Ammount=rs.getString("Paid_Ammount");
-				//		System.out.println(Paid_Ammount);
-						txtPaidAmmount.setText(Paid_Ammount);
-					
-				    }
-				    else
-				    {
-				    //	JOptionPane.showMessageDialog(null,"Sorry! this Invoice is not Exist.");	
-				    }
-				    
-				} catch (SQLException e3) {
-					// TODO Auto-generated catch block
-					e3.printStackTrace();
-				}
 				ShowDataInvoiceNo();
-				ShowDataCustomer();
+				
+//				try {
+//					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+//					String s="select *from ProductsData where Invoice_No=?";
+//				    ps=con.prepareStatement(s);
+//				    ps.setString(1,txtInvoiceNo.getText());
+//				    rs=ps.executeQuery();
+//				    if(rs.next())
+//				    {
+//				    	String Date=rs.getString("Date");
+//						txtDate.setText(Date);
+//						String Time=rs.getString("Time");
+//						txtTime.setText(Time);
+//						String Customer_Name=rs.getString("Customer_Name");
+//						txtSearch.setText(Customer_Name);
+//						String Address=rs.getString("Address");
+//						txtAddress.setText(Address);
+//						String Contact=rs.getString("Contact");
+//						txtContact.setText(Contact);
+//						String Total_Ammount=rs.getString("Total_Ammount");
+//						txtTotalAmmount.setText(Total_Ammount);
+//						String Pending_Ammount=rs.getString("Pending_Ammount");
+//						txtPendingAmmount.setText(Pending_Ammount);
+//						String Paid_Ammount=rs.getString("Paid_Ammount");
+//				//		System.out.println(Paid_Ammount);
+//						txtPaidAmmount.setText(Paid_Ammount);
+//					
+//				    }
+//				    else
+//				    {
+//				    //	JOptionPane.showMessageDialog(null,"Sorry! this Invoice is not Exist.");	
+//				    }
+//				    
+//				} catch (SQLException e3) {
+//					// TODO Auto-generated catch block
+//					e3.printStackTrace();
+//				}
+		//		ShowDataInvoiceNo();
+		//		ShowDataCustomer();
 			}
 		});
 		scrollPaneCustomer.setViewportView(tblCustomer);
 		
-		ShowDataCustomer();
+//		ShowDataCustomer();
 		
 		JLabel lblNewLabel_3 = new JLabel("New label");
 		lblNewLabel_3.setIcon(new ImageIcon(LoginShop.class.getResource("/images/wallpaper2test.jpg")));

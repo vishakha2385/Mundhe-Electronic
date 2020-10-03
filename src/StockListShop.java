@@ -53,7 +53,7 @@ public class StockListShop extends JFrame {
 	 * Create the frame.
 	 */
 	public StockListShop() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(StockListShop.class.getResource("/images/logoShop.jpg")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(StockListShop.class.getResource("/images/plug.png")));
 		setTitle("Stock List");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(225,0,950,768);

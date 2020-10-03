@@ -51,8 +51,8 @@ public class DealerBillStatus extends JFrame {
 	 * Create the frame.
 	 */
 	public DealerBillStatus() {
-		setTitle("Dealer Invoices Status");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(DealerBillStatus.class.getResource("/images/logoShop.jpg")));
+		setTitle("Dealer Payments Status");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(DealerBillStatus.class.getResource("/images/plug.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0,0,1366,768);
 		contentPane = new JPanel();
@@ -60,19 +60,19 @@ public class DealerBillStatus extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Invoice Status:");
+		JLabel lblNewLabel = new JLabel("Payment Status:");
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		lblNewLabel.setBounds(21, 25, 300, 27);
 		contentPane.add(lblNewLabel);
 		
-		JButton btnPaid = new JButton("Paid Invoices");
+		JButton btnPaid = new JButton("Paid Payments");
 		btnPaid.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
 				try {
 					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-					String sql="select *from DealerData where Pending_Ammount=0";
+					String sql="select *from DealersPaymentData where Pending_Amount=0";
 					ps=con.prepareStatement(sql);
 					rs=ps.executeQuery();
 					table.setModel(DbUtils.resultSetToTableModel(rs));
@@ -88,13 +88,13 @@ public class DealerBillStatus extends JFrame {
 		btnPaid.setBounds(178, 24, 176, 28);
 		contentPane.add(btnPaid);
 		
-		JButton btnPending = new JButton("Pending Invoices");
+		JButton btnPending = new JButton("Pending Payments");
 		btnPending.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
 				try {
 					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-					String sql="select *from DealerData where Pending_Ammount>0";
+					String sql="select *from DealersPaymentData where Pending_Amount>0";
 					ps=con.prepareStatement(sql);
 					rs=ps.executeQuery();
 					table.setModel(DbUtils.resultSetToTableModel(rs));

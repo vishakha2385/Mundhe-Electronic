@@ -51,7 +51,7 @@ public class MundheElectronicsShop {
 	private void initialize() {
 		frmWelcome = new JFrame();
 		frmWelcome.setTitle("Welcome");
-		frmWelcome.setIconImage(Toolkit.getDefaultToolkit().getImage(MundheElectronicsShop.class.getResource("/images/logoShop.jpg")));
+		frmWelcome.setIconImage(Toolkit.getDefaultToolkit().getImage(MundheElectronicsShop.class.getResource("/images/plug.png")));
 		frmWelcome.setBounds(0,0,1366,768);
 		frmWelcome.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmWelcome.getContentPane().setLayout(null);

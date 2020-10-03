@@ -486,7 +486,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 		}
 		
 		setTitle("Create Invoice");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(CreateBillShop.class.getResource("/images/logoShop.jpg")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(CreateBillShop.class.getResource("/images/plug.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0,0,1366,768);
 		contentPane = new JPanel();
@@ -701,7 +701,7 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 			{
 				try 
 				{
-					String sql="SELECT Product_Name FROM StockData WHERE Category=? ORDER BY Product_Name ASC";
+					String sql="SELECT Product_Name FROM StockData WHERE Quantity>0 and Category=? and Quantity>0 ORDER BY Product_Name ASC";
 					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 					PreparedStatement ps=con.prepareStatement(sql);
 					String sname=(String) cbCategory.getSelectedItem();
