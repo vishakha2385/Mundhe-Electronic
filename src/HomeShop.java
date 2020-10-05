@@ -50,7 +50,7 @@ public class HomeShop extends JFrame {
 		menuBar.setBounds(0, 0, 1350, 22);
 		contentPane.add(menuBar);
 		
-		JMenu mnNewMenu = new JMenu("Invoice");
+		JMenu mnNewMenu = new JMenu("Invoices");
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Create Invoice");
@@ -88,6 +88,27 @@ public class HomeShop extends JFrame {
 		});
 		mnNewMenu.add(mntmNewMenuItem_10);
 		mnNewMenu.add(mntmNewMenuItem_2);
+		
+		JMenu mnNewMenu_5 = new JMenu("Custom Invoices");
+		menuBar.add(mnNewMenu_5);
+		
+		JMenuItem mntmNewMenuItem_13 = new JMenuItem("Create Custom Invoice");
+		mntmNewMenuItem_13.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				new CustomInvoce().setVisible(true);
+			}
+		});
+		mnNewMenu_5.add(mntmNewMenuItem_13);
+		
+		JMenuItem mntmNewMenuItem_14 = new JMenuItem("Custom Invoices List");
+		mntmNewMenuItem_14.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				new CustomInvoicesList().setVisible(true);
+			}
+		});
+		mnNewMenu_5.add(mntmNewMenuItem_14);
 		
 		JMenu mnNewMenu_1 = new JMenu("Stock");
 		menuBar.add(mnNewMenu_1);

@@ -172,10 +172,10 @@ public class UpdateBill extends JFrame {
 		lblInvoiceNo.setBounds(21, 87, 106, 24);
 		contentPane.add(lblInvoiceNo);
 		
-		JLabel lblCustomerName = new JLabel("Customer Name:");
+		JLabel lblCustomerName = new JLabel("Customer:");
 		lblCustomerName.setForeground(Color.WHITE);
 		lblCustomerName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblCustomerName.setBounds(21, 19, 143, 24);
+		lblCustomerName.setBounds(21, 19, 236, 24);
 		contentPane.add(lblCustomerName);
 		
 		txtSearch = new JTextField();
