@@ -882,10 +882,16 @@ ArrayList<String> ModuleNo = new ArrayList<>();
 		btnReset.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		btnReset.setBounds(461, 627, 134, 28);
 		contentPane_1.add(btnReset);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon(CustomInvoce.class.getResource("/images/wallpaper2test.jpg")));
+		lblNewLabel_1.setBounds(0, 0, 1366, 731);
+		contentPane_1.add(lblNewLabel_1);
 	clock();
 	date();
 	CustomInvoicesData();
 	InvoiceNo();
+	
 	
 	
 
