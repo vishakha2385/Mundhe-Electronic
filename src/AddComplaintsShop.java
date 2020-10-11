@@ -43,12 +43,14 @@ public class AddComplaintsShop extends JFrame {
 	private JTextField txtSearch;
 	private JTable table;
     private JComboBox CategorycomboBox;
-    
+   private JComboBox cbCategory;
 	
 	Connection con;
 	   PreparedStatement ps;
 	   ResultSet rs;
 	   private JTextField txtComplaintNo;
+	   String search;
+	 
 	   
 	   public void ComplaintsData()
 		{
@@ -111,6 +113,7 @@ public class AddComplaintsShop extends JFrame {
 	public AddComplaintsShop()
 	{
 		
+		
 			try 
 			{
 				Class.forName("com.mysql.cj.jdbc.Driver");
@@ -132,120 +135,125 @@ public class AddComplaintsShop extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Customer:");
+		lblNewLabel.setBounds(30, 29, 298, 29);
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblNewLabel.setBounds(30, 29, 298, 29);
 		contentPane.add(lblNewLabel);
 		
 		txtCustomerName = new JTextField();
+		txtCustomerName.setBounds(242, 31, 426, 25);
 		txtCustomerName.setForeground(new Color(0, 0, 128));
 		txtCustomerName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		txtCustomerName.setBounds(242, 31, 426, 25);
 		contentPane.add(txtCustomerName);
 		txtCustomerName.setColumns(10);
 		
 		txtAddress = new JTextField();
+		txtAddress.setBounds(242, 70, 426, 25);
 		txtAddress.setForeground(new Color(0, 0, 128));
 		txtAddress.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtAddress.setColumns(10);
-		txtAddress.setBounds(242, 70, 426, 25);
 		contentPane.add(txtAddress);
 		
 		JLabel lblAddress = new JLabel("Address:");
+		lblAddress.setBounds(30, 68, 144, 29);
 		lblAddress.setForeground(Color.WHITE);
 		lblAddress.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblAddress.setBounds(30, 68, 144, 29);
 		contentPane.add(lblAddress);
 		
 		txtContact = new JTextField();
+		txtContact.setBounds(242, 109, 183, 25);
 		txtContact.setForeground(new Color(0, 0, 128));
 		txtContact.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtContact.setColumns(10);
-		txtContact.setBounds(242, 109, 183, 25);
 		contentPane.add(txtContact);
 		
 		JLabel lblContact = new JLabel("Contact:");
+		lblContact.setBounds(30, 107, 144, 29);
 		lblContact.setForeground(Color.WHITE);
 		lblContact.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblContact.setBounds(30, 107, 144, 29);
 		contentPane.add(lblContact);
 		
 		txtProduct = new JTextField();
+		txtProduct.setBounds(242, 146, 183, 25);
 		txtProduct.setForeground(new Color(0, 0, 128));
 		txtProduct.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtProduct.setColumns(10);
-		txtProduct.setBounds(242, 146, 183, 25);
 		contentPane.add(txtProduct);
 		
 		JLabel lblProductName = new JLabel("Product Name:");
+		lblProductName.setBounds(30, 144, 246, 29);
 		lblProductName.setForeground(Color.WHITE);
 		lblProductName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblProductName.setBounds(30, 144, 246, 29);
 		contentPane.add(lblProductName);
 		
 		txtSerialNo = new JTextField();
+		txtSerialNo.setBounds(242, 183, 183, 25);
 		txtSerialNo.setForeground(new Color(0, 0, 128));
 		txtSerialNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtSerialNo.setColumns(10);
-		txtSerialNo.setBounds(242, 183, 183, 25);
 		contentPane.add(txtSerialNo);
 		
 		JLabel lblSerialNo = new JLabel("Serial No:");
+		lblSerialNo.setBounds(30, 181, 144, 29);
 		lblSerialNo.setForeground(Color.WHITE);
 		lblSerialNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblSerialNo.setBounds(30, 181, 144, 29);
 		contentPane.add(lblSerialNo);
 		
 		txtModuleNo = new JTextField();
+		txtModuleNo.setBounds(242, 220, 183, 25);
 		txtModuleNo.setForeground(new Color(0, 0, 128));
 		txtModuleNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtModuleNo.setColumns(10);
-		txtModuleNo.setBounds(242, 220, 183, 25);
 		contentPane.add(txtModuleNo);
 		
 		JLabel lblModuleNo = new JLabel("Module No:");
+		lblModuleNo.setBounds(30, 218, 144, 29);
 		lblModuleNo.setForeground(Color.WHITE);
 		lblModuleNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblModuleNo.setBounds(30, 218, 144, 29);
 		contentPane.add(lblModuleNo);
 		
 		JLabel lblCategory = new JLabel("Category:");
+		lblCategory.setBounds(30, 301, 144, 29);
 		lblCategory.setForeground(Color.WHITE);
 		lblCategory.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblCategory.setBounds(30, 301, 144, 29);
 		contentPane.add(lblCategory);
 		
 		CategorycomboBox = new JComboBox();
+		CategorycomboBox.setBounds(242, 305, 183, 25);
 		CategorycomboBox.setForeground(new Color(0, 0, 128));
 		CategorycomboBox.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		CategorycomboBox.setBounds(242, 305, 183, 25);
 		CategorycomboBox.addItem("Send");
 		CategorycomboBox.addItem("Unsent");
 		contentPane.add(CategorycomboBox);
 		
 		JLabel lblNewLabel_1 = new JLabel("Customer :");
+		lblNewLabel_1.setBounds(704, 29, 144, 29);
 		lblNewLabel_1.setForeground(Color.WHITE);
 		lblNewLabel_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblNewLabel_1.setBounds(704, 29, 144, 29);
 		contentPane.add(lblNewLabel_1);
 		
 		txtSearch = new JTextField();
+		txtSearch.setBounds(801, 30, 426, 25);
 		txtSearch.setForeground(new Color(0, 0, 128));
 		txtSearch.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtSearch.setColumns(10);
-		txtSearch.setBounds(803, 33, 426, 25);
 		contentPane.add(txtSearch);
 		
 		JButton btnSearch = new JButton("Search");
+		btnSearch.setBounds(1239, 31, 103, 28);
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				
 				try 
 				{
-					String sql5="select *from ComplaintsData where Customer_Name=?";
-					ps=con.prepareStatement(sql5);
+					String sql="select *from ComplaintsData where Customer_Name=?";
+					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+					PreparedStatement ps=con.prepareStatement(sql);
+					
 					ps.setString(1,txtSearch.getText());
-					rs=ps.executeQuery();
+					
+					ResultSet rs=ps.executeQuery();
 					if(rs.next())
 					{
 						
@@ -283,10 +291,10 @@ public class AddComplaintsShop extends JFrame {
 		});
 		btnSearch.setForeground(new Color(0, 0, 128));
 		btnSearch.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnSearch.setBounds(1239, 31, 103, 28);
 		contentPane.add(btnSearch);
 		
 		JButton btnAdd = new JButton("Add");
+		btnAdd.setBounds(242, 349, 103, 28);
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
@@ -335,10 +343,10 @@ try
 		});
 		btnAdd.setForeground(new Color(0, 0, 128));
 		btnAdd.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnAdd.setBounds(242, 349, 103, 28);
 		contentPane.add(btnAdd);
 		
 		JButton btnUpdate = new JButton("Update");
+		btnUpdate.setBounds(355, 349, 103, 28);
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
@@ -376,10 +384,10 @@ try
 		});
 		btnUpdate.setForeground(new Color(0, 0, 128));
 		btnUpdate.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnUpdate.setBounds(355, 349, 103, 28);
 		contentPane.add(btnUpdate);
 		
 		JButton Delete = new JButton("Delete");
+		Delete.setBounds(468, 349, 103, 28);
 		Delete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
@@ -412,10 +420,10 @@ try
 		});
 		Delete.setForeground(new Color(0, 0, 128));
 		Delete.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		Delete.setBounds(468, 349, 103, 28);
 		contentPane.add(Delete);
 		
 		JButton btnCancel = new JButton("Cancel");
+		btnCancel.setBounds(581, 349, 103, 28);
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
@@ -424,7 +432,6 @@ try
 		});
 		btnCancel.setForeground(new Color(0, 0, 128));
 		btnCancel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnCancel.setBounds(581, 349, 103, 28);
 		contentPane.add(btnCancel);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -452,25 +459,47 @@ try
 		scrollPane.setViewportView(table);
 		
 		JLabel lblComplaintNo = new JLabel("Complaint No:");
+		lblComplaintNo.setBounds(30, 262, 246, 29);
 		lblComplaintNo.setForeground(Color.WHITE);
 		lblComplaintNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblComplaintNo.setBounds(30, 262, 246, 29);
 		contentPane.add(lblComplaintNo);
 		
 		txtComplaintNo = new JTextField();
+		txtComplaintNo.setBounds(242, 264, 183, 25);
 		txtComplaintNo.setForeground(new Color(0, 0, 128));
 		txtComplaintNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtComplaintNo.setColumns(10);
-		txtComplaintNo.setBounds(242, 264, 183, 25);
 		contentPane.add(txtComplaintNo);
+		
+				try 
+				{
+					String sql="select Customer_Name from ComplaintsData";
+					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+					PreparedStatement ps=con.prepareStatement(sql);
+					
+					ResultSet rs=ps.executeQuery();
+					
+					while(rs.next())
+					{
+					String a=rs.getString(1);
+					cbCategory.addItem(a);
+					
+					}
+					
+				} 
+				catch(Exception e)
+				{
+					
+				}
+		
+		
+		ComplaintsData();
+		ShowData();
 		
 		JLabel lblNewLabel_3 = new JLabel("New label");
 		lblNewLabel_3.setIcon(new ImageIcon(LoginShop.class.getResource("/images/wallpaper2test.jpg")));
 		lblNewLabel_3.setBounds(0,0,1366,768);
 		contentPane.add(lblNewLabel_3);
-		
-		
-		ComplaintsData();
-		ShowData();
+	
 	}
 }

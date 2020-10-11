@@ -95,9 +95,8 @@ public class DeleteBillShop extends JFrame {
 	{
 		try {
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-			String sql="select * from CustomerData where Customer_Name=?";
+			String sql="select * from CustomerData";
 			ps=con.prepareStatement(sql);
-			ps.setString(1,txtSearch.getText());
 			rs=ps.executeQuery();
 			tblCustomer.setModel(DbUtils.resultSetToTableModel(rs));
 			
@@ -432,6 +431,6 @@ public class DeleteBillShop extends JFrame {
 		lblNewLabel_3.setBounds(0,0,1366,768);
 		contentPane.add(lblNewLabel_3);
 	
-		
+		ShowCustomerInvoices();
 	}
 }

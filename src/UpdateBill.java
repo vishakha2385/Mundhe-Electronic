@@ -105,9 +105,8 @@ public class UpdateBill extends JFrame {
 	{
 		try {
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-			String sql="select * from CustomerData where Customer_Name=?";
+			String sql="select * from CustomerData";
 			ps=con.prepareStatement(sql);
-			ps.setString(1,txtSearch.getText());
 			rs=ps.executeQuery();
 			tblCustomer.setModel(DbUtils.resultSetToTableModel(rs));
 			
@@ -312,6 +311,7 @@ public class UpdateBill extends JFrame {
 				catch(Exception e1) {}
 				ShowDataInvoiceNo();
 				ShowCustomerInvoices();
+				
 				total();
 				
 				
@@ -450,7 +450,7 @@ public class UpdateBill extends JFrame {
 		scrollPaneCustomer.setViewportView(tblCustomer);
 		
 		//ShowDataCustomer();
-		
+		ShowCustomerInvoices();
 		
 		JLabel lblNewLabel_3 = new JLabel("New label");
 		lblNewLabel_3.setIcon(new ImageIcon(LoginShop.class.getResource("/images/wallpaper2test.jpg")));
