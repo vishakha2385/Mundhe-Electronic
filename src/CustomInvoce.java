@@ -262,7 +262,7 @@ public class BillPrintable implements Printable {
             g2d.drawString(" Customer Name:",108,y);g2d.drawString(txtCustomerName.getText(),233,y);y+=yShift;
             g2d.drawString(" Address:",108,y);g2d.drawString(txtAddress.getText(),233,y);y+=yShift;
             g2d.drawString(" Contact:",108,y);g2d.drawString(txtContact.getText(),233,y);y+=yShift;
-            
+
             g2d.drawString("_______________________________________________________________________________________",108,215);y+=yShift;
             
           //  g2d.drawString("                                                                           ",108,y);y+=headerRectHeight;
