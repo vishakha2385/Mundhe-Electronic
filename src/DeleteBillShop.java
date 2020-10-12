@@ -47,39 +47,12 @@ public class DeleteBillShop extends JFrame {
 	ResultSet rs;
 	private JTable tblCustomer;
 	
-	public void total()
-	{
-		try
-		{
-			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-			String sql="select sum(Total) from ProductsData where Invoice_No=?";
-			
-			ps=con.prepareStatement(sql);
-			ps.setString(1,txtInvoiceNo.getText());
-			rs=ps.executeQuery();
-			if(rs.next())
-			{
-				String sum=rs.getString("sum(Total)");
-				
-				txtTotalAmmount.setText(sum);
-				
-			}
-			
-		} 
-		catch(NumberFormatException | SQLException e) 
-		{
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-    
+	
 	public void ShowDataInvoiceNo()
 	{
 		try {
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-			String sql="select Product_No,Sr_No,Category,Products,Serial_No,Module_No,Rate_Rs,Discount,Quantity,Discount_Price,Total from ProductsData where Invoice_No=?";
+			String sql="SELECT `Sr_No`, `Products`, `Serial_No`, `Module_No`, `Rate_Rs`, `CGST(%)`, `CGST(Rs)`, `SGST(%)`, `SGST(Rs)`, `GST(%)`, `GST(Rs)`, `Actual_Price`, `Discount(%)`, `Discount(Rs)`, `Quantity`, `Discount_Price`, `Total` FROM `mundheelectronics1`.`productsdata` WHERE Invoice_No=?";
 			ps=con.prepareStatement(sql);
 			ps.setString(1,txtInvoiceNo.getText());
 			rs=ps.executeQuery();

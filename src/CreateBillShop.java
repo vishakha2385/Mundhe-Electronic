@@ -138,11 +138,14 @@ public class CreateBillShop extends JFrame {
 			ResultSet rs=d.getTables(null,null,"ProductsData",null);
 			if(rs.next())
 			{
-				JOptionPane.showMessageDialog(null,"ProductsData table exist");
+		//		JOptionPane.showMessageDialog(null,"ProductsData table exist");
 			}
 			else 
 			{
 				String Create_Table1="CREATE TABLE `mundheelectronics1`.`productsdata` (\r\n"
+						+ "  `Invoice_No` VARCHAR(45) NOT NULL,\r\n"
+						+ "  `Date` VARCHAR(45) NOT NULL,\r\n"
+						+ "  `Time` VARCHAR(45) NOT NULL,\r\n"
 						+ "  `Product_No` INT NOT NULL AUTO_INCREMENT,\r\n"
 						+ "  `Sr_No` INT NOT NULL,\r\n"
 						+ "  `Category` VARCHAR(45) NOT NULL,\r\n"
@@ -150,26 +153,23 @@ public class CreateBillShop extends JFrame {
 						+ "  `Serial_No` VARCHAR(50) NOT NULL,\r\n"
 						+ "  `Module_No` VARCHAR(50) NOT NULL,\r\n"
 						+ "  `Rate_Rs` FLOAT NOT NULL,\r\n"
-						+ "  `Discount_Per` FLOAT NOT NULL,\r\n"
+						+ "  `CGST(%)` FLOAT NOT NULL,\r\n"
+						+ "  `CGST(Rs)` FLOAT NOT NULL,\r\n"
+						+ "  `SGST(%)` FLOAT NOT NULL,\r\n"
+						+ "  `SGST(Rs)` FLOAT NOT NULL,\r\n"
+						+ "  `GST(%)` FLOAT NOT NULL,\r\n"
+						+ "  `GST(Rs)` FLOAT NOT NULL,\r\n"
+						+ "  `Actual_Price` FLOAT NOT NULL,\r\n"
+						+ "  `Discount(%)` FLOAT NOT NULL,\r\n"
+						+ "  `Discount(Rs)` FLOAT NOT NULL,\r\n"
 						+ "  `Quantity` INT NOT NULL,\r\n"
 						+ "  `Discount_Price` FLOAT NOT NULL,\r\n"
 						+ "  `Total` FLOAT NOT NULL,\r\n"
-						+ "  `Invoice_No` VARCHAR(45) NOT NULL,\r\n"
-						+ "  `Date` VARCHAR(45) NOT NULL,\r\n"
-						+ "  `Time` VARCHAR(45) NOT NULL,\r\n"
-						+ "  `Discount_in_Rs` FLOAT NOT NULL,\r\n"
-						+ "  `CGST_in_per` FLOAT NOT NULL,\r\n"
-						+ "  `CGST_in_Rs` FLOAT NOT NULL,\r\n"
-						+ "  `SGST_in_per` FLOAT NOT NULL,\r\n"
-						+ "  `SGST_in_Rs` FLOAT NOT NULL,\r\n"
-						+ "  `GST_in_per` FLOAT NOT NULL,\r\n"
-						+ "  `GST_in_Rs` FLOAT NOT NULL,\r\n"
-						+ "  `Actual_Price` FLOAT NOT NULL,\r\n"
 						+ "  PRIMARY KEY (`Product_No`));\r\n"
 						+ "";
 				PreparedStatement ps=con.prepareStatement(Create_Table1);
 				ps.executeUpdate();
-				JOptionPane.showMessageDialog(null,"ProductsData created successfully!");
+		//		JOptionPane.showMessageDialog(null,"ProductsData created successfully!");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -440,16 +440,14 @@ private JTextField txtTotalGSTPrice;
 		try
 		{
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-			String sql="select sum(Discount) from ProductsData where Invoice_No=?";
+			String sql="SELECT  sum(`Discount(Rs)`) FROM `mundheelectronics1`.`productsdata` where Invoice_No=?";
 			
 			ps=con.prepareStatement(sql);
 			ps.setString(1,txtInvoiceNo.getText());
 			rs=ps.executeQuery();
-		
-
-			if(rs.next())
+				if(rs.next())
 			{
-				String sum=rs.getString("sum(Discount)");
+				String sum=rs.getString("sum(`Discount(Rs)`)");
 				textTotalDiscount.setText(sum);
 				
 			
@@ -471,7 +469,7 @@ private JTextField txtTotalGSTPrice;
 		try
 		{
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-			String sql="select sum(CGST(%)) from ProductsData where Invoice_No=?";
+			String sql="SELECT  sum(`CGST(%)`) FROM `mundheelectronics1`.`productsdata` where Invoice_No=?";
 			
 			ps=con.prepareStatement(sql);
 			ps.setString(1,txtInvoiceNo.getText());
@@ -480,7 +478,7 @@ private JTextField txtTotalGSTPrice;
 
 			if(rs.next())
 			{
-				String sum=rs.getString("sum(CGST(%))");
+				String sum=rs.getString("sum(`CGST(%)`)");
 				txtTotalCGST.setText(sum);
 				
 			
@@ -502,7 +500,7 @@ private JTextField txtTotalGSTPrice;
 		try
 		{
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-			String sql="select sum(SGST(%)) from ProductsData where Invoice_No=?";
+			String sql="SELECT  sum(`SGST(%)`) FROM `mundheelectronics1`.`productsdata` where Invoice_No=?";
 			
 			ps=con.prepareStatement(sql);
 			ps.setString(1,txtInvoiceNo.getText());
@@ -511,7 +509,7 @@ private JTextField txtTotalGSTPrice;
 
 			if(rs.next())
 			{
-				String sum=rs.getString("sum(SGST(%))");
+				String sum=rs.getString("sum(`SGST(%)`)");
 				txtTotalSGST.setText(sum);
 				
 			
@@ -533,7 +531,7 @@ private JTextField txtTotalGSTPrice;
 		try
 		{
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-			String sql="select sum(SGST(Rs)) from ProductsData where Invoice_No=?";
+			String sql="SELECT  sum(`SGST(Rs)`) FROM `mundheelectronics1`.`productsdata` where Invoice_No=?";
 			
 			ps=con.prepareStatement(sql);
 			ps.setString(1,txtInvoiceNo.getText());
@@ -542,7 +540,7 @@ private JTextField txtTotalGSTPrice;
 
 			if(rs.next())
 			{
-				String sum=rs.getString("sum(SGST(Rs))");
+				String sum=rs.getString("sum(`SGST(Rs)`)");
 				txtTotalSGSTPrice.setText(sum);
 				
 			
@@ -564,7 +562,7 @@ private JTextField txtTotalGSTPrice;
 		try
 		{
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-			String sql="select sum(CGST(Rs)) from ProductsData where Invoice_No=?";
+			String sql="SELECT  sum(`CGST(Rs)`) FROM `mundheelectronics1`.`productsdata` where Invoice_No=?";
 			
 			ps=con.prepareStatement(sql);
 			ps.setString(1,txtInvoiceNo.getText());
@@ -573,7 +571,7 @@ private JTextField txtTotalGSTPrice;
 
 			if(rs.next())
 			{
-				String sum=rs.getString("sum(CGST(Rs))");
+				String sum=rs.getString("sum(`CGST(Rs)`)");
 				txtTotalCGSTPrice.setText(sum);
 				
 			
@@ -595,7 +593,7 @@ private JTextField txtTotalGSTPrice;
 		try
 		{
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-			String sql="select sum(GST(Rs)) from ProductsData where Invoice_No=?";
+			String sql="SELECT  sum(`GST(Rs)`) FROM `mundheelectronics1`.`productsdata` where Invoice_No=?";
 			
 			ps=con.prepareStatement(sql);
 			ps.setString(1,txtInvoiceNo.getText());
@@ -604,7 +602,7 @@ private JTextField txtTotalGSTPrice;
 
 			if(rs.next())
 			{
-				String sum=rs.getString("sum(GST(Rs))");
+				String sum=rs.getString("sum(`GST(Rs)`)");
 				txtTotalGSTPrice.setText(sum);
 				
 			
@@ -626,7 +624,7 @@ private JTextField txtTotalGSTPrice;
 		try
 		{
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-			String sql="select sum(GST(%)) from ProductsData where Invoice_No=?";
+			String sql="SELECT  sum(`GST(%)`) FROM `mundheelectronics1`.`productsdata` where Invoice_No=?";
 			
 			ps=con.prepareStatement(sql);
 			ps.setString(1,txtInvoiceNo.getText());
@@ -635,7 +633,7 @@ private JTextField txtTotalGSTPrice;
 
 			if(rs.next())
 			{
-				String sum=rs.getString("sum(GST(%))");
+				String sum=rs.getString("sum(`GST(%)`)");
 				txtTotalGST.setText(sum);
 				
 			
@@ -674,7 +672,7 @@ private JTextField txtTotalGSTPrice;
 	{
 		try {
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-			String sql="select Sr_No,Products,Serial_No,Module_No,Rate_Rs,CGST_in_per,CGST_in_Rs,SGST_in_per,SGST_in_Rs,GST_in_per,GST_in_Rs,Actal_Price,Discount_in_per,Discount_in_Rs,Quantity,Discount_Price,Total from ProductsData where Invoice_No=?";
+			String sql="SELECT `Sr_No`, `Products`, `Serial_No`, `Module_No`, `Rate_Rs`, `CGST(%)`, `CGST(Rs)`, `SGST(%)`, `SGST(Rs)`, `GST(%)`, `GST(Rs)`, `Actual_Price`, `Discount(%)`, `Discount(Rs)`, `Quantity`, `Discount_Price`, `Total` FROM `mundheelectronics1`.`productsdata` WHERE Invoice_No=?";
 			ps=con.prepareStatement(sql);
 			ps.setString(1,txtInvoiceNo.getText());
 			rs=ps.executeQuery();
@@ -762,123 +760,123 @@ private JTextField txtTotalGSTPrice;
 		JLabel lblNewLabel = new JLabel("Date:");
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblNewLabel.setBounds(29, 39, 50, 24);
+		lblNewLabel.setBounds(20, 50, 50, 24);
 		contentPane.add(lblNewLabel);
 		
 		txtDate = new JTextField();
 		txtDate.setForeground(new Color(0, 0, 128));
 		txtDate.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		txtDate.setBounds(82, 41, 104, 25);
+		txtDate.setBounds(73, 50, 104, 25);
 		contentPane.add(txtDate);
 		txtDate.setColumns(10);
 		
 		JLabel lblTime = new JLabel("Time:");
 		lblTime.setForeground(new Color(255, 255, 255));
 		lblTime.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblTime.setBounds(216, 39, 50, 24);
+		lblTime.setBounds(207, 50, 50, 24);
 		contentPane.add(lblTime);
 		
 		JLabel lblInvoiceNo = new JLabel("Invoice No:");
 		lblInvoiceNo.setForeground(new Color(255, 255, 255));
 		lblInvoiceNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblInvoiceNo.setBounds(29, 70, 106, 24);
+		lblInvoiceNo.setBounds(20, 80, 106, 24);
 		contentPane.add(lblInvoiceNo);
 		
 		txtTime = new JTextField();
 		txtTime.setForeground(new Color(0, 0, 128));
 		txtTime.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtTime.setColumns(10);
-		txtTime.setBounds(271, 39, 104, 25);
+		txtTime.setBounds(262, 50, 104, 25);
 		contentPane.add(txtTime);
 		
 		txtInvoiceNo = new JTextField();
 		txtInvoiceNo.setForeground(new Color(0, 0, 128));
 		txtInvoiceNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtInvoiceNo.setColumns(10);
-		txtInvoiceNo.setBounds(173, 70, 202, 25);
+		txtInvoiceNo.setBounds(174, 80, 192, 25);
 		contentPane.add(txtInvoiceNo);
 		
 		JLabel lblCustomerName = new JLabel("Customer:");
 		lblCustomerName.setForeground(new Color(255, 255, 255));
 		lblCustomerName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblCustomerName.setBounds(29, 100, 143, 24);
+		lblCustomerName.setBounds(20, 110, 143, 24);
 		contentPane.add(lblCustomerName);
 		
 		txtCustomerName = new JTextField();
 		txtCustomerName.setForeground(new Color(0, 0, 128));
 		txtCustomerName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtCustomerName.setColumns(10);
-		txtCustomerName.setBounds(173, 100, 357, 25);
+		txtCustomerName.setBounds(174, 110, 316, 25);
 		contentPane.add(txtCustomerName);
 		
 		JLabel lblAddress = new JLabel("Address:");
 		lblAddress.setForeground(Color.WHITE);
 		lblAddress.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblAddress.setBounds(29, 130, 143, 24);
+		lblAddress.setBounds(20, 140, 143, 24);
 		contentPane.add(lblAddress);
 		
 		txtAddress = new JTextField();
 		txtAddress.setForeground(new Color(0, 0, 128));
 		txtAddress.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtAddress.setColumns(10);
-		txtAddress.setBounds(173, 130, 357, 25);
+		txtAddress.setBounds(174, 140, 316, 25);
 		contentPane.add(txtAddress);
 		
 		JLabel lblContact = new JLabel("Contact:");
 		lblContact.setForeground(Color.WHITE);
 		lblContact.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblContact.setBounds(29, 160, 143, 24);
+		lblContact.setBounds(20, 170, 143, 24);
 		contentPane.add(lblContact);
 		
 		Contact = new JTextField();
 		Contact.setForeground(new Color(0, 0, 128));
 		Contact.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		Contact.setColumns(10);
-		Contact.setBounds(173, 160, 199, 25);
+		Contact.setBounds(174, 170, 189, 25);
 		contentPane.add(Contact);
 		
 		JLabel lblAddCustomerDetails = new JLabel("Add Customer Details");
 		lblAddCustomerDetails.setForeground(Color.WHITE);
-		lblAddCustomerDetails.setFont(new Font("Baskerville Old Face", Font.PLAIN, 25));
-		lblAddCustomerDetails.setBounds(82, 10, 260, 30);
+		lblAddCustomerDetails.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
+		lblAddCustomerDetails.setBounds(20, 20, 260, 25);
 		contentPane.add(lblAddCustomerDetails);
 		
 		JLabel lblAddProductDetails = new JLabel("Add Product Details");
 		lblAddProductDetails.setForeground(Color.WHITE);
-		lblAddProductDetails.setFont(new Font("Baskerville Old Face", Font.PLAIN, 25));
-		lblAddProductDetails.setBounds(82, 194, 260, 30);
+		lblAddProductDetails.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
+		lblAddProductDetails.setBounds(20, 200, 260, 25);
 		contentPane.add(lblAddProductDetails);
 		
 		JLabel lblProductNo = new JLabel("Record No:");
 		lblProductNo.setForeground(Color.WHITE);
 		lblProductNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblProductNo.setBounds(29, 230, 134, 24);
+		lblProductNo.setBounds(20, 230, 134, 25);
 		contentPane.add(lblProductNo);
 		
 		txtProductNo = new JTextField();
 		txtProductNo.setForeground(new Color(0, 0, 128));
 		txtProductNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtProductNo.setColumns(10);
-		txtProductNo.setBounds(173, 230, 104, 25);
+		txtProductNo.setBounds(174, 230, 94, 25);
 		contentPane.add(txtProductNo);
 		
 		JLabel lblSrno = new JLabel("No:");
 		lblSrno.setForeground(Color.WHITE);
 		lblSrno.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblSrno.setBounds(29, 260, 106, 24);
+		lblSrno.setBounds(20, 260, 106, 25);
 		contentPane.add(lblSrno);
 		
 		txtSrNo = new JTextField();
 		txtSrNo.setForeground(new Color(0, 0, 128));
 		txtSrNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtSrNo.setColumns(10);
-		txtSrNo.setBounds(173, 260, 104, 25);
+		txtSrNo.setBounds(174, 260, 94, 25);
 		contentPane.add(txtSrNo);
 		
 		JLabel lblCategory = new JLabel("Category:");
 		lblCategory.setForeground(Color.WHITE);
 		lblCategory.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblCategory.setBounds(29, 290, 106, 24);
+		lblCategory.setBounds(20, 290, 106, 25);
 		contentPane.add(lblCategory);
 		
 		
@@ -886,7 +884,7 @@ private JTextField txtTotalGSTPrice;
 		JLabel lblProductName = new JLabel("Product Name:");
 		lblProductName.setForeground(Color.WHITE);
 		lblProductName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblProductName.setBounds(29, 320, 134, 24);
+		lblProductName.setBounds(512, 20, 134, 25);
 		contentPane.add(lblProductName);
 		
 		JComboBox cbName = new JComboBox();
@@ -966,7 +964,7 @@ private JTextField txtTotalGSTPrice;
 		});
 		cbName.setForeground(new Color(0, 0, 128));
 		cbName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		cbName.setBounds(173, 320, 266, 25);
+		cbName.setBounds(656, 20, 277, 25);
 		contentPane.add(cbName);
 		
 		
@@ -1002,52 +1000,52 @@ private JTextField txtTotalGSTPrice;
 				}
 			}
 		});
-		cbCategory.setBounds(173, 290, 134, 25);
+		cbCategory.setBounds(174, 290, 124, 25);
 		contentPane.add(cbCategory);
 		
 		JLabel lblSerialNo = new JLabel("Serial No:");
 		lblSerialNo.setForeground(Color.WHITE);
 		lblSerialNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblSerialNo.setBounds(29, 350, 106, 24);
+		lblSerialNo.setBounds(512, 50, 106, 25);
 		contentPane.add(lblSerialNo);
 		
 		txtSerialNo = new JTextField();
 		txtSerialNo.setForeground(new Color(0, 0, 128));
 		txtSerialNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtSerialNo.setColumns(10);
-		txtSerialNo.setBounds(173, 350, 266, 25);
+		txtSerialNo.setBounds(656, 50, 277, 25);
 		contentPane.add(txtSerialNo);
 		
 		JLabel lblModuleNo = new JLabel("Module No:");
 		lblModuleNo.setForeground(Color.WHITE);
 		lblModuleNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblModuleNo.setBounds(29, 380, 106, 24);
+		lblModuleNo.setBounds(512, 80, 106, 25);
 		contentPane.add(lblModuleNo);
 		
 		txtModuleNo = new JTextField();
 		txtModuleNo.setForeground(new Color(0, 0, 128));
 		txtModuleNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtModuleNo.setColumns(10);
-		txtModuleNo.setBounds(173, 380, 266, 25);
+		txtModuleNo.setBounds(656, 80, 277, 25);
 		contentPane.add(txtModuleNo);
 		
 		JLabel lblRateRs = new JLabel("Rate Rs:");
 		lblRateRs.setForeground(Color.WHITE);
 		lblRateRs.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRateRs.setBounds(29, 410, 106, 24);
+		lblRateRs.setBounds(512, 110, 106, 25);
 		contentPane.add(lblRateRs);
 		
 		txtRateRs = new JTextField();
 		txtRateRs.setForeground(new Color(0, 0, 128));
 		txtRateRs.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtRateRs.setColumns(10);
-		txtRateRs.setBounds(173, 410, 125, 25);
+		txtRateRs.setBounds(656, 110, 125, 25);
 		contentPane.add(txtRateRs);
 		
 		JLabel lblDiscount = new JLabel("Discount:");
 		lblDiscount.setForeground(Color.WHITE);
 		lblDiscount.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblDiscount.setBounds(29, 590, 209, 24);
+		lblDiscount.setBounds(512, 290, 143, 25);
 		contentPane.add(lblDiscount);
 		
 		txtDiscount = new JTextField();
@@ -1090,13 +1088,13 @@ private JTextField txtTotalGSTPrice;
 		txtDiscount.setForeground(new Color(0, 0, 128));
 		txtDiscount.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtDiscount.setColumns(10);
-		txtDiscount.setBounds(173, 590, 125, 25);
+		txtDiscount.setBounds(656, 289, 65, 25);
 		contentPane.add(txtDiscount);
 		
 		JLabel lblQuantity = new JLabel("Quantity:");
 		lblQuantity.setForeground(Color.WHITE);
 		lblQuantity.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblQuantity.setBounds(29, 560, 106, 24);
+		lblQuantity.setBounds(512, 260, 106, 25);
 		contentPane.add(lblQuantity);
 		
 		txtQuantity = new JTextField();
@@ -1164,13 +1162,13 @@ private JTextField txtTotalGSTPrice;
 		txtQuantity.setForeground(new Color(0, 0, 128));
 		txtQuantity.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtQuantity.setColumns(10);
-		txtQuantity.setBounds(173, 560, 125, 25);
+		txtQuantity.setBounds(656, 260, 65, 25);
 		contentPane.add(txtQuantity);
 		
 		JLabel lblDiscountPrice = new JLabel("Discount Price:");
 		lblDiscountPrice.setForeground(Color.WHITE);
 		lblDiscountPrice.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblDiscountPrice.setBounds(29, 620, 143, 24);
+		lblDiscountPrice.setBounds(954, 20, 143, 25);
 		contentPane.add(lblDiscountPrice);
 		
 		txtDiscountPrice = new JTextField();
@@ -1207,50 +1205,50 @@ private JTextField txtTotalGSTPrice;
 		txtDiscountPrice.setForeground(new Color(0, 0, 128));
 		txtDiscountPrice.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtDiscountPrice.setColumns(10);
-		txtDiscountPrice.setBounds(173, 620, 125, 25);
+		txtDiscountPrice.setBounds(1098, 20, 125, 25);
 		contentPane.add(txtDiscountPrice);
 		
 		JLabel lblTotal = new JLabel("Total:");
 		lblTotal.setForeground(Color.WHITE);
 		lblTotal.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblTotal.setBounds(29, 650, 106, 24);
+		lblTotal.setBounds(954, 50, 106, 25);
 		contentPane.add(lblTotal);
 		
 		txtTotal = new JTextField();
 		txtTotal.setForeground(new Color(0, 0, 128));
 		txtTotal.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtTotal.setColumns(10);
-		txtTotal.setBounds(173, 650, 125, 25);
+		txtTotal.setBounds(1098, 50, 125, 25);
 		contentPane.add(txtTotal);
 		
 		JLabel lblRs = new JLabel("Rs");
 		lblRs.setForeground(Color.WHITE);
 		lblRs.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs.setBounds(300, 410, 106, 24);
+		lblRs.setBounds(783, 110, 106, 24);
 		contentPane.add(lblRs);
 		
 		JLabel lblRs_1 = new JLabel("%");
 		lblRs_1.setForeground(Color.WHITE);
 		lblRs_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs_1.setBounds(300, 590, 106, 24);
+		lblRs_1.setBounds(722, 290, 106, 24);
 		contentPane.add(lblRs_1);
 		
 		JLabel lblUnits = new JLabel("Units");
 		lblUnits.setForeground(Color.WHITE);
 		lblUnits.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblUnits.setBounds(300, 560, 106, 24);
+		lblUnits.setBounds(722, 260, 106, 24);
 		contentPane.add(lblUnits);
 		
 		JLabel lblRs_2 = new JLabel("Rs");
 		lblRs_2.setForeground(Color.WHITE);
 		lblRs_2.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs_2.setBounds(300, 620, 106, 24);
+		lblRs_2.setBounds(1225, 20, 106, 24);
 		contentPane.add(lblRs_2);
 		
 		JLabel lblRs_3 = new JLabel("Rs");
 		lblRs_3.setForeground(Color.WHITE);
 		lblRs_3.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs_3.setBounds(300, 650, 106, 24);
+		lblRs_3.setBounds(1225, 50, 106, 24);
 		contentPane.add(lblRs_3);
 		
 		JButton btnAdd = new JButton("Add");
@@ -1325,30 +1323,33 @@ private JTextField txtTotalGSTPrice;
 				String sql1="insert into ProductsData values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";	
 				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 				ps=con.prepareStatement(sql1);
-				ps.setString(1,txtProductNo.getText());
-				ps.setString(2,txtSrNo.getText());
+				ps.setString(1,txtInvoiceNo.getText());
+				ps.setString(2,txtDate.getText());
+				ps.setString(3,txtTime.getText());
+				ps.setString(4,txtProductNo.getText());
+				ps.setString(5,txtSrNo.getText());
 				String Category=(String) cbCategory.getSelectedItem();
-				ps.setString(3,Category);
+				ps.setString(6,Category);
 				String pname=(String) cbName.getSelectedItem();
-				ps.setString(4,pname);
-				ps.setString(5,txtSerialNo.getText());
-				ps.setString(6,txtModuleNo.getText());
-				ps.setString(7,txtRateRs.getText());
-				ps.setString(8,txtDiscount.getText());
-				ps.setString(9,txtQuantity.getText());
-				ps.setString(10,txtDiscountPrice.getText());
-				ps.setString(11,txtTotal.getText());
-				ps.setString(12,txtInvoiceNo.getText());
-				ps.setString(13,txtDate.getText());
-				ps.setString(14,txtTime.getText());
-				ps.setString(15,txtDis.getText());
-				ps.setString(16,txtCGST.getText());
-				ps.setString(17,txtCGSTPrice.getText());
-				ps.setString(18,txtSGST.getText());
-				ps.setString(19,txtSGSTPrice.getText());
-				ps.setString(20,txtGST.getText());
-				ps.setString(21,txtGSTPrice.getText());
-				ps.setString(22,txtActualPrice.getText());
+				ps.setString(7,pname);
+				ps.setString(8,txtSerialNo.getText());
+				ps.setString(9,txtModuleNo.getText());
+				ps.setString(10,txtRateRs.getText());
+				ps.setString(11,txtCGST.getText());
+				ps.setString(12,txtCGSTPrice.getText());
+				ps.setString(13,txtSGST.getText());
+				ps.setString(14,txtSGSTPrice.getText());
+				ps.setString(15,txtGST.getText());
+				ps.setString(16,txtGSTPrice.getText());
+				ps.setString(17,txtActualPrice.getText());
+				ps.setString(18,txtDiscount.getText());
+				ps.setString(19,txtDis.getText());
+				ps.setString(20,txtQuantity.getText());
+				ps.setString(21,txtDiscountPrice.getText());
+				ps.setString(22,txtTotal.getText());
+				
+				
+				
 				
 				ps.executeUpdate();
 	//			JOptionPane.showMessageDialog(null,"inserted into ProductsData");
@@ -1405,7 +1406,7 @@ private JTextField txtTotalGSTPrice;
 			}
 		});
 		btnAdd.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnAdd.setBounds(173, 685, 134, 28);
+		btnAdd.setBounds(20, 334, 134, 28);
 		contentPane.add(btnAdd);
 		
 		JButton btnNewInvoice = new JButton("New Invoice");
@@ -1416,7 +1417,7 @@ private JTextField txtTotalGSTPrice;
 			}
 		});
 		btnNewInvoice.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnNewInvoice.setBounds(605, 685, 177, 28);
+		btnNewInvoice.setBounds(596, 334, 177, 28);
 		contentPane.add(btnNewInvoice);
 		
 		JButton btnCancel = new JButton("Cancel");
@@ -1428,11 +1429,11 @@ private JTextField txtTotalGSTPrice;
 			}
 		});
 		btnCancel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnCancel.setBounds(936, 685, 134, 28);
+		btnCancel.setBounds(783, 334, 134, 28);
 		contentPane.add(btnCancel);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(540, 10, 802, 537);
+		scrollPane.setBounds(10, 383, 1332, 338);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -1442,16 +1443,28 @@ private JTextField txtTotalGSTPrice;
 			{
 				DefaultTableModel model=(DefaultTableModel)table.getModel();
 				int i=table.getSelectedRow();
-				txtProductNo.setText(model.getValueAt(i,0).toString());
-				txtSrNo.setText(model.getValueAt(i,1).toString());
-				cbName.setSelectedItem(model.getValueAt(i,2).toString());
-				txtSerialNo.setText(model.getValueAt(i,3).toString());
-				txtModuleNo.setText(model.getValueAt(i,4).toString());
-				txtRateRs.setText(model.getValueAt(i,5).toString());
-				txtDiscount.setText(model.getValueAt(i,6).toString());
-				txtQuantity.setText(model.getValueAt(i,7).toString());
-				txtDiscountPrice.setText(model.getValueAt(i,8).toString());
-				txtTotal.setText(model.getValueAt(i,9).toString());
+				txtInvoiceNo.setText(model.getValueAt(i,0).toString());
+				txtDate.setText(model.getValueAt(i,1).toString());
+				txtTime.setText(model.getValueAt(i,2).toString());
+				txtProductNo.setText(model.getValueAt(i,3).toString());
+				txtSrNo.setText(model.getValueAt(i,4).toString());
+				cbCategory.setSelectedItem(model.getValueAt(i,5).toString());
+				cbName.setSelectedItem(model.getValueAt(i,6).toString());
+				txtSerialNo.setText(model.getValueAt(i,7).toString());
+				txtModuleNo.setText(model.getValueAt(i,8).toString());
+				txtRateRs.setText(model.getValueAt(i,9).toString());
+				txtCGST.setText(model.getValueAt(i,10).toString());
+				txtCGSTPrice.setText(model.getValueAt(i,11).toString());
+				txtSGST.setText(model.getValueAt(i,12).toString());
+				txtSGSTPrice.setText(model.getValueAt(i,13).toString());
+				txtGST.setText(model.getValueAt(i,14).toString());
+				txtGSTPrice.setText(model.getValueAt(i,15).toString());
+				txtActualPrice.setText(model.getValueAt(i,16).toString());
+				txtDiscount.setText(model.getValueAt(i,17).toString());
+				txtDis.setText(model.getValueAt(i,18).toString());
+				txtQuantity.setText(model.getValueAt(i,19).toString());
+				txtDiscountPrice.setText(model.getValueAt(i,20).toString());
+				txtTotal.setText(model.getValueAt(i,21).toString());
 			}
 		});
 		scrollPane.setViewportView(table);
@@ -1459,26 +1472,26 @@ private JTextField txtTotalGSTPrice;
 		JLabel lblTotalAmmount = new JLabel("Total Amount:");
 		lblTotalAmmount.setForeground(Color.WHITE);
 		lblTotalAmmount.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblTotalAmmount.setBounds(1042, 590, 241, 24);
+		lblTotalAmmount.setBounds(958, 230, 241, 25);
 		contentPane.add(lblTotalAmmount);
 		
 		txtTotalAmmount = new JTextField();
 		txtTotalAmmount.setForeground(new Color(0, 0, 128));
 		txtTotalAmmount.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtTotalAmmount.setColumns(10);
-		txtTotalAmmount.setBounds(1208, 590, 104, 25);
+		txtTotalAmmount.setBounds(1112, 230, 116, 25);
 		contentPane.add(txtTotalAmmount);
 		
 		JLabel lblRs_4 = new JLabel("Rs");
 		lblRs_4.setForeground(Color.WHITE);
 		lblRs_4.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs_4.setBounds(1316, 590, 26, 24);
+		lblRs_4.setBounds(1232, 230, 26, 24);
 		contentPane.add(lblRs_4);
 		
 		JLabel lblPaidAmmount = new JLabel("Paid Amount:");
 		lblPaidAmmount.setForeground(Color.WHITE);
 		lblPaidAmmount.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblPaidAmmount.setBounds(1042, 620, 199, 24);
+		lblPaidAmmount.setBounds(958, 260, 199, 25);
 		contentPane.add(lblPaidAmmount);
 		
 		txtPaidAmmount = new JTextField();
@@ -1497,32 +1510,32 @@ private JTextField txtTotalGSTPrice;
 		txtPaidAmmount.setForeground(new Color(0, 0, 128));
 		txtPaidAmmount.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtPaidAmmount.setColumns(10);
-		txtPaidAmmount.setBounds(1208, 620, 104, 25);
+		txtPaidAmmount.setBounds(1112, 260, 116, 25);
 		contentPane.add(txtPaidAmmount);
 		
 		JLabel lblRs_2_1 = new JLabel("Rs");
 		lblRs_2_1.setForeground(Color.WHITE);
 		lblRs_2_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs_2_1.setBounds(1316, 620, 26, 24);
+		lblRs_2_1.setBounds(1232, 260, 26, 24);
 		contentPane.add(lblRs_2_1);
 		
 		JLabel lblPendingAmmount = new JLabel("Pending Amount:");
 		lblPendingAmmount.setForeground(Color.WHITE);
 		lblPendingAmmount.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblPendingAmmount.setBounds(1042, 650, 171, 24);
+		lblPendingAmmount.setBounds(958, 290, 171, 25);
 		contentPane.add(lblPendingAmmount);
 		
 		txtPendingAmmount = new JTextField();
 		txtPendingAmmount.setForeground(new Color(0, 0, 128));
 		txtPendingAmmount.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtPendingAmmount.setColumns(10);
-		txtPendingAmmount.setBounds(1208, 650, 104, 25);
+		txtPendingAmmount.setBounds(1114, 290, 114, 25);
 		contentPane.add(txtPendingAmmount);
 		
 		JLabel lblRs_3_1 = new JLabel("Rs");
 		lblRs_3_1.setForeground(Color.WHITE);
 		lblRs_3_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs_3_1.setBounds(1316, 650, 26, 24);
+		lblRs_3_1.setBounds(1232, 290, 26, 24);
 		contentPane.add(lblRs_3_1);
 		
 		JButton btnPrint = new JButton("Print");
@@ -1568,7 +1581,14 @@ private JTextField txtTotalGSTPrice;
 				txtPendingAmmount.setText("");
 				txtAddress.setText("");
 				textTotalDiscount.setText("");
-				
+				txtTotalCGST.setText("");
+				txtTotalSGST.setText("");
+				txtTotalGST.setText("");
+				txtTotalCGSTPrice.setText("");
+				txtTotalSGSTPrice.setText("");
+				txtTotalGSTPrice.setText("");
+				new CreateBillShop().setVisible(true);
+
 				}
 				
 				catch(Exception e1) 
@@ -1584,7 +1604,7 @@ private JTextField txtTotalGSTPrice;
 			}
 		});
 		btnPrint.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnPrint.setBounds(792, 685, 134, 28);
+		btnPrint.setBounds(452, 334, 134, 28);
 		contentPane.add(btnPrint);
 		
 		JButton btnDiscard = new JButton("Discard");
@@ -1644,11 +1664,11 @@ private JTextField txtTotalGSTPrice;
 			    }
 				total();
 				ShowDataInvoiceNo();
-			
+			    ProductNo();
 			}
 		});
 		btnDiscard.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnDiscard.setBounds(317, 685, 134, 28);
+		btnDiscard.setBounds(164, 334, 134, 28);
 		contentPane.add(btnDiscard);
 		
 		JButton btnReset = new JButton("Reset");
@@ -1666,42 +1686,49 @@ private JTextField txtTotalGSTPrice;
 				txtDiscountPrice.setText(null);
 				txtTotal.setText(null);	
 				txtDis.setText("");
+				txtCGSTPrice.setText("");
+				txtCGST.setText("");
+				txtSGSTPrice.setText("");
+				txtSGST.setText("");
+				txtGST.setText("");
+				txtGSTPrice.setText("");
+				txtActualPrice.setText("");
 			}
 		});
 		btnReset.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnReset.setBounds(461, 685, 134, 28);
+		btnReset.setBounds(308, 334, 134, 28);
 		contentPane.add(btnReset);
 		
 		txtDis = new JTextField();
 		txtDis.setForeground(new Color(0, 0, 128));
 		txtDis.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtDis.setColumns(10);
-		txtDis.setBounds(325, 590, 104, 25);
+		txtDis.setBounds(746, 290, 104, 25);
 		contentPane.add(txtDis);
 		
 		JLabel lblRs_2_2 = new JLabel("Rs");
 		lblRs_2_2.setForeground(Color.WHITE);
 		lblRs_2_2.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs_2_2.setBounds(433, 590, 106, 24);
+		lblRs_2_2.setBounds(1368, 226, 106, 24);
 		contentPane.add(lblRs_2_2);
 		
 		JLabel lblTotalAmmount_1 = new JLabel("Discount Amount:");
 		lblTotalAmmount_1.setForeground(Color.WHITE);
 		lblTotalAmmount_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblTotalAmmount_1.setBounds(1042, 560, 241, 24);
+		lblTotalAmmount_1.setBounds(958, 200, 241, 25);
 		contentPane.add(lblTotalAmmount_1);
 		
 		textTotalDiscount = new JTextField();
 		textTotalDiscount.setForeground(new Color(0, 0, 128));
 		textTotalDiscount.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		textTotalDiscount.setColumns(10);
-		textTotalDiscount.setBounds(1208, 560, 104, 25);
+		textTotalDiscount.setBounds(1112, 200, 116, 25);
 		contentPane.add(textTotalDiscount);
 		
 		JLabel lblRs_4_1 = new JLabel("Rs");
 		lblRs_4_1.setForeground(Color.WHITE);
 		lblRs_4_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs_4_1.setBounds(1316, 560, 26, 24);
+		lblRs_4_1.setBounds(1232, 200, 26, 24);
 		contentPane.add(lblRs_4_1);
 		
 
@@ -1716,219 +1743,265 @@ private JTextField txtTotalGSTPrice;
 		JLabel lblCgst = new JLabel("CGST:");
 		lblCgst.setForeground(Color.WHITE);
 		lblCgst.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblCgst.setBounds(29, 440, 132, 22);
+		lblCgst.setBounds(514, 140, 132, 25);
 		contentPane.add(lblCgst);
 		
 		txtCGST = new JTextField();
 		txtCGST.setForeground(new Color(0, 0, 128));
 		txtCGST.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtCGST.setColumns(10);
-		txtCGST.setBounds(173, 440, 125, 25);
+		txtCGST.setBounds(656, 140, 65, 25);
 		contentPane.add(txtCGST);
 		
 		JLabel lblRs_1_1 = new JLabel("%");
 		lblRs_1_1.setForeground(Color.WHITE);
 		lblRs_1_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs_1_1.setBounds(300, 440, 33, 26);
+		lblRs_1_1.setBounds(722, 140, 33, 26);
 		contentPane.add(lblRs_1_1);
 		
 		txtCGSTPrice = new JTextField();
 		txtCGSTPrice.setForeground(new Color(0, 0, 128));
 		txtCGSTPrice.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtCGSTPrice.setColumns(10);
-		txtCGSTPrice.setBounds(325, 441, 125, 25);
+		txtCGSTPrice.setBounds(746, 140, 125, 25);
 		contentPane.add(txtCGSTPrice);
 		
 		JLabel lblRs_3_1_2 = new JLabel("Rs");
 		lblRs_3_1_2.setForeground(Color.WHITE);
 		lblRs_3_1_2.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs_3_1_2.setBounds(451, 441, 33, 24);
+		lblRs_3_1_2.setBounds(1386, 77, 33, 24);
 		contentPane.add(lblRs_3_1_2);
 		
 		JLabel lblSgst = new JLabel("SGST");
 		lblSgst.setForeground(Color.WHITE);
 		lblSgst.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblSgst.setBounds(29, 470, 132, 22);
+		lblSgst.setBounds(512, 170, 132, 25);
 		contentPane.add(lblSgst);
 		
 		txtSGST = new JTextField();
 		txtSGST.setForeground(new Color(0, 0, 128));
 		txtSGST.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtSGST.setColumns(10);
-		txtSGST.setBounds(173, 470, 125, 25);
+		txtSGST.setBounds(656, 170, 65, 25);
 		contentPane.add(txtSGST);
 		
 		JLabel lblRs_2_3 = new JLabel("%");
 		lblRs_2_3.setForeground(Color.WHITE);
 		lblRs_2_3.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs_2_3.setBounds(300, 470, 33, 26);
+		lblRs_2_3.setBounds(722, 170, 33, 26);
 		contentPane.add(lblRs_2_3);
 		
 		txtSGSTPrice = new JTextField();
 		txtSGSTPrice.setForeground(new Color(0, 0, 128));
 		txtSGSTPrice.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtSGSTPrice.setColumns(10);
-		txtSGSTPrice.setBounds(325, 471, 125, 25);
+		txtSGSTPrice.setBounds(746, 170, 125, 25);
 		contentPane.add(txtSGSTPrice);
 		
 		JLabel lblRs_3_1_1 = new JLabel("Rs");
 		lblRs_3_1_1.setForeground(Color.WHITE);
 		lblRs_3_1_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs_3_1_1.setBounds(451, 471, 33, 24);
+		lblRs_3_1_1.setBounds(1386, 107, 33, 24);
 		contentPane.add(lblRs_3_1_1);
 		
 		JLabel lblRs_3_1_3 = new JLabel("Rs");
 		lblRs_3_1_3.setForeground(Color.WHITE);
 		lblRs_3_1_3.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs_3_1_3.setBounds(451, 501, 33, 24);
+		lblRs_3_1_3.setBounds(1386, 137, 33, 24);
 		contentPane.add(lblRs_3_1_3);
 		
 		txtGSTPrice = new JTextField();
 		txtGSTPrice.setForeground(new Color(0, 0, 128));
 		txtGSTPrice.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtGSTPrice.setColumns(10);
-		txtGSTPrice.setBounds(325, 501, 125, 25);
+		txtGSTPrice.setBounds(746, 200, 125, 25);
 		contentPane.add(txtGSTPrice);
 		
 		JLabel lblRs_3_2 = new JLabel("%");
 		lblRs_3_2.setForeground(Color.WHITE);
 		lblRs_3_2.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs_3_2.setBounds(300, 500, 33, 26);
+		lblRs_3_2.setBounds(722, 200, 33, 26);
 		contentPane.add(lblRs_3_2);
 		
 		txtGST = new JTextField();
 		txtGST.setForeground(new Color(0, 0, 128));
 		txtGST.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtGST.setColumns(10);
-		txtGST.setBounds(173, 500, 125, 25);
+		txtGST.setBounds(656, 200, 65, 25);
 		contentPane.add(txtGST);
 		
 		JLabel lblGst = new JLabel("GST");
 		lblGst.setForeground(Color.WHITE);
 		lblGst.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblGst.setBounds(29, 500, 132, 22);
+		lblGst.setBounds(512, 200, 132, 25);
 		contentPane.add(lblGst);
 		
 		JLabel lblActualPrice = new JLabel("Actual Price:");
 		lblActualPrice.setForeground(Color.WHITE);
 		lblActualPrice.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblActualPrice.setBounds(31, 530, 170, 26);
+		lblActualPrice.setBounds(514, 230, 170, 25);
 		contentPane.add(lblActualPrice);
 		
 		txtActualPrice = new JTextField();
 		txtActualPrice.setForeground(new Color(0, 0, 128));
 		txtActualPrice.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtActualPrice.setColumns(10);
-		txtActualPrice.setBounds(173, 530, 125, 25);
+		txtActualPrice.setBounds(656, 230, 65, 25);
 		contentPane.add(txtActualPrice);
 		
 		JLabel lblRs_4_2 = new JLabel("Rs");
 		lblRs_4_2.setForeground(Color.WHITE);
 		lblRs_4_2.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs_4_2.setBounds(300, 530, 33, 26);
+		lblRs_4_2.setBounds(722, 230, 33, 26);
 		contentPane.add(lblRs_4_2);
 		
-		JLabel lblCgst_1 = new JLabel("CGST:");
+		JLabel lblCgst_1 = new JLabel("Total CGST:");
 		lblCgst_1.setForeground(Color.WHITE);
 		lblCgst_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblCgst_1.setBounds(540, 560, 132, 22);
+		lblCgst_1.setBounds(954, 110, 177, 25);
 		contentPane.add(lblCgst_1);
 		
-		JLabel lblSgst_1 = new JLabel("SGST");
+		JLabel lblSgst_1 = new JLabel("Total SGST:");
 		lblSgst_1.setForeground(Color.WHITE);
 		lblSgst_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblSgst_1.setBounds(540, 590, 132, 22);
+		lblSgst_1.setBounds(954, 140, 177, 25);
 		contentPane.add(lblSgst_1);
 		
-		JLabel lblGst_1 = new JLabel("GST");
+		JLabel lblGst_1 = new JLabel("Total GST:");
 		lblGst_1.setForeground(Color.WHITE);
 		lblGst_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblGst_1.setBounds(540, 620, 132, 22);
+		lblGst_1.setBounds(954, 170, 177, 25);
 		contentPane.add(lblGst_1);
 		
 		txtTotalCGST = new JTextField();
 		txtTotalCGST.setForeground(new Color(0, 0, 128));
 		txtTotalCGST.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtTotalCGST.setColumns(10);
-		txtTotalCGST.setBounds(625, 560, 125, 25);
+		txtTotalCGST.setBounds(1084, 110, 65, 25);
 		contentPane.add(txtTotalCGST);
 		
 		txtTotalSGST = new JTextField();
 		txtTotalSGST.setForeground(new Color(0, 0, 128));
 		txtTotalSGST.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtTotalSGST.setColumns(10);
-		txtTotalSGST.setBounds(625, 590, 125, 25);
+		txtTotalSGST.setBounds(1084, 140, 65, 25);
 		contentPane.add(txtTotalSGST);
 		
 		txtTotalGST = new JTextField();
 		txtTotalGST.setForeground(new Color(0, 0, 128));
 		txtTotalGST.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtTotalGST.setColumns(10);
-		txtTotalGST.setBounds(625, 620, 125, 25);
+		txtTotalGST.setBounds(1084, 170, 65, 25);
 		contentPane.add(txtTotalGST);
 		
 		JLabel lblRs_1_1_1 = new JLabel("%");
 		lblRs_1_1_1.setForeground(Color.WHITE);
 		lblRs_1_1_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs_1_1_1.setBounds(752, 560, 33, 26);
+		lblRs_1_1_1.setBounds(1151, 110, 33, 26);
 		contentPane.add(lblRs_1_1_1);
 		
 		JLabel lblRs_2_3_1 = new JLabel("%");
 		lblRs_2_3_1.setForeground(Color.WHITE);
 		lblRs_2_3_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs_2_3_1.setBounds(752, 590, 33, 26);
+		lblRs_2_3_1.setBounds(1151, 140, 33, 26);
 		contentPane.add(lblRs_2_3_1);
 		
 		JLabel lblRs_3_2_1 = new JLabel("%");
 		lblRs_3_2_1.setForeground(Color.WHITE);
 		lblRs_3_2_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs_3_2_1.setBounds(752, 620, 33, 26);
+		lblRs_3_2_1.setBounds(1151, 170, 33, 26);
 		contentPane.add(lblRs_3_2_1);
 		
 		txtTotalCGSTPrice = new JTextField();
 		txtTotalCGSTPrice.setForeground(new Color(0, 0, 128));
 		txtTotalCGSTPrice.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtTotalCGSTPrice.setColumns(10);
-		txtTotalCGSTPrice.setBounds(777, 561, 125, 25);
+		txtTotalCGSTPrice.setBounds(1172, 110, 125, 25);
 		contentPane.add(txtTotalCGSTPrice);
 		
 		txtTotalSGSTPrice = new JTextField();
 		txtTotalSGSTPrice.setForeground(new Color(0, 0, 128));
 		txtTotalSGSTPrice.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtTotalSGSTPrice.setColumns(10);
-		txtTotalSGSTPrice.setBounds(777, 591, 125, 25);
+		txtTotalSGSTPrice.setBounds(1172, 140, 125, 25);
 		contentPane.add(txtTotalSGSTPrice);
 		
 		txtTotalGSTPrice = new JTextField();
 		txtTotalGSTPrice.setForeground(new Color(0, 0, 128));
 		txtTotalGSTPrice.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtTotalGSTPrice.setColumns(10);
-		txtTotalGSTPrice.setBounds(777, 621, 125, 25);
+		txtTotalGSTPrice.setBounds(1172, 170, 125, 25);
 		contentPane.add(txtTotalGSTPrice);
 		
 		JLabel lblRs_3_1_2_1 = new JLabel("Rs");
 		lblRs_3_1_2_1.setForeground(Color.WHITE);
 		lblRs_3_1_2_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs_3_1_2_1.setBounds(903, 561, 33, 24);
+		lblRs_3_1_2_1.setBounds(1372, 197, 33, 24);
 		contentPane.add(lblRs_3_1_2_1);
 		
 		JLabel lblRs_3_1_1_1 = new JLabel("Rs");
 		lblRs_3_1_1_1.setForeground(Color.WHITE);
 		lblRs_3_1_1_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs_3_1_1_1.setBounds(903, 591, 33, 24);
+		lblRs_3_1_1_1.setBounds(1372, 227, 33, 24);
 		contentPane.add(lblRs_3_1_1_1);
 		
 		JLabel lblRs_3_1_3_1 = new JLabel("Rs");
 		lblRs_3_1_3_1.setForeground(Color.WHITE);
 		lblRs_3_1_3_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs_3_1_3_1.setBounds(903, 621, 33, 24);
+		lblRs_3_1_3_1.setBounds(1372, 257, 33, 24);
 		contentPane.add(lblRs_3_1_3_1);
+		
+		JLabel lblPaymentDetails = new JLabel("Payment Details:");
+		lblPaymentDetails.setForeground(Color.WHITE);
+		lblPaymentDetails.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
+		lblPaymentDetails.setBounds(958, 80, 260, 25);
+		contentPane.add(lblPaymentDetails);
+		
+		JLabel lblRs_4_1_1 = new JLabel("Rs");
+		lblRs_4_1_1.setForeground(Color.WHITE);
+		lblRs_4_1_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
+		lblRs_4_1_1.setBounds(1305, 110, 26, 24);
+		contentPane.add(lblRs_4_1_1);
+		
+		JLabel lblRs_4_3 = new JLabel("Rs");
+		lblRs_4_3.setForeground(Color.WHITE);
+		lblRs_4_3.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
+		lblRs_4_3.setBounds(1305, 140, 26, 24);
+		contentPane.add(lblRs_4_3);
+		
+		JLabel lblRs_2_1_1 = new JLabel("Rs");
+		lblRs_2_1_1.setForeground(Color.WHITE);
+		lblRs_2_1_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
+		lblRs_2_1_1.setBounds(1305, 170, 26, 24);
+		contentPane.add(lblRs_2_1_1);
+		
+		JLabel lblRs_4_1_1_1 = new JLabel("Rs");
+		lblRs_4_1_1_1.setForeground(Color.WHITE);
+		lblRs_4_1_1_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
+		lblRs_4_1_1_1.setBounds(873, 140, 26, 24);
+		contentPane.add(lblRs_4_1_1_1);
+		
+		JLabel lblRs_4_3_1 = new JLabel("Rs");
+		lblRs_4_3_1.setForeground(Color.WHITE);
+		lblRs_4_3_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
+		lblRs_4_3_1.setBounds(873, 170, 26, 24);
+		contentPane.add(lblRs_4_3_1);
+		
+		JLabel lblRs_2_1_1_1 = new JLabel("Rs");
+		lblRs_2_1_1_1.setForeground(Color.WHITE);
+		lblRs_2_1_1_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
+		lblRs_2_1_1_1.setBounds(873, 200, 26, 24);
+		contentPane.add(lblRs_2_1_1_1);
+		
+		JLabel lblRs_2_1_1_1_1 = new JLabel("Rs");
+		lblRs_2_1_1_1_1.setForeground(Color.WHITE);
+		lblRs_2_1_1_1_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
+		lblRs_2_1_1_1_1.setBounds(856, 290, 26, 24);
+		contentPane.add(lblRs_2_1_1_1_1);
 		
 		JLabel lblNewLabel_3 = new JLabel("New label");
 		lblNewLabel_3.setIcon(new ImageIcon(LoginShop.class.getResource("/images/wallpaper2test.jpg")));
 		lblNewLabel_3.setBounds(0,0,1366,768);
 		contentPane.add(lblNewLabel_3);
-		
-		
 	}
 }
