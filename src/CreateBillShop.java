@@ -298,7 +298,6 @@ public class BillPrintable implements Printable {
         
         try{
             int y=30;
-       //     int z=550;
             int yShift = 15;
             int headerRectHeight=25;
            // int headerRectHeighta=40;
@@ -672,7 +671,7 @@ private JTextField txtTotalGSTPrice;
 	{
 		try {
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-			String sql="SELECT `Sr_No`, `Products`, `Serial_No`, `Module_No`, `Rate_Rs`, `CGST(%)`, `CGST(Rs)`, `SGST(%)`, `SGST(Rs)`, `GST(%)`, `GST(Rs)`, `Actual_Price`, `Discount(%)`, `Discount(Rs)`, `Quantity`, `Discount_Price`, `Total` FROM `mundheelectronics1`.`productsdata` WHERE Invoice_No=?";
+			String sql="SELECT `Product_No`,`Sr_No`, `Products`, `Serial_No`, `Module_No`, `Rate_Rs`, `CGST(%)`, `CGST(Rs)`, `SGST(%)`, `SGST(Rs)`, `GST(%)`, `GST(Rs)`, `Actual_Price`, `Discount(%)`, `Discount(Rs)`, `Quantity`, `Discount_Price`, `Total` FROM `mundheelectronics1`.`productsdata` WHERE Invoice_No=?";
 			ps=con.prepareStatement(sql);
 			ps.setString(1,txtInvoiceNo.getText());
 			rs=ps.executeQuery();
@@ -1443,28 +1442,24 @@ private JTextField txtTotalGSTPrice;
 			{
 				DefaultTableModel model=(DefaultTableModel)table.getModel();
 				int i=table.getSelectedRow();
-				txtInvoiceNo.setText(model.getValueAt(i,0).toString());
-				txtDate.setText(model.getValueAt(i,1).toString());
-				txtTime.setText(model.getValueAt(i,2).toString());
-				txtProductNo.setText(model.getValueAt(i,3).toString());
-				txtSrNo.setText(model.getValueAt(i,4).toString());
-				cbCategory.setSelectedItem(model.getValueAt(i,5).toString());
-				cbName.setSelectedItem(model.getValueAt(i,6).toString());
-				txtSerialNo.setText(model.getValueAt(i,7).toString());
-				txtModuleNo.setText(model.getValueAt(i,8).toString());
-				txtRateRs.setText(model.getValueAt(i,9).toString());
-				txtCGST.setText(model.getValueAt(i,10).toString());
-				txtCGSTPrice.setText(model.getValueAt(i,11).toString());
-				txtSGST.setText(model.getValueAt(i,12).toString());
-				txtSGSTPrice.setText(model.getValueAt(i,13).toString());
-				txtGST.setText(model.getValueAt(i,14).toString());
-				txtGSTPrice.setText(model.getValueAt(i,15).toString());
-				txtActualPrice.setText(model.getValueAt(i,16).toString());
-				txtDiscount.setText(model.getValueAt(i,17).toString());
-				txtDis.setText(model.getValueAt(i,18).toString());
-				txtQuantity.setText(model.getValueAt(i,19).toString());
-				txtDiscountPrice.setText(model.getValueAt(i,20).toString());
-				txtTotal.setText(model.getValueAt(i,21).toString());
+				txtProductNo.setText(model.getValueAt(i,0).toString());
+				txtSrNo.setText(model.getValueAt(i,1).toString());
+				cbName.setSelectedItem(model.getValueAt(i,2).toString());
+				txtSerialNo.setText(model.getValueAt(i,3).toString());
+				txtModuleNo.setText(model.getValueAt(i,4).toString());
+				txtRateRs.setText(model.getValueAt(i,5).toString());
+				txtCGST.setText(model.getValueAt(i,6).toString());
+				txtCGSTPrice.setText(model.getValueAt(i,7).toString());
+				txtSGST.setText(model.getValueAt(i,8).toString());
+				txtSGSTPrice.setText(model.getValueAt(i,9).toString());
+				txtGST.setText(model.getValueAt(i,10).toString());
+				txtGSTPrice.setText(model.getValueAt(i,11).toString());
+				txtActualPrice.setText(model.getValueAt(i,12).toString());
+				txtDiscount.setText(model.getValueAt(i,13).toString());
+				txtDis.setText(model.getValueAt(i,14).toString());
+				txtQuantity.setText(model.getValueAt(i,15).toString());
+				txtDiscountPrice.setText(model.getValueAt(i,16).toString());
+				txtTotal.setText(model.getValueAt(i,17).toString());
 			}
 		});
 		scrollPane.setViewportView(table);
