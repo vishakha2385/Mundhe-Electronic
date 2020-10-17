@@ -79,7 +79,7 @@ public class IncomeShop extends JFrame {
 		txtDate.setForeground(new Color(0, 0, 128));
 		txtDate.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtDate.setColumns(10);
-		txtDate.setBounds(77, 23, 104, 25);
+		txtDate.setBounds(95, 23, 117, 25);
 		contentPane.add(txtDate);
 		
 		JButton btnNewButton = new JButton("Income");
@@ -110,7 +110,7 @@ public class IncomeShop extends JFrame {
 				
 				try {
 					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-					String sql="select Product_No,Time,Category,Products,Serial_No,Module_No,Rate_Rs,Discount,Quantity,Discount_Price,Total from ProductsData where Date=? order by Time desc";
+					String sql="SELECT `Product_No`,`Sr_No`, `Products`, `Serial_No`, `Module_No`, `Rate_Rs`, `CGST(%)`, `CGST(Rs)`, `SGST(%)`, `SGST(Rs)`, `GST(%)`, `GST(Rs)`, `Actual_Price`, `Discount(%)`, `Discount(Rs)`, `Quantity`, `Discount_Price`, `Total` FROM `mundheelectronics1`.`productsdata` WHERE Date=? ORDER BY Time DESC";
 					ps=con.prepareStatement(sql);
 					ps.setString(1,txtDate.getText());
 					rs=ps.executeQuery();
@@ -133,7 +133,7 @@ public class IncomeShop extends JFrame {
 		});
 		btnNewButton.setForeground(new Color(0, 0, 128));
 		btnNewButton.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnNewButton.setBounds(191, 21, 120, 28);
+		btnNewButton.setBounds(222, 20, 120, 28);
 		contentPane.add(btnNewButton);
 		
 		JButton btnCancel = new JButton("Cancel");
@@ -145,7 +145,7 @@ public class IncomeShop extends JFrame {
 		});
 		btnCancel.setForeground(new Color(0, 0, 128));
 		btnCancel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnCancel.setBounds(322, 21, 104, 28);
+		btnCancel.setBounds(353, 20, 104, 28);
 		contentPane.add(btnCancel);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -165,7 +165,7 @@ public class IncomeShop extends JFrame {
 		txtIncome.setForeground(new Color(0, 0, 128));
 		txtIncome.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtIncome.setColumns(10);
-		txtIncome.setBounds(92, 64, 120, 25);
+		txtIncome.setBounds(95, 64, 120, 25);
 		contentPane.add(txtIncome);
 		
 		JLabel lblRs = new JLabel("Rs");

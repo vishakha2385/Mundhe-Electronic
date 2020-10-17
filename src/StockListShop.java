@@ -56,7 +56,7 @@ public class StockListShop extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StockListShop.class.getResource("/images/plug.png")));
 		setTitle("Stock List");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(225,0,950,768);
+		setBounds(0,0,1366,768);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -91,7 +91,7 @@ public class StockListShop extends JFrame {
 		contentPane.add(btnElectronics);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(29, 66, 874, 631);
+		scrollPane.setBounds(29, 66, 1298, 631);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();

@@ -494,8 +494,20 @@ public class AddInvoice extends JFrame {
 		});
 		btnCancel.setForeground(new Color(0, 0, 128));
 		btnCancel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnCancel.setBounds(775, 280, 128, 30);
+		btnCancel.setBounds(916, 280, 128, 30);
 		contentPane.add(btnCancel);
+		
+		JButton btnReset = new JButton("Reset");
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{
+				new AddInvoice().setVisible(true);
+			}
+		});
+		btnReset.setForeground(new Color(0, 0, 128));
+		btnReset.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
+		btnReset.setBounds(775, 280, 128, 30);
+		contentPane.add(btnReset);
 		
 		DealersPaymentData();
 		ShowDealersPaymentData();

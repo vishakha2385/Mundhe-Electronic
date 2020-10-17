@@ -55,6 +55,7 @@ public class UpdateBill extends JFrame {
     private JTextField txtInvoiceNo;
     private JTextField txtDate;
     private JTable tblCustomer;
+    private JButton btnReset;
     
     
    
@@ -79,7 +80,7 @@ public class UpdateBill extends JFrame {
 	{
 		try {
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-			String sql="select * from CustomerData";
+			String sql="select * from CustomerData order by Customer_Name asc";
 			ps=con.prepareStatement(sql);
 			rs=ps.executeQuery();
 			tblCustomer.setModel(DbUtils.resultSetToTableModel(rs));
@@ -298,7 +299,7 @@ public class UpdateBill extends JFrame {
 			}
 		});
 		btnCancel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnCancel.setBounds(315, 298, 117, 28);
+		btnCancel.setBounds(442, 298, 117, 28);
 		contentPane.add(btnCancel);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -313,26 +314,26 @@ public class UpdateBill extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				ShowCustomerInvoices();
-//				try {
-//					
-//					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-//					String s="select *from CustomerData where Customer_Name=?";
-//				    ps=con.prepareStatement(s);
-//				    ps.setString(1,txtSearch.getText());
-//				    rs=ps.executeQuery();
-//				    if(rs.next())
-//				    {
-//				    	tblCustomer.setModel(DbUtils.resultSetToTableModel(rs));
-//				    }
-//				    else
-//				    {
-//				    	JOptionPane.showMessageDialog(null,"Sorry! this Cutomer is not exist.");
-//				    }
-//				    
-//				} catch (SQLException e3) {
-//					// TODO Auto-generated catch block
-//					e3.printStackTrace();
-//				}
+				try {
+					
+					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+					String s="select *from CustomerData where Customer_Name=?";
+				    ps=con.prepareStatement(s);
+				    ps.setString(1,txtSearch.getText());
+				    rs=ps.executeQuery();
+				    if(rs.next())
+				    {
+				    	tblCustomer.setModel(DbUtils.resultSetToTableModel(rs));
+				    }
+				    else
+				    {
+				    	JOptionPane.showMessageDialog(null,"Sorry! this Cutomer is not exist.");
+				    }
+				    
+				} catch (SQLException e3) {
+					// TODO Auto-generated catch block
+					e3.printStackTrace();
+				}
 				
 			}
 		});
@@ -416,6 +417,17 @@ public class UpdateBill extends JFrame {
 			}
 		});
 		scrollPaneCustomer.setViewportView(tblCustomer);
+		
+		btnReset = new JButton("Reset");
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{
+				new UpdateBill().setVisible(true);
+			}
+		});
+		btnReset.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
+		btnReset.setBounds(315, 298, 117, 28);
+		contentPane.add(btnReset);
 		
 		//ShowDataCustomer();
 		ShowCustomerInvoices();

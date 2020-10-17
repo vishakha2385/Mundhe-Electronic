@@ -329,7 +329,7 @@ public class CustomInvoicesList extends JFrame {
 			}
 		});
 		btnCancel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnCancel.setBounds(445, 300, 117, 28);
+		btnCancel.setBounds(570, 300, 117, 28);
 		contentPane.add(btnCancel);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -408,13 +408,22 @@ public class CustomInvoicesList extends JFrame {
 		btnSearch.setBounds(846, 51, 117, 28);
 		contentPane.add(btnSearch);
 		
+		JButton btnReset = new JButton("Reset");
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{
+				new CustomInvoicesList().setVisible(true);
+			}
+		});
+		btnReset.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
+		btnReset.setBounds(443, 300, 117, 28);
+		contentPane.add(btnReset);
+		
 		ShowData();
 		
 		JLabel lblNewLabel_3 = new JLabel("New label");
 		lblNewLabel_3.setIcon(new ImageIcon(LoginShop.class.getResource("/images/wallpaper2test.jpg")));
 		lblNewLabel_3.setBounds(0,0,1366,768);
 		contentPane.add(lblNewLabel_3);
-		
-		
 	}
 }

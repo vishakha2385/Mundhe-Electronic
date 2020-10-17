@@ -196,7 +196,7 @@ public class AddStockShop extends JFrame {
 				txtSGST.setText(model.getValueAt(i,5).toString());
 				txtSGSTPrice.setText(model.getValueAt(i,6).toString());
 				txtGST.setText(model.getValueAt(i,7).toString());
-				txtGST.setText(model.getValueAt(i,8).toString());
+				txtGSTPrice.setText(model.getValueAt(i,8).toString());
 				txtActualPrice.setText(model.getValueAt(i,9).toString());
 				txtQuantity.setText(model.getValueAt(i,10).toString());
 				txtSerialNo.setText(model.getValueAt(i,11).toString());
@@ -266,19 +266,41 @@ public class AddStockShop extends JFrame {
 				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 				ps=con.prepareStatement(sql3);
 				ps.setString(13,txtProductName.getText());
+				
+
 				String s1=(String) cbCategory.getSelectedItem();
 				ps.setString(1,s1);
+				
+
 				ps.setString(2,txtPrice.getText());
+				
+
 				ps.setString(3,txtCGST.getText());
+				
+
 				ps.setString(4,txtCGSTPrice.getText());
+				
+
 				ps.setString(5,txtSGST.getText());
+				
 				ps.setString(6,txtSGSTPrice.getText());
+				
+
 				ps.setString(7,txtGST.getText());
+				
+
 				ps.setString(8,txtGSTPrice.getText());
+				
+
 				ps.setString(9,txtActualPrice.getText());
+				
+
 				ps.setString(10,txtQuantity.getText());
+				
 				ps.setString(11,txtSerialNo.getText());
+				
 				ps.setString(12,txtModuleNo.getText());
+				
 				
 				ps.executeUpdate();
 				JOptionPane.showMessageDialog(null,"Product updated succefully!");
@@ -352,7 +374,7 @@ public class AddStockShop extends JFrame {
 		});
 		btnCancel.setForeground(new Color(0, 0, 128));
 		btnCancel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnCancel.setBounds(503, 325, 100, 28);
+		btnCancel.setBounds(624, 325, 100, 28);
 		contentPane.add(btnCancel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Product Name:");
@@ -598,6 +620,18 @@ public class AddStockShop extends JFrame {
 		lblRs_3_1_2.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		lblRs_3_1_2.setBounds(435, 110, 33, 24);
 		contentPane.add(lblRs_3_1_2);
+		
+		JButton btnReset = new JButton("Reset");
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{
+			new	AddStockShop().setVisible(true);
+			}
+		});
+		btnReset.setForeground(new Color(0, 0, 128));
+		btnReset.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
+		btnReset.setBounds(505, 324, 100, 28);
+		contentPane.add(btnReset);
 		
 		ShowData();
 		

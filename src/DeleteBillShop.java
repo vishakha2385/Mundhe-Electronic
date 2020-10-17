@@ -68,7 +68,7 @@ public class DeleteBillShop extends JFrame {
 	{
 		try {
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-			String sql="select * from CustomerData";
+			String sql="select * from CustomerData order by Customer_Name asc";
 			ps=con.prepareStatement(sql);
 			rs=ps.executeQuery();
 			tblCustomer.setModel(DbUtils.resultSetToTableModel(rs));
@@ -126,6 +126,26 @@ public class DeleteBillShop extends JFrame {
 			public void actionPerformed(ActionEvent e)
 			{
 				ShowCustomerInvoices();
+				try {
+					
+					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+					String s="select *from CustomerData where Customer_Name=?";
+				    ps=con.prepareStatement(s);
+				    ps.setString(1,txtSearch.getText());
+				    rs=ps.executeQuery();
+				    if(rs.next())
+				    {
+				    	tblCustomer.setModel(DbUtils.resultSetToTableModel(rs));
+				    }
+				    else
+				    {
+				    	JOptionPane.showMessageDialog(null,"Sorry! this Cutomer is not exist.");
+				    }
+				    
+				} catch (SQLException e3) {
+					// TODO Auto-generated catch block
+					e3.printStackTrace();
+				}
 
 			}
 		});
@@ -322,7 +342,7 @@ public class DeleteBillShop extends JFrame {
 			}
 		});
 		btnCancel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnCancel.setBounds(316, 299, 117, 28);
+		btnCancel.setBounds(443, 299, 117, 28);
 		contentPane.add(btnCancel);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -355,55 +375,62 @@ public class DeleteBillShop extends JFrame {
 				
 				ShowDataInvoiceNo();
 				
-//				try {
-//					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-//					String s="select *from ProductsData where Invoice_No=?";
-//				    ps=con.prepareStatement(s);
-//				    ps.setString(1,txtInvoiceNo.getText());
-//				    rs=ps.executeQuery();
-//				    if(rs.next())
-//				    {
-//				    	String Date=rs.getString("Date");
-//						txtDate.setText(Date);
-//						String Time=rs.getString("Time");
-//						txtTime.setText(Time);
-//						String Customer_Name=rs.getString("Customer_Name");
-//						txtSearch.setText(Customer_Name);
-//						String Address=rs.getString("Address");
-//						txtAddress.setText(Address);
-//						String Contact=rs.getString("Contact");
-//						txtContact.setText(Contact);
-//						String Total_Ammount=rs.getString("Total_Ammount");
-//						txtTotalAmmount.setText(Total_Ammount);
-//						String Pending_Ammount=rs.getString("Pending_Ammount");
-//						txtPendingAmmount.setText(Pending_Ammount);
-//						String Paid_Ammount=rs.getString("Paid_Ammount");
-//				//		System.out.println(Paid_Ammount);
-//						txtPaidAmmount.setText(Paid_Ammount);
-//					
-//				    }
-//				    else
-//				    {
-//				    //	JOptionPane.showMessageDialog(null,"Sorry! this Invoice is not Exist.");	
-//				    }
-//				    
-//				} catch (SQLException e3) {
-//					// TODO Auto-generated catch block
-//					e3.printStackTrace();
-//				}
-		//		ShowDataInvoiceNo();
-		//		ShowDataCustomer();
+				try {
+					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+					String s="select *from ProductsData where Invoice_No=?";
+				    ps=con.prepareStatement(s);
+				    ps.setString(1,txtInvoiceNo.getText());
+				    rs=ps.executeQuery();
+				    if(rs.next())
+				    {
+				    	String Date=rs.getString("Date");
+						txtDate.setText(Date);
+						String Time=rs.getString("Time");
+						txtTime.setText(Time);
+						String Customer_Name=rs.getString("Customer_Name");
+						txtSearch.setText(Customer_Name);
+						String Address=rs.getString("Address");
+						txtAddress.setText(Address);
+						String Contact=rs.getString("Contact");
+						txtContact.setText(Contact);
+						String Total_Ammount=rs.getString("Total_Ammount");
+						txtTotalAmmount.setText(Total_Ammount);
+						String Pending_Ammount=rs.getString("Pending_Ammount");
+						txtPendingAmmount.setText(Pending_Ammount);
+						String Paid_Ammount=rs.getString("Paid_Ammount");
+				//		System.out.println(Paid_Ammount);
+						txtPaidAmmount.setText(Paid_Ammount);
+					
+				    }
+				    else
+				    {
+				    //	JOptionPane.showMessageDialog(null,"Sorry! this Invoice is not Exist.");	
+				    }
+				    
+				} catch (SQLException e3) {
+					// TODO Auto-generated catch block
+					e3.printStackTrace();
+				}
+				ShowDataInvoiceNo();
 			}
 		});
 		scrollPaneCustomer.setViewportView(tblCustomer);
 		
-//		ShowDataCustomer();
-		
+		JButton btnReset = new JButton("Reset");
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				new DeleteBillShop().setVisible(true);
+			}
+		});
+		btnReset.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
+		btnReset.setBounds(316, 299, 117, 28);
+		contentPane.add(btnReset);
+	
+		ShowCustomerInvoices();
 		JLabel lblNewLabel_3 = new JLabel("New label");
 		lblNewLabel_3.setIcon(new ImageIcon(LoginShop.class.getResource("/images/wallpaper2test.jpg")));
 		lblNewLabel_3.setBounds(0,0,1366,768);
 		contentPane.add(lblNewLabel_3);
-	
-		ShowCustomerInvoices();
 	}
 }

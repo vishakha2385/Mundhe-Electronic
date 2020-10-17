@@ -246,16 +246,18 @@ public class AddComplaintsShop extends JFrame {
 			{
 				
 				try 
-				{
+				{  
 					String sql="select *from ComplaintsData where Customer_Name=?";
 					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 					PreparedStatement ps=con.prepareStatement(sql);
-					
 					ps.setString(1,txtSearch.getText());
 					
 					ResultSet rs=ps.executeQuery();
+					
 					if(rs.next())
 					{
+						
+						
 						
 						String Customer_Name=rs.getString("Customer_Name");
 						txtCustomerName.setText(Customer_Name);
@@ -423,7 +425,7 @@ try
 		contentPane.add(Delete);
 		
 		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setBounds(581, 349, 103, 28);
+		btnCancel.setBounds(695, 349, 103, 28);
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
@@ -470,6 +472,18 @@ try
 		txtComplaintNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtComplaintNo.setColumns(10);
 		contentPane.add(txtComplaintNo);
+		
+		JButton btnReset = new JButton("Reset");
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				new AddComplaintsShop().setVisible(true);
+			}
+		});
+		btnReset.setForeground(new Color(0, 0, 128));
+		btnReset.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
+		btnReset.setBounds(581, 349, 103, 28);
+		contentPane.add(btnReset);
 		
 				try 
 				{

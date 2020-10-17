@@ -245,58 +245,80 @@ public class BillPrintable implements Printable {
            // int headerRectHeighta=40;
             
                 
-            g2d.setFont(new Font("Baskerville Old Face",Font.BOLD,20));
-            g2d.drawString("                                    Mundhe Electronics                           ",108,y);y+=yShift;
-            g2d.setFont(new Font("Century 20",Font.PLAIN,13));
-            g2d.drawString("                                                        OPP-Janata Sahakari Bank,Otur                     ",108,y);y+=yShift;
-            g2d.drawString("                                                          Tal-Junnar,Dist-Pune 409-412                      ",108,y);y+=yShift;
-            g2d.drawString("                                                     Email-mundheelectronics@gmail.com                   ",108,y);y+=yShift;
-            g2d.drawString("                                                        Contact:9673590202,9860223356                     ",108,y);y+=yShift;
-            g2d.drawString("_______________________________________________________________________________________",108,y);y+=headerRectHeight;
-            g2d.drawString(" Invoice No:",108,y);g2d.drawString(txtInvoiceNo.getText(),190,y);g2d.drawString(" Date:",498,y);g2d.drawString(txtDate.getText(),540,y);y+=yShift;
-      
-            g2d.drawString("                                                                      ",108,y);y+=headerRectHeight;
-            g2d.setFont(new Font("Century 20",Font.BOLD,13));
-            g2d.drawString(" Customer Details:",108,y);y+=yShift;
-            g2d.setFont(new Font("Century 20",Font.PLAIN,13));
-            g2d.drawString(" Customer Name:",108,y);g2d.drawString(txtCustomerName.getText(),233,y);y+=yShift;
-            g2d.drawString(" Address:",108,y);g2d.drawString(txtAddress.getText(),233,y);y+=yShift;
-            g2d.drawString(" Contact:",108,y);g2d.drawString(txtContact.getText(),233,y);y+=yShift;
+            g2d.drawLine(50,217,50,547);
+//            g2d.drawLine(264,217,264,547);
+//            g2d.drawLine(344,217,344,547);
+//            g2d.drawLine(396,217,396,547);
+//            g2d.drawLine(448,217,448,547);
+            g2d.drawLine(500,217,500,547);
+            g2d.drawLine(570,217,570,547);
+            g2d.drawLine(640,217,640,547);
+            g2d.drawLine(710,217,710,547);
+            g2d.drawLine(780,217,780,547);
+            
+            
 
-            g2d.drawString("_______________________________________________________________________________________",108,215);y+=yShift;
+
+            g2d.setFont(new Font("Baskerville Old Face",Font.BOLD,20));
+            g2d.drawString("                                              Mundhe Electronics                           ",50,y);y+=yShift;
+            g2d.setFont(new Font("Century 20",Font.PLAIN,13));
+            g2d.drawString("                                                                       OPP-Janata Sahakari Bank,Otur                     ",50,y);y+=yShift;
+            g2d.drawString("                                                                        Tal-Junnar,Dist-Pune 409-412                      ",50,y);y+=yShift;
+            g2d.drawString("                                                                      Email-mundheelectronics@gmail.com                   ",50,y);y+=yShift;
+            g2d.drawString("                                                                        Contact:9673590202,9860223356                     ",50,y);y+=yShift;
+            g2d.drawString("_____________________________________________________________________________________________________",50,y);y+=headerRectHeight;
+            g2d.drawString(" Invoice No:",50,y);g2d.drawString(txtInvoiceNo.getText(),130,y);g2d.drawString(" Date:",498,y);g2d.drawString(txtDate.getText(),540,y);y+=yShift;
+      
+            g2d.drawString("                                                                      ",50,y);y+=headerRectHeight;
+            g2d.setFont(new Font("Century 20",Font.BOLD,13));
+            g2d.drawString(" Customer Details:",50,y);y+=yShift;
+            g2d.setFont(new Font("Century 20",Font.PLAIN,13));
+            g2d.drawString(" Customer Name:",50,y);g2d.drawString(txtCustomerName.getText(),170,y);y+=yShift;
+            g2d.drawString(" Address:",50,y);g2d.drawString(txtAddress.getText(),170,y);y+=yShift;
+            g2d.drawString(" Contact:",50,y);g2d.drawString(txtContact.getText(),170,y);y+=yShift;
+
+            g2d.drawString("_____________________________________________________________________________________________________",50,215);y+=yShift;
             
           //  g2d.drawString("                                                                           ",108,y);y+=headerRectHeight;
-            g2d.setFont(new Font("Century 20",Font.BOLD,15));
-            g2d.drawString(" Item Name                                   Rate Rs          Discount          Quantity          Amount Rs   ",108,y);y+=yShift;
+            g2d.setFont(new Font("Century 20",Font.BOLD,11));
+            g2d.drawString(" Item Name                                                                                                                                  Rate Rs         Discount       Quantity      Amount Rs   ",50,y);y+=yShift;
             g2d.setFont(new Font("Century 20",Font.PLAIN,15));
-            g2d.drawString("__________________________________________________________________________",108,260);y+=headerRectHeight;
+            g2d.drawString("_______________________________________________________________________________________",50,260);y+=headerRectHeight;
             
             
             for(int s=0; s<r; s++)
             {g2d.setFont(new Font("Century 20",Font.BOLD,15));
-            g2d.drawString(" "+itemName.get(s),108,y);g2d.setFont(new Font("Century 20",Font.PLAIN,13));g2d.drawString(itemPrice.get(s),340,y);g2d.drawString(Discount.get(s)+"%",435,y);g2d.drawString(quantity.get(s),549,y);g2d.drawString(subtotal.get(s),645,y);y+=yShift;
-            g2d.drawString(" "+SerialNo.get(s),108,y);y+=yShift;
-            g2d.drawString(" "+ModuleNo.get(s),108,y);y+=yShift;
-            g2d.drawString("                                                                           ",108,y);y+=headerRectHeight;
+            g2d.drawString(" "+itemName.get(s),50,y);g2d.setFont(new Font("Century 20",Font.PLAIN,13));g2d.drawString(itemPrice.get(s),510,y);g2d.drawString(Discount.get(s),580,y);g2d.drawString(quantity.get(s),650,y);g2d.drawString(subtotal.get(s),715,y);y+=yShift;
+            g2d.drawString(" "+SerialNo.get(s),50,y);y+=yShift;
+            g2d.drawString(" "+ModuleNo.get(s),50,y);y+=yShift;
+            g2d.drawString("                                                                           ",50,y);y+=headerRectHeight;
 
             }
           
-            g2d.drawString("__________________________________________________________________________",108,545);y+=yShift;
-            g2d.drawString("                                                                           ",108,555);y+=headerRectHeight;
-            g2d.drawString(" Total Ammount:",458,580);g2d.drawString(txtTotalAmmount.getText()+" Rs",580,580);y+=yShift;
-    //        g2d.drawString(" Paid Ammount:",260,y);g2d.drawString(txtPaidAmmount.getText()+" Rs",343,y);y+=yShift;
-   //         g2d.drawString(" Pending Ammount:",260,y);g2d.drawString(txtPendingAmmount.getText()+" Rs",343,y);y+=yShift;
-            g2d.drawString("__________________________________________________________________________",108,600);y+=yShift;
-            g2d.drawString("                                                                           ",108,611);y+=headerRectHeight;
-            g2d.drawString(" GSTIN No:27AMBPM6213C1ZI",108,620);y+=yShift;
-            g2d.drawString(" CGST & SGST both are added.",108,635);y+=yShift;
-            g2d.drawString("                                                                      ",108,645);y+=yShift;
-            g2d.drawString("                                                                      ",108,655);y+=yShift;
-            g2d.drawString("                                                                                                                Authorised Signatory",108,670);y+=yShift;
-            g2d.drawString("                                                                                                                 Mundhe Electronics",108,685);y+=yShift;
-            g2d.drawString("***********************************************************************************************************",108,700);y+=yShift;
-            g2d.drawString("                                                               THANK YOU!                             ",108,720);y+=yShift;
-    }
+            g2d.drawString("_____________________________________________________________________________________________________",50,545);y+=yShift;
+            g2d.drawString("                                                                           ",50,555);y+=headerRectHeight;
+  //          g2d.drawString(" CGST:",50,580);g2d.drawString(txtTotalCGSTPrice.getText()+" Rs",230,580);y+=yShift;   //+20
+ //           g2d.drawString(" SGST:",50,600);g2d.drawString(txtTotalSGSTPrice.getText()+" Rs",230,600);y+=yShift;   //+20
+ //           g2d.drawString(" GST:",50,620);g2d.drawString(txtTotalGSTPrice.getText()+" Rs",230,620);y+=yShift;      //+20
+ //           g2d.drawString(" Total Discount:",50,640);g2d.drawString(textTotalDiscount.getText()+" Rs",230,640);y+=yShift;  //+20
+            g2d.drawString(" Total Ammount:",50,570);g2d.drawString(txtTotalAmmount.getText()+" Rs",175,570);y+=yShift;     //+20
+    //        g2d.drawString(" Total Ammount in Words:",50,680);g2d.drawString(txtWords.getText(),230,680);y+=yShift;     //+20
+            g2d.drawString("______________________________________________________________________________________________________",50,590);y+=yShift;     //+11
+            g2d.drawString("                                                                           ",50,711);y+=headerRectHeight;  //+9
+            g2d.drawString(" GSTIN No:27AMBPM6213C1ZI",50,610);y+=yShift;//+15
+            g2d.drawString(" CGST & SGST both are added.",50,626);y+=yShift;  //+25
+            g2d.setFont(new Font("Century 20",Font.BOLD,13));
+            g2d.drawString(" Declaretion:",50,660);y+=yShift;
+            g2d.setFont(new Font("Century 20",Font.PLAIN,13));
+            g2d.drawString(" We declare that this invoice shows the actual price of goods described.",50,675);y+=yShift;//+15
+            g2d.drawString(" And all particulars are true and correct.",50,690);y+=yShift;  //+25
+            g2d.drawString("                                                                      ",50,810);y+=yShift;
+            g2d.drawString("          Customer's Signatory                                                                                                                    Authorised Signatory",50,765);y+=yShift;  //+15
+            g2d.drawString("                                                                                                                                                                 Mundhe Electronics",50,780);y+=yShift;  //+20
+            g2d.drawString("______________________________________________________________________________________________________",50,790);y+=yShift;  //+20
+            g2d.drawString(" This is a Computer Generated Invoice.",320,815);y+=yShift;  //+25
+            g2d.drawString(" Thank You!",400,835);y+=yShift;  //+25
+        }
     catch(Exception e){
     e.printStackTrace();
     }
