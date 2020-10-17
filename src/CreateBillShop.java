@@ -346,7 +346,7 @@ public class BillPrintable implements Printable {
            // int headerRectHeighta=40;
             
             g2d.drawLine(50,217,50,547);
-            g2d.drawLine(264,217,264,547);
+          //  g2d.drawLine(264,217,264,547);
             g2d.drawLine(344,217,344,547);
         //    g2d.drawLine(396,217,396,547);
             g2d.drawLine(422,217,422,547);
@@ -357,7 +357,8 @@ public class BillPrintable implements Printable {
             g2d.drawLine(780,217,780,547);
             
             
-
+//            g2d.setFont(new Font("Century 20",Font.PLAIN,13));
+//            g2d.drawString("_____________________________________________________________________________________________________",50,2);y+=headerRectHeight;
 
             g2d.setFont(new Font("Baskerville Old Face",Font.BOLD,20));
             g2d.drawString("                                              Mundhe Electronics                           ",50,y);y+=yShift;
@@ -381,15 +382,15 @@ public class BillPrintable implements Printable {
             
           //  g2d.drawString("                                                                           ",108,y);y+=headerRectHeight;
             g2d.setFont(new Font("Century 20",Font.BOLD,11));
-            g2d.drawString(" Item Name                                                    Actual Price          CGST                SGST            Rate Rs         Discount       Quantity      Amount Rs   ",50,y);y+=yShift;
+            g2d.drawString(" Item Name                                                                                Quantity           Discount            Price             CGST             SGST        Amount Rs   ",50,y);y+=yShift;
             g2d.setFont(new Font("Century 20",Font.PLAIN,15));
             g2d.drawString("_______________________________________________________________________________________",50,260);y+=headerRectHeight;
             
             
             for(int s=0; s<r; s++)
             {g2d.setFont(new Font("Century 20",Font.BOLD,15));
-            g2d.drawString(" "+itemName.get(s),50,y);g2d.setFont(new Font("Century 20",Font.PLAIN,13));g2d.drawString(ActualPrice.get(s),270,y);g2d.drawString(CGSTInPer.get(s)+"%",350,y);g2d.drawString(SGSTInPer.get(s)+"%",430,y);g2d.drawString(itemPrice.get(s),510,y);g2d.drawString(Discount.get(s),580,y);g2d.drawString(quantity.get(s),650,y);g2d.drawString(subtotal.get(s),715,y);y+=yShift;
-            g2d.drawString(" "+SerialNo.get(s),50,y);g2d.drawString(" "+CGSTInRs.get(s)+" Rs",345,y);g2d.drawString(" "+SGSTInRs.get(s)+" Rs",425,y);y+=yShift;
+            g2d.drawString(" "+itemName.get(s),50,y);g2d.setFont(new Font("Century 20",Font.PLAIN,13));g2d.drawString(quantity.get(s),350,y);g2d.drawString(Discount.get(s)+"%",430,y);g2d.drawString(itemPrice.get(s),510,y);g2d.drawString(CGSTInPer.get(s)+"%",580,y);g2d.drawString(SGSTInPer.get(s)+"%",650,y);g2d.drawString(subtotal.get(s),715,y);y+=yShift;
+            g2d.drawString(" "+SerialNo.get(s),50,y);g2d.drawString(" "+CGSTInRs.get(s)+" Rs",575,y);g2d.drawString(" "+SGSTInRs.get(s)+" Rs",645,y);y+=yShift;
             g2d.drawString(" "+ModuleNo.get(s),50,y);y+=yShift;
             g2d.drawString("                                                                           ",50,y);y+=headerRectHeight;
 
@@ -397,6 +398,7 @@ public class BillPrintable implements Printable {
           
             g2d.drawString("_____________________________________________________________________________________________________",50,545);y+=yShift;
             g2d.drawString("                                                                           ",50,555);y+=headerRectHeight;
+            g2d.setFont(new Font("Century 20",Font.PLAIN,13));
             g2d.drawString(" CGST:",50,580);g2d.drawString(txtTotalCGSTPrice.getText()+" Rs",230,580);y+=yShift;   //+20
             g2d.drawString(" SGST:",50,600);g2d.drawString(txtTotalSGSTPrice.getText()+" Rs",230,600);y+=yShift;   //+20
             g2d.drawString(" GST:",50,620);g2d.drawString(txtTotalGSTPrice.getText()+" Rs",230,620);y+=yShift;      //+20
@@ -405,19 +407,22 @@ public class BillPrintable implements Printable {
             g2d.drawString(" Total Ammount in Words:",50,680);g2d.drawString(txtWords.getText(),230,680);y+=yShift;     //+20
             g2d.drawString("______________________________________________________________________________________________________",50,700);y+=yShift;     //+11
             g2d.drawString("                                                                           ",50,711);y+=headerRectHeight;  //+9
+            g2d.setFont(new Font("Century 20",Font.PLAIN,13));
             g2d.drawString(" GSTIN No:27AMBPM6213C1ZI",50,720);y+=yShift;//+15
             g2d.drawString(" CGST & SGST both are added.",50,735);y+=yShift;  //+25
             g2d.setFont(new Font("Century 20",Font.BOLD,13));
-            g2d.drawString(" Declaretion:",50,760);y+=yShift;
+            g2d.drawString("                                                                                              Declaretion",50,760);y+=yShift;
             g2d.setFont(new Font("Century 20",Font.PLAIN,13));
-            g2d.drawString(" We declare that this invoice shows the actual price of goods described.",50,775);y+=yShift;//+15
-            g2d.drawString(" And all particulars are true and correct.",50,790);y+=yShift;  //+25
+            g2d.drawString("                               I/We hereby certify that our registration certificate under the GST Act,is in force of the date",50,775);y+=yShift;//+15
+            g2d.drawString("       on which the sales of goods specified in this 'Tax Invoice' is made by me/us and that the transaction of sale covered by",50,790);y+=yShift;  //+25
+            g2d.drawString("     this 'Tax Invoice' has been effected by me/us and it shall be accounted for in the turnover of sales while filing of return and ",50,805);y+=yShift;  //+25
+            g2d.drawString("                                              the due tax,if any,payable on the sale has been paid or shall be paid.",50,820);y+=yShift;  //+25
             g2d.drawString("                                                                      ",50,810);y+=yShift;
-            g2d.drawString("          Customer's Signatory                                                                                                                    Authorised Signatory",50,865);y+=yShift;  //+15
-            g2d.drawString("                                                                                                                                                                 Mundhe Electronics",50,880);y+=yShift;  //+20
-            g2d.drawString("______________________________________________________________________________________________________",50,890);y+=yShift;  //+20
-            g2d.drawString(" This is a Computer Generated Invoice.",320,915);y+=yShift;  //+25
-            g2d.drawString(" Thank You!",400,935);y+=yShift;  //+25
+            g2d.drawString("          Customer's Signatory                                                                                                                    Authorised Signatory",50,900);y+=yShift;  //+15
+            g2d.drawString("                                                                                                                                                                 Mundhe Electronics",50,920);y+=yShift;  //+20
+            g2d.drawString("______________________________________________________________________________________________________",50,940);y+=yShift;  //+20
+            g2d.drawString(" This is a Computer Generated Invoice.",320,960);y+=yShift;  //+25
+            g2d.drawString(" Thank You!",400,980);y+=yShift;  //+25
         }
     catch(Exception e){
     e.printStackTrace();
@@ -2100,7 +2105,7 @@ private JTextField txtWords;
 		txtWords.setForeground(new Color(0, 0, 128));
 		txtWords.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtWords.setColumns(10);
-		txtWords.setBounds(656, 320, 686, 25);
+		txtWords.setBounds(656, 320, 640, 25);
 		contentPane.add(txtWords);
 		
 		JButton btnSave = new JButton("Print Invoice");
