@@ -49,17 +49,16 @@ public class UpdateBill extends JFrame {
 	private JButton btnUpdate;
 	private JButton btnCancel;
 	private JTable table;
-    Connection con;
-    PreparedStatement ps;
-    ResultSet rs;
     private JTextField txtInvoiceNo;
     private JTextField txtDate;
     private JTable tblCustomer;
     private JButton btnReset;
     
-    
+    Connection con;
+    PreparedStatement ps;
+    ResultSet rs;
    
-    
+   //show data of products according to the invoice no 
 	public void ShowDataInvoiceNo()
 	{
 		try {
@@ -76,6 +75,7 @@ public class UpdateBill extends JFrame {
 		}
 	}
 	
+	//set customer data to the table ordered by ascending
 	public void ShowCustomerInvoices()
 	{
 		try {
@@ -215,6 +215,7 @@ public class UpdateBill extends JFrame {
 			@Override
 			public void keyReleased(KeyEvent e)
 			{
+				//find pending amount
 				try {
 					String p1=txtPaidAmmount.getText();
 					int paid=Integer.parseInt(p1);
@@ -262,6 +263,7 @@ public class UpdateBill extends JFrame {
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+			//	update customer details and payment also
 				try 
 				{
 				String sql3="update CustomerData set Date=?,Time=?,Customer_Name=?,Address=?,Contact=?,Total_Ammount=?,Paid_Ammount=?,Pending_Ammount=? where Invoice_No=?";
@@ -313,6 +315,7 @@ public class UpdateBill extends JFrame {
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//set customer invoices according to the customer name to the JTable
 				ShowCustomerInvoices();
 				try {
 					
@@ -364,6 +367,7 @@ public class UpdateBill extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) 
 			{
+				//set JTable data to the JTextFields
 				DefaultTableModel model=(DefaultTableModel)tblCustomer.getModel();
 				int i=tblCustomer.getSelectedRow();
 				txtInvoiceNo.setText(model.getValueAt(i,0).toString());
@@ -376,6 +380,7 @@ public class UpdateBill extends JFrame {
 				txtPaidAmmount.setText(model.getValueAt(i,5).toString());
 				txtPendingAmmount.setText(model.getValueAt(i,6).toString());
 				
+				//set customer details to the JTextFields
 				try {
 					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 					String s="select *from CustomerData,ProductsData,BillsData where CustomerData.Invoice_No=BillsData.Invoice_No and ProductsData.Product_No=BillsData.Product_No and CustomerData.Invoice_No=?";

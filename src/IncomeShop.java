@@ -32,7 +32,11 @@ public class IncomeShop extends JFrame {
 	private JTextField txtDate;
 	private JTable table;
 	private JTextField txtIncome;
-
+	private JTextField txtGrandTotal;
+	Connection con;
+	PreparedStatement ps;
+	ResultSet rs;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -48,14 +52,6 @@ public class IncomeShop extends JFrame {
 			}
 		});
 	}
-	
-	Connection con;
-	PreparedStatement ps;
-	ResultSet rs;
-	private JTextField txtGrandTotal;
-	
-	
-
 	/**
 	 * Create the frame.
 	 */
@@ -86,7 +82,7 @@ public class IncomeShop extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				
+				//get income according to the date
 				try {
 					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 					String sql="select sum(Total) from ProductsData where Date=?";
@@ -108,6 +104,7 @@ public class IncomeShop extends JFrame {
 					e1.printStackTrace();
 				}	
 				
+				//set data of products which are sold according to the date to the JTable
 				try {
 					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 					String sql="SELECT `Product_No`,`Sr_No`, `Products`, `Serial_No`, `Module_No`, `Rate_Rs`, `CGST(%)`, `CGST(Rs)`, `SGST(%)`, `SGST(Rs)`, `GST(%)`, `GST(Rs)`, `Actual_Price`, `Discount(%)`, `Discount(Rs)`, `Quantity`, `Discount_Price`, `Total` FROM `mundheelectronics1`.`productsdata` WHERE Date=? ORDER BY Time DESC";
@@ -140,6 +137,7 @@ public class IncomeShop extends JFrame {
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//go to the home page on cancel action
 				new HomeShop().setVisible(true);
 			}
 		});

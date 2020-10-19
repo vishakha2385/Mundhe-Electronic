@@ -60,6 +60,7 @@ public class MundheElectronicsShop {
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//start application
 				new LoginShop().setVisible(true);
 			}
 		});

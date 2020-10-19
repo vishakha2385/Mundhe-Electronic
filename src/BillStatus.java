@@ -78,6 +78,7 @@ public class BillStatus extends JFrame {
 		btnPending.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//show pending invoices details of customer invoices
 				try {
 					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 					String sql="select *from CustomerData where Pending_Ammount>0";
@@ -100,6 +101,7 @@ public class BillStatus extends JFrame {
 		btnPaid.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//show paid invoices details of Customer Invoices
 				try {
 					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 					String sql="select *from CustomerData where Pending_Ammount=0";
@@ -122,6 +124,7 @@ public class BillStatus extends JFrame {
 		Cancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//go to the home page on cancel action
 				new HomeShop().setVisible(true);
 			}
 		});

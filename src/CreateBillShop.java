@@ -29,6 +29,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -77,6 +78,21 @@ public class CreateBillShop extends JFrame {
 	private JComboBox cbCategory;
 	private JComboBox cbName;
 	private JTextField txtDis;
+	private JTextField textTotalDiscount;
+	private JTextField txtCGST;
+	private JTextField txtCGSTPrice;
+	private JTextField txtSGST;
+	private JTextField txtSGSTPrice;
+	private JTextField txtGSTPrice;
+	private JTextField txtGST;
+	private JTextField txtActualPrice;
+	private JTextField txtTotalCGST;
+	private JTextField txtTotalSGST;
+	private JTextField txtTotalGST;
+	private JTextField txtTotalCGSTPrice;
+	private JTextField txtTotalSGSTPrice;
+	private JTextField txtTotalGSTPrice;
+	private JTextField txtWords;
 
     Connection con;
     ResultSet rs;
@@ -86,48 +102,7 @@ public class CreateBillShop extends JFrame {
     long eventMask;
     String word;
     
-    String fun(int n)
-    {
-    String str="";
-    String[] units= {"Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen"};
-    String[] tens= {"","","Twenty","Thirty","Forty","Fifty","Sixty","Seventy","Eighty","Ninety"};
-    if(n<20)
-    {
-    	str=units[n];
-    }
-    else if(n>=20 && n<100)
-    {
-    	str=tens[n/10]+units[n%10];
-    }
-    return str;
-    }
-    
-    String convert(int num)
-    {
-    	String ss="";
-    	if(num<100)
-    	{
-    		ss=fun(num);	
-    	}
-    	else if(num>=100 && num<1000)   //hundred
-    	{
-    		ss=fun(num/100)+" Hundred "+convert(num%100);
-    	}
-    	else if(num>=1000 && num<100000)   //thousand
-    	{
-    		ss=fun(num/1000)+" Thousand "+convert(num%1000);	
-    	}
-    	else if(num>=100000 && num<10000000)   //lakh
-    	{
-    		ss=fun(num/100000)+" Lakh "+convert(num%100000);
-    	}
-    	else if(num>=10000000 && num<1000000000)   //crore
-    	{
-    		ss=fun(num/10000000)+" Crore "+convert(num%10000000);
-    	}
-    	return ss;
-    }
-    
+    //create table CustomerData in database to store details of Customers and payments
     public void CustomerData()
 	{
 		try {
@@ -151,29 +126,7 @@ public class CreateBillShop extends JFrame {
 		
 	}
     
-    public void BillsData()
-	{
-		try {
-			DatabaseMetaData d=con.getMetaData();
-			ResultSet rs=d.getTables(null,null,"BillsData",null);
-			if(rs.next())
-			{
-	//			JOptionPane.showMessageDialog(null,"BillsData table exist");
-			}
-			else 
-			{
-				String Create_Table="create table BillsData(Invoice_No int references CustomerData,Product_No int references ProductsData)";
-				PreparedStatement ps=con.prepareStatement(Create_Table);
-				ps.executeUpdate();
-	//			JOptionPane.showMessageDialog(null,"BillsData created successfully!");
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-    
+    //create table ProductsData in database to store the details of products which are sold
     public void ProductsData()
 	{
 		try {
@@ -220,7 +173,77 @@ public class CreateBillShop extends JFrame {
 		}
 		
 	}
-	
+    
+    //create table BillsData in database to store the Products No according to the Invoice No
+    public void BillsData()
+	{
+		try {
+			DatabaseMetaData d=con.getMetaData();
+			ResultSet rs=d.getTables(null,null,"BillsData",null);
+			if(rs.next())
+			{
+	//			JOptionPane.showMessageDialog(null,"BillsData table exist");
+			}
+			else 
+			{
+				String Create_Table="create table BillsData(Invoice_No int references CustomerData,Product_No int references ProductsData)";
+				PreparedStatement ps=con.prepareStatement(Create_Table);
+				ps.executeUpdate();
+	//			JOptionPane.showMessageDialog(null,"BillsData created successfully!");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+    
+    
+    //create fun method to convert amount in words format
+    String fun(int n)
+    {
+    String str="";
+    String[] units= {"Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen"};
+    String[] tens= {"","","Twenty","Thirty","Forty","Fifty","Sixty","Seventy","Eighty","Ninety"};
+    if(n<20)
+    {
+    	str=units[n];
+    }
+    else if(n>=20 && n<100)
+    {
+    	str=tens[n/10]+units[n%10];
+    }
+    return str;
+    }
+    
+    //create convert method to convert amount in words format
+    String convert(int num)
+    {
+    	String ss="";
+    	if(num<100)
+    	{
+    		ss=fun(num);	
+    	}
+    	else if(num>=100 && num<1000)   //hundred
+    	{
+    		ss=fun(num/100)+" Hundred "+convert(num%100);
+    	}
+    	else if(num>=1000 && num<100000)   //thousand
+    	{
+    		ss=fun(num/1000)+" Thousand "+convert(num%1000);	
+    	}
+    	else if(num>=100000 && num<10000000)   //lakh
+    	{
+    		ss=fun(num/100000)+" Lakh "+convert(num%100000);
+    	}
+    	else if(num>=10000000 && num<1000000000)   //crore
+    	{
+    		ss=fun(num/10000000)+" Crore "+convert(num%10000000);
+    	}
+    	return ss;
+    }
+  
+    //create automated Invoice No
 	public void InvoiceNo()
 	{
 		try {
@@ -247,6 +270,7 @@ public class CreateBillShop extends JFrame {
 		
 	}
 	
+	//create automated Product No
 	public void ProductNo()
 	{
 		try {
@@ -272,22 +296,31 @@ public class CreateBillShop extends JFrame {
 		}
 		
 	}
-    
-    
-    
-    private void clear()
+ 
+	//create clear and method to clear the JTextFields and JComboBox on particular actions
+	private void clear()
     {
-    cbCategory.setSelectedItem("Electronics");
-    txtQuantity.setText("");
-    txtDiscountPrice.setText("");
-    txtTotal.setText("");
-    txtDiscount.setText("");
-    txtSerialNo.setText("");
-    txtModuleNo.setText("");
-    }
-    
+		ProductNo();
+		cbCategory.setSelectedItem("Electronics");
+		txtSrNo.setText("");
+		txtSerialNo.setText("");
+		txtModuleNo.setText("");
+		txtRateRs.setText("");
+		txtDiscount.setText("");
+		txtDiscountPrice.setText("");
+		txtQuantity.setText("");
+		txtTotal.setText("");
+		txtDis.setText("");
+		txtCGSTPrice.setText("");
+		txtCGST.setText("");
+		txtSGSTPrice.setText("");
+		txtSGST.setText("");
+		txtGST.setText("");
+		txtGSTPrice.setText("");
+		txtActualPrice.setText("");
+    }   
 
-
+//create code for Printing the Invoice using 2D Grahics	
 public PageFormat getPageFormat(PrinterJob pj)
 {
 
@@ -308,17 +341,36 @@ pf.setPaper(paper);
 return pf;
 }
 
-
-
+//create method cm_to_pp and to_PPI convert cm to pixels
 protected static double cm_to_pp(double cm)
 {            
         return toPPI(cm * 0.393600787);            
 }
-
 protected static double toPPI(double inch)
 {            
         return inch * 72d;            
 }
+
+Double totalAmount=0.0;
+Double cash=0.0;
+Double balance=0.0;
+Double bHeight=0.0;
+
+ArrayList<String> itemName = new ArrayList<>();
+ArrayList<String> quantity = new ArrayList<>();
+ArrayList<String> itemPrice = new ArrayList<>();
+ArrayList<String> subtotal = new ArrayList<>();
+ArrayList<String> Discount = new ArrayList<>();
+ArrayList<String> DiscountInRs = new ArrayList<>();
+ArrayList<String> SerialNo = new ArrayList<>();
+ArrayList<String> ModuleNo = new ArrayList<>();
+ArrayList<String> CGSTInPer = new ArrayList<>();
+ArrayList<String> CGSTInRs = new ArrayList<>();
+ArrayList<String> SGSTInPer = new ArrayList<>();
+ArrayList<String> SGSTInRs = new ArrayList<>();
+ArrayList<String> GSTInPer = new ArrayList<>();
+ArrayList<String> GSTInRs = new ArrayList<>();
+ArrayList<String> ActualPrice = new ArrayList<>();
 
 public class BillPrintable implements Printable {
 
@@ -327,7 +379,6 @@ public class BillPrintable implements Printable {
   {    
       
       int r= itemName.size();
-      ImageIcon icon=new ImageIcon("C:\\Users\\Vishakha Hande\\eclipse-workspace\\Invoice Test\\src\\images\\logoShop.jpg"); 
       int result = NO_SUCH_PAGE;    
         if (pageIndex == 0) {                    
         
@@ -335,16 +386,15 @@ public class BillPrintable implements Printable {
             double width = pageFormat.getImageableWidth();                               
             g2d.translate((int) pageFormat.getImageableX(),(int) pageFormat.getImageableY()); 
 
-
-
-          //  FontMetrics metrics=g2d.getFontMetrics(new Font("Arial",Font.BOLD,7));
+            //  FontMetrics metrics=g2d.getFontMetrics(new Font("Arial",Font.BOLD,7));
         
         try{
             int y=30;
             int yShift = 15;
             int headerRectHeight=25;
            // int headerRectHeighta=40;
-            
+           
+            //draw vertical lines
             g2d.drawLine(50,50,50,1150);
             g2d.drawLine(344,317,344,647);
             g2d.drawLine(422,317,422,647);
@@ -354,9 +404,7 @@ public class BillPrintable implements Printable {
             g2d.drawLine(710,317,710,647);
             g2d.drawLine(780,50,780,1150);
             g2d.drawLine(50,1150,780,1150);
-            
-            
-            
+      
             
             g2d.setFont(new Font("Century 20",Font.PLAIN,13));
             g2d.drawString("_____________________________________________________________________________________________________",50,50);y+=headerRectHeight;
@@ -391,7 +439,7 @@ public class BillPrintable implements Printable {
             for(int s=0; s<r; s++)
             {g2d.setFont(new Font("Century 20",Font.BOLD,15));
             g2d.drawString(" "+itemName.get(s),50,388);g2d.setFont(new Font("Century 20",Font.PLAIN,13));g2d.drawString(quantity.get(s),350,388);g2d.drawString(Discount.get(s)+"%",430,388);g2d.drawString(itemPrice.get(s),510,388);g2d.drawString(CGSTInPer.get(s)+"%",580,388);g2d.drawString(SGSTInPer.get(s)+"%",650,388);g2d.drawString(subtotal.get(s),715,388);y+=yShift;
-            g2d.drawString(" "+SerialNo.get(s),50,403);g2d.drawString(" "+CGSTInRs.get(s)+" Rs",575,403);g2d.drawString(" "+SGSTInRs.get(s)+" Rs",645,403);y+=yShift;
+            g2d.drawString(" "+SerialNo.get(s),50,403);g2d.drawString(" "+CGSTInRs.get(s)+" Rs",575,403);g2d.drawString(" "+SGSTInRs.get(s)+" Rs",645,403);g2d.drawString(" "+DiscountInRs.get(s)+" Rs",427,403);y+=yShift;
             g2d.drawString(" "+ModuleNo.get(s),50,415);y+=yShift;
             g2d.drawString("                                                                           ",50,478);y+=headerRectHeight;
 
@@ -436,74 +484,32 @@ public class BillPrintable implements Printable {
       }
    }
 
-
-Double totalAmount=0.0;
-Double cash=0.0;
-Double balance=0.0;
-Double bHeight=0.0;
-
-ArrayList<String> itemName = new ArrayList<>();
-ArrayList<String> quantity = new ArrayList<>();
-ArrayList<String> itemPrice = new ArrayList<>();
-ArrayList<String> subtotal = new ArrayList<>();
-ArrayList<String> Discount = new ArrayList<>();
-ArrayList<String> SerialNo = new ArrayList<>();
-ArrayList<String> ModuleNo = new ArrayList<>();
-ArrayList<String> CGSTInPer = new ArrayList<>();
-ArrayList<String> CGSTInRs = new ArrayList<>();
-ArrayList<String> SGSTInPer = new ArrayList<>();
-ArrayList<String> SGSTInRs = new ArrayList<>();
-ArrayList<String> GSTInPer = new ArrayList<>();
-ArrayList<String> GSTInRs = new ArrayList<>();
-ArrayList<String> ActualPrice = new ArrayList<>();
-private JTextField textTotalDiscount;
-private JTextField txtCGST;
-private JTextField txtCGSTPrice;
-private JTextField txtSGST;
-private JTextField txtSGSTPrice;
-private JTextField txtGSTPrice;
-private JTextField txtGST;
-private JTextField txtActualPrice;
-private JTextField txtTotalCGST;
-private JTextField txtTotalSGST;
-private JTextField txtTotalGST;
-private JTextField txtTotalCGSTPrice;
-private JTextField txtTotalSGSTPrice;
-private JTextField txtTotalGSTPrice;
-private JTextField txtWords;
-
-
+//create method total to find Total amount
     public void total()
 	{
 		try
 		{
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 			String sql="select sum(Total) from ProductsData where Invoice_No=?";
-			
 			ps=con.prepareStatement(sql);
 			ps.setString(1,txtInvoiceNo.getText());
 			rs=ps.executeQuery();
-		
-
 			if(rs.next())
 			{
 				String sum=rs.getString("sum(Total)");
-				txtTotalAmmount.setText(sum);
-				
-			
-		}
-				
-			
+				txtTotalAmmount.setText(sum);	
+		    }		
 		} 
 		catch(NumberFormatException | SQLException e) 
 		{
-			
+			JOptionPane.showMessageDialog(null,e);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
     
+    //create table totalDiscount to find discount on total amount
     public void totalDiscount()
 	{
 		try
@@ -514,87 +520,72 @@ private JTextField txtWords;
 			ps=con.prepareStatement(sql);
 			ps.setString(1,txtInvoiceNo.getText());
 			rs=ps.executeQuery();
-				if(rs.next())
+			if(rs.next())
 			{
-				String sum=rs.getString("sum(`Discount(Rs)`)");
-				textTotalDiscount.setText(sum);
-				
-			
-		}
-				
-			
+				String sum=rs.getString("sum(`Discount(Rs)`)");	
+				textTotalDiscount.setText(sum);	
+		    }
 		} 
 		catch(NumberFormatException | SQLException e) 
 		{
-			
+			JOptionPane.showMessageDialog(null,e);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
     
+    //create method totalCGST to find total CGST on total amount 
     public void totalCGST()
 	{
 		try
 		{
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 			String sql="SELECT  sum(`CGST(%)`) FROM `mundheelectronics1`.`productsdata` where Invoice_No=?";
-			
 			ps=con.prepareStatement(sql);
 			ps.setString(1,txtInvoiceNo.getText());
 			rs=ps.executeQuery();
-		
-
 			if(rs.next())
 			{
 				String sum=rs.getString("sum(`CGST(%)`)");
 				txtTotalCGST.setText(sum);
-				
-			
-		}
-				
-			
+		    }
 		} 
 		catch(NumberFormatException | SQLException e) 
 		{
-			
+			JOptionPane.showMessageDialog(null,e);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
     
+    //create method totalSGST to find total SGST on total amount 
     public void totalSGST()
 	{
 		try
 		{
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 			String sql="SELECT  sum(`SGST(%)`) FROM `mundheelectronics1`.`productsdata` where Invoice_No=?";
-			
 			ps=con.prepareStatement(sql);
 			ps.setString(1,txtInvoiceNo.getText());
 			rs=ps.executeQuery();
-		
-
-			if(rs.next())
+		    if(rs.next())
 			{
 				String sum=rs.getString("sum(`SGST(%)`)");
 				txtTotalSGST.setText(sum);
-				
-			
-		}
-				
-			
+		    }		
 		} 
 		catch(NumberFormatException | SQLException e) 
 		{
-			
+			JOptionPane.showMessageDialog(null,e);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
     
+    //create method totalSGSTPrice to find total SGST Price on total amount 
     public void totalSGSTPrice()
 	{
 		try
@@ -605,138 +596,97 @@ private JTextField txtWords;
 			ps=con.prepareStatement(sql);
 			ps.setString(1,txtInvoiceNo.getText());
 			rs=ps.executeQuery();
-		
-
-			if(rs.next())
+		    if(rs.next())
 			{
 				String sum=rs.getString("sum(`SGST(Rs)`)");
-				txtTotalSGSTPrice.setText(sum);
-				
-			
-		}
-				
-			
+				txtTotalSGSTPrice.setText(sum);	
+		    }		
 		} 
 		catch(NumberFormatException | SQLException e) 
 		{
-			
+			JOptionPane.showMessageDialog(null,e);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
     
+    //create method totalCGSTPrice to find total CGST Price on total amount 
     public void totalCGSTPrice()
 	{
 		try
 		{
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 			String sql="SELECT  sum(`CGST(Rs)`) FROM `mundheelectronics1`.`productsdata` where Invoice_No=?";
-			
 			ps=con.prepareStatement(sql);
 			ps.setString(1,txtInvoiceNo.getText());
 			rs=ps.executeQuery();
-		
-
 			if(rs.next())
 			{
 				String sum=rs.getString("sum(`CGST(Rs)`)");
 				txtTotalCGSTPrice.setText(sum);
-				
-			
-		}
-				
-			
+		    }
 		} 
 		catch(NumberFormatException | SQLException e) 
 		{
-			
+			JOptionPane.showMessageDialog(null,e);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
     
+    //create method totalGSTPrice to find GST price on total amount
     public void totalGSTPrice()
 	{
 		try
 		{
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 			String sql="SELECT  sum(`GST(Rs)`) FROM `mundheelectronics1`.`productsdata` where Invoice_No=?";
-			
 			ps=con.prepareStatement(sql);
 			ps.setString(1,txtInvoiceNo.getText());
 			rs=ps.executeQuery();
-		
-
-			if(rs.next())
+		    if(rs.next())
 			{
 				String sum=rs.getString("sum(`GST(Rs)`)");
 				txtTotalGSTPrice.setText(sum);
-				
-			
-		}
-				
-			
+		    }
 		} 
 		catch(NumberFormatException | SQLException e) 
 		{
-			
+			JOptionPane.showMessageDialog(null,e);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
     
+    //create method totalGST to find GST on total amount
     public void totalGST()
 	{
 		try
 		{
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 			String sql="SELECT  sum(`GST(%)`) FROM `mundheelectronics1`.`productsdata` where Invoice_No=?";
-			
 			ps=con.prepareStatement(sql);
 			ps.setString(1,txtInvoiceNo.getText());
 			rs=ps.executeQuery();
-		
-
 			if(rs.next())
 			{
 				String sum=rs.getString("sum(`GST(%)`)");
 				txtTotalGST.setText(sum);
-				
-			
-		}
-				
-			
+		    }
 		} 
 		catch(NumberFormatException | SQLException e) 
 		{
-			
+			JOptionPane.showMessageDialog(null,e);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-    
- //   
-    
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CreateBillShop frame = new CreateBillShop();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
-	
-    
-	
+	}  
+   
+    //show data of products which are sold
 	public void ShowDataInvoiceNo()
 	{
 		try {
@@ -752,11 +702,8 @@ private JTextField txtWords;
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
-	
 
+	//generate date
 	public void date()
 	{
 	
@@ -765,6 +712,7 @@ private JTextField txtWords;
 		txtDate.setText(d.format(date));
 	}
 	
+	//generate clock
 	public void clock()
 	{
 		Thread clock=new Thread()
@@ -791,21 +739,36 @@ private JTextField txtWords;
 				} 
 				catch(Exception e)
 				{
-					
+					JOptionPane.showMessageDialog(null,e);
 				}
 			}
 				};
 		
 				clock.start();
-		
 	}
-	
+	 /**
+		 * Launch the application.
+		 */
+		public static void main(String[] args) {
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						CreateBillShop frame = new CreateBillShop();
+						frame.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		}
+		
 
 	/**
 	 * Create the frame.
 	 */
 	public CreateBillShop()
 	{
+		//connect to database
 		try 
 		{
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -814,7 +777,7 @@ private JTextField txtWords;
 		} 
 		catch(Exception e)
 		{
-			
+			JOptionPane.showMessageDialog(null,e);
 		}
 		
 		setTitle("Create Invoice");
@@ -960,13 +923,13 @@ private JTextField txtWords;
 		cbName.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//set details of selected product to the JTextFields 
 				try 
 				{
 					String sql="SELECT * FROM StockData WHERE Product_Name=?";
 					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 					PreparedStatement ps=con.prepareStatement(sql);
 					String pname=(String) cbName.getSelectedItem();
-					
                     ps.setString(1,pname);
                     ResultSet rs=ps.executeQuery();
 					
@@ -997,38 +960,8 @@ private JTextField txtWords;
 				} 
 				catch(Exception e1)
 				{
-					
+					JOptionPane.showMessageDialog(null,e1);
 				}
-				
-				try
-				{
-					
-					String s="select Quantity from StockData where Product_Name=?";
-					ps=con.prepareStatement(s);
-					
-					String prod1=(String) cbName.getSelectedItem();
-					
-					ps.setString(1,prod1);
-					
-					rs=ps.executeQuery();
-					
-					while(rs.next())
-					{
-						
-						String Quan=rs.getString("Quantity");
-						
-						int q5=Integer.parseInt(Quan);
-						
-						if(q5<=0)
-						{
-							
-							String msg="Sorry! "+prod1+" Not available.";
-							
-							JOptionPane.showMessageDialog(null, msg);
-						}
-					}
-				} 
-				catch(Exception e1) {}
 			}
 		});
 		cbName.setForeground(new Color(0, 0, 128));
@@ -1047,25 +980,23 @@ private JTextField txtWords;
 			{
 				try 
 				{
+					//set product names to the JComBox according to their category
 					String sql="SELECT Product_Name FROM StockData WHERE Quantity>0 and Category=? and Quantity>0 ORDER BY Product_Name ASC";
 					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 					PreparedStatement ps=con.prepareStatement(sql);
 					String sname=(String) cbCategory.getSelectedItem();
 					ps.setString(1,sname);
-					
 					ResultSet rs=ps.executeQuery();
 					cbName.removeAllItems();
 					while(rs.next())
 					{
 					String a=rs.getString(1);
 					cbName.addItem(a);
-					
 					}
-					
 				} 
 				catch(Exception e)
 				{
-					
+					JOptionPane.showMessageDialog(null,e);
 				}
 			}
 		});
@@ -1122,7 +1053,7 @@ private JTextField txtWords;
 			@Override
 			public void keyReleased(KeyEvent e)
 			{
-				
+			       //find total price of products according to the discount and quantity and set total price to the JTextfield	
 					String r1=txtRateRs.getText();
 					float rate=Float.parseFloat(r1);
 			//		JOptionPane.showMessageDialog(null,rate);
@@ -1134,21 +1065,18 @@ private JTextField txtWords;
 					String q1=txtQuantity.getText();
 					float quantity=Float.parseFloat(q1);
 			//		JOptionPane.showMessageDialog(null,quantity);
-
-					
+	
 					float discount=(discountInPer*rate)/100;
 			//		JOptionPane.showMessageDialog(null,discount);
                     txtDis.setText(String.valueOf(discount));
 
 					float unitDiscount=rate-discount;
 			//		JOptionPane.showMessageDialog(null,unitDiscount);
-
-					
+	
 					txtDiscountPrice.setText(String.valueOf(unitDiscount));
 					float total=unitDiscount*quantity;
 			//		JOptionPane.showMessageDialog(null,total);
-
-					
+		
 					txtTotal.setText(String.valueOf(total));
 			//		txtDis.setText(String.valueOf(discount));
 			}
@@ -1171,29 +1099,20 @@ private JTextField txtWords;
 			@Override
 			public void keyReleased(KeyEvent e)
 			{
+				//checks the quantity status of selected product
 				try
 				{
-					
 					String s="select Quantity from StockData where Product_Name=?";
 					ps=con.prepareStatement(s);
-					
 					String prod1=(String) cbName.getSelectedItem();
-					
 					ps.setString(1,prod1);
-					
 					rs=ps.executeQuery();
-					
 					while(rs.next())
-					{
-						
+					{	
 						String Quan=rs.getString("Quantity");
-						
 						int q5=Integer.parseInt(Quan);
-						
-						
 						String q6=txtQuantity.getText();
 						int quantity1=Integer.parseInt(q6);
-						
 						if(q5>=quantity1 && q5>=0)
 						{
 							String r1=txtRateRs.getText();
@@ -1220,11 +1139,10 @@ private JTextField txtWords;
 						}
 						else
 						{
-							JOptionPane.showMessageDialog(null,"Unavailable");
+							JOptionPane.showMessageDialog(null," Currently Unavailable");
 						}
 					}
-					}
-			
+		    	}
 				catch(Exception e1) {}
 			}
 		});
@@ -1245,6 +1163,7 @@ private JTextField txtWords;
 			@Override
 			public void keyReleased(KeyEvent e)
 			{
+				//find discount price
 				try {
 					String rr1=txtRateRs.getText();
 					float rate=Float.parseFloat(rr1);
@@ -1255,19 +1174,22 @@ private JTextField txtWords;
 					float discount=rate-discountPrice;
 					txtDis.setText(String.valueOf(discount));
 					float DiscountInPercentage=(discount*100)/rate;
+			//		int d=Math.round(DiscountInPercentage);
 					
-					txtDiscount.setText(String.valueOf(DiscountInPercentage));
+			        String dis1=new DecimalFormat("0.0").format(DiscountInPercentage);
+			     //   JOptionPane.showMessageDialog(null,dis1);
+					
+					txtDiscount.setText(String.valueOf(dis1));
 					
 					String quantity1=txtQuantity.getText();
 					float quantity2=Float.parseFloat(quantity1);
 					
 					float total1=discountPrice*quantity2;
 					txtTotal.setText(String.valueOf(total1));
-
 					}
 					catch(NumberFormatException e2)
 					{
-						
+					//	JOptionPane.showMessageDialog(null,e);
 					}
 			}
 		});
@@ -1324,10 +1246,9 @@ private JTextField txtWords;
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
-				
+				//update stock
 				try
 				{
-					
 					String sql="select Quantity from StockData where Product_Name=?";
 					ps=con.prepareStatement(sql);
 					
@@ -1335,9 +1256,7 @@ private JTextField txtWords;
 		//			JOptionPane.showMessageDialog(null,Prod_Name);
 		//			System.out.println(Prod_Name);
 					ps.setString(1,Prod_Name);
-					
 					rs=ps.executeQuery();
-					
 					while(rs.next())
 					{
 						String qq=txtQuantity.getText();
@@ -1354,11 +1273,8 @@ private JTextField txtWords;
 						String sql3="UPDATE StockData SET Quantity=? WHERE Product_Name=?";	
 						con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 						ps=con.prepareStatement(sql3);
-						
 						String Prod=(String) cbName.getSelectedItem();
 						ps.setString(2,Prod);
-						
-						
 						ps.setString(1,Final_Quantity);
 						ps.executeUpdate();
 			//			JOptionPane.showMessageDialog(null,"Stock updated");
@@ -1367,16 +1283,19 @@ private JTextField txtWords;
 						{
 			//				JOptionPane.showMessageDialog(null,"Stock updated failed");
 						}
-					}
-					
+					}	
 				} 
-				catch(Exception e5) {}
+				catch(Exception e5)
+				{
+			//		JOptionPane.showMessageDialog(null,e5);
+				}
 				
-				
+				//get values from JTextFields for the Printing invoice purpose
 				try {
 					itemName.add((String) cbName.getSelectedItem());
 			        quantity.add(txtQuantity.getText());
 			        Discount.add(txtDiscount.getText());
+			        DiscountInRs.add(txtDis.getText());
 			        SerialNo.add(txtSerialNo.getText());
 			        ModuleNo.add(txtModuleNo.getText());
 			        itemPrice.add(txtDiscountPrice.getText());
@@ -1394,7 +1313,7 @@ private JTextField txtWords;
 				}catch(Exception e4) {}
 				
 				
-				
+				//insert details of products which are sold into the database 
 				try 
 				{
 				String sql1="insert into ProductsData values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";	
@@ -1424,36 +1343,16 @@ private JTextField txtWords;
 				ps.setString(20,txtQuantity.getText());
 				ps.setString(21,txtDiscountPrice.getText());
 				ps.setString(22,txtTotal.getText());
-				
-				
-				
-				
 				ps.executeUpdate();
 	//			JOptionPane.showMessageDialog(null,"inserted into ProductsData");
-				
-				cbCategory.setSelectedItem("Electronics");
-				txtSrNo.setText("");
-				txtSerialNo.setText("");
-				txtModuleNo.setText("");
-				txtRateRs.setText("");
-				txtDiscount.setText("");
-				txtDiscountPrice.setText("");
-				txtQuantity.setText("");
-				txtTotal.setText("");
-				txtDis.setText("");
-				txtCGSTPrice.setText("");
-				txtCGST.setText("");
-				txtSGSTPrice.setText("");
-				txtSGST.setText("");
-				txtGST.setText("");
-				txtGSTPrice.setText("");
-				txtActualPrice.setText("");
+				clear();
 			    }
 				catch(Exception e1) 
 				{
-					JOptionPane.showMessageDialog(null,e1);	
+		//			JOptionPane.showMessageDialog(null,e1);	
 				}
 				
+				//insert data into BillsData table in database
 				try 
 				{
 					String sql11="insert into BillsData values(?,?)";
@@ -1466,15 +1365,13 @@ private JTextField txtWords;
 				} 
 				catch(Exception e2)
 				{
-					JOptionPane.showMessageDialog(null,e2);
+			//		JOptionPane.showMessageDialog(null,e2);
 				}
-				
-				
-				
-				
-		
+			
 				ShowDataInvoiceNo();
 				total();
+				
+				//converts total amount into word format and set to the JTextFields
 				try
 				{
 					String t=txtTotalAmmount.getText();
@@ -1483,7 +1380,11 @@ private JTextField txtWords;
 					String word=convert(num);
 					txtWords.setText(word);
 				}
-				catch(NumberFormatException t) {}
+				catch(NumberFormatException t)
+				{
+			//		JOptionPane.showMessageDialog(null,t);
+				}
+				
 				totalDiscount();
 				ProductNo();
 				totalCGST();
@@ -1491,9 +1392,7 @@ private JTextField txtWords;
 				totalCGSTPrice();
 				totalSGSTPrice();
 				totalGST();
-				totalGSTPrice();
-				
-				
+				totalGSTPrice();	
 			}
 		});
 		btnAdd.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
@@ -1504,6 +1403,7 @@ private JTextField txtWords;
 		btnNewInvoice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//go to the new Invoice page
 				new CreateBillShop().setVisible(true);
 			}
 		});
@@ -1515,6 +1415,7 @@ private JTextField txtWords;
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//go to the home page on cancel action
 				new HomeShop().setVisible(true);
 				CreateBillShop.this.dispose();
 			}
@@ -1532,6 +1433,7 @@ private JTextField txtWords;
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
+				//set table values to the JTextFields and JComboBox
 				DefaultTableModel model=(DefaultTableModel)table.getModel();
 				int i=table.getSelectedRow();
 				txtProductNo.setText(model.getValueAt(i,0).toString());
@@ -1586,7 +1488,7 @@ private JTextField txtWords;
 			@Override
 			public void keyReleased(KeyEvent e)
 			{
-				
+				//find pending amount and set to JTextFields
 				String p1=txtPaidAmmount.getText();
 				float paid=Float.parseFloat(p1);
 				String t5=txtTotalAmmount.getText();
@@ -1630,8 +1532,7 @@ private JTextField txtWords;
 		btnPrint.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)			
 			{
-				
-				
+				//insert details of customer and payments into CustomerData table
 				try 
 				{
 				String sql1="insert into CustomerData values(?,?,?,?,?,?,?,?,?)";	
@@ -1646,12 +1547,9 @@ private JTextField txtWords;
 				ps.setString(7,txtTotalAmmount.getText());
 				ps.setString(8,txtPaidAmmount.getText());
 				ps.setString(9,txtPendingAmmount.getText());
-				
-				
 				ps.executeUpdate();
 				JOptionPane.showMessageDialog(null,"Invoice Saved Succefully!");
-			}
-				
+			}	
 				catch(Exception e1) 
 				{
 	//				JOptionPane.showMessageDialog(null,e1);	
@@ -1666,6 +1564,7 @@ private JTextField txtWords;
 		btnDiscard.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//delete product from ProductsData
 				int a=JOptionPane.showConfirmDialog(null,"Are you sure you want to discard this Product?","Delete this Record?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 			    if(a==JOptionPane.YES_OPTION)
 			    {
@@ -1677,20 +1576,17 @@ private JTextField txtWords;
 					ps.setString(1,txtProductNo.getText());
 					ps.executeUpdate();
 			//		JOptionPane.showMessageDialog(null,"deleted from ProductsData");
-
+					
+					//update stock on discard the product
 					 try
-						{
-							
+						{	
 							String sql="select Quantity from StockData where Product_Name=?";
 							ps=con.prepareStatement(sql);
-							
 							String Prod_Name=(String) cbName.getSelectedItem();
 					//		JOptionPane.showMessageDialog(null,Prod_Name);
 					//		System.out.println(Prod_Name);
 							ps.setString(1,Prod_Name);
-							
 							rs=ps.executeQuery();
-							
 							while(rs.next())
 							{
 								String qq=txtQuantity.getText();
@@ -1703,15 +1599,11 @@ private JTextField txtWords;
 								
 								try 
 								{
-								
 								String sql3="UPDATE StockData SET Quantity=? WHERE Product_Name=?";	
 								con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 								ps=con.prepareStatement(sql3);
-								
 								String Prod=(String) cbName.getSelectedItem();
 								ps.setString(2,Prod);
-								
-								
 								ps.setString(1,Final_Quantity);
 								ps.executeUpdate();
 					//			JOptionPane.showMessageDialog(null,"Stock updated");
@@ -1720,24 +1612,15 @@ private JTextField txtWords;
 								{
 					//				JOptionPane.showMessageDialog(null,"Stock updated failed");
 								}
-							}
-							
+							}	
 						} 
 						catch(Exception e5) {}
 					ProductNo();
-					txtSrNo.setText(null);
-				    cbCategory.setSelectedItem("Electronics");
-					txtSerialNo.setText(null);
-					txtModuleNo.setText(null);
-					txtRateRs.setText(null);
-					txtDiscount.setText(null);
-					txtQuantity.setText(null);
-				    txtDiscountPrice.setText(null);
-					txtTotal.setText(null);
-					txtDis.setText("");
+					clear();
 					}
 					catch(Exception e1) {}
 			    	
+			    	//also delete that product from BillsData products
 			    	try 
 					{
 					String sql2="DELETE FROM BillsData WHERE Product_No=?";	
@@ -1759,13 +1642,12 @@ private JTextField txtWords;
 					txtTotal.setText(null);
 					txtDis.setText("");
 					}
-					catch(Exception e1) {}
-			    	
+					catch(Exception e1)
+			    	{
+						JOptionPane.showMessageDialog(null,e1);
+			    	}	
 			    }
-			    
-			   
-				
-			    
+  
 				total();
 				ShowDataInvoiceNo();
 			    ProductNo();
@@ -1779,24 +1661,9 @@ private JTextField txtWords;
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//clear the JTextFields which are related to the products
 				ProductNo();
-				txtSrNo.setText(null);
-			    cbCategory.setSelectedItem("Electronics");
-				txtSerialNo.setText(null);
-				txtModuleNo.setText(null);
-				txtRateRs.setText(null);
-				txtDiscount.setText(null);
-				txtQuantity.setText(null);
-				txtDiscountPrice.setText(null);
-				txtTotal.setText(null);	
-				txtDis.setText("");
-				txtCGSTPrice.setText("");
-				txtCGST.setText("");
-				txtSGSTPrice.setText("");
-				txtSGST.setText("");
-				txtGST.setText("");
-				txtGSTPrice.setText("");
-				txtActualPrice.setText("");
+				clear();
 			}
 		});
 		btnReset.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
@@ -1807,7 +1674,7 @@ private JTextField txtWords;
 		txtDis.setForeground(new Color(0, 0, 128));
 		txtDis.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtDis.setColumns(10);
-		txtDis.setBounds(746, 260, 104, 25);
+		txtDis.setBounds(746, 259, 104, 25);
 		contentPane.add(txtDis);
 		
 		JLabel lblRs_2_2 = new JLabel("Rs");
@@ -1834,15 +1701,6 @@ private JTextField txtWords;
 		lblRs_4_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		lblRs_4_1.setBounds(1231, 170, 26, 24);
 		contentPane.add(lblRs_4_1);
-		
-
-		clock();
-		date();
-		InvoiceNo();
-		CustomerData();
-		ProductNo();
-		ProductsData();
-		BillsData();
 		
 		JLabel lblCgst = new JLabel("CGST:");
 		lblCgst.setForeground(Color.WHITE);
@@ -2100,7 +1958,7 @@ private JTextField txtWords;
 		JLabel lblRs_2_1_1_1_1 = new JLabel("Rs");
 		lblRs_2_1_1_1_1.setForeground(Color.WHITE);
 		lblRs_2_1_1_1_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs_2_1_1_1_1.setBounds(856, 260, 26, 24);
+		lblRs_2_1_1_1_1.setBounds(854, 260, 26, 24);
 		contentPane.add(lblRs_2_1_1_1_1);
 		
 		txtWords = new JTextField();
@@ -2114,6 +1972,7 @@ private JTextField txtWords;
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//print invoice
 				bHeight = Double.valueOf(itemName.size());
 		        //JOptionPane.showMessageDialog(rootPane, bHeight);
 		        
@@ -2139,6 +1998,14 @@ private JTextField txtWords;
 		lblTotalInWords.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		lblTotalInWords.setBounds(512, 320, 243, 25);
 		contentPane.add(lblTotalInWords);
+
+		clock();
+		date();
+		InvoiceNo();
+		CustomerData();
+		ProductNo();
+		ProductsData();
+		BillsData();
 	
 		JLabel lblNewLabel_3 = new JLabel("New label");
 		lblNewLabel_3.setIcon(new ImageIcon(LoginShop.class.getResource("/images/wallpaper2test.jpg")));

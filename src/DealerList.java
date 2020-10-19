@@ -42,12 +42,7 @@ public class DealerList extends JFrame {
 
 	private JPanel contentPane;
 	private JComboBox cbName;
-	String pname;
-	Connection con;
-	PreparedStatement ps;
-	ResultSet rs;
 	private JTable tblDealers;
-	String s;
 	private JLabel lblDate;
 	private JLabel lblDealer;
 	private JLabel lblTypesOfPayment;
@@ -67,9 +62,15 @@ public class DealerList extends JFrame {
 	private JLabel lblPending;
 	private ImageIcon format;
 	private JLabel lblImage;
-	byte[] photo;
-    String filename;
 	
+    String pname;
+	Connection con;
+	PreparedStatement ps;
+	ResultSet rs;
+	
+	String s;
+	
+	//show details of dealer's payment
 	public void ShowDealers()
 	{
 		try {
@@ -77,16 +78,15 @@ public class DealerList extends JFrame {
 			String sql="select Dealer from DealersPaymentData ORDER BY Dealer ASC";
 			ps=con.prepareStatement(sql);
 			rs=ps.executeQuery();
-			tblDealers.setModel(DbUtils.resultSetToTableModel(rs));
-			
+			tblDealers.setModel(DbUtils.resultSetToTableModel(rs));	
 		}
 		catch (Exception e) 
-		{
-			
+		{	
 			e.printStackTrace();
 		}
 	}
 	
+	//show dealer's invoice details
 	public void ShowInvoices()
 	{
 		try {
@@ -100,7 +100,6 @@ public class DealerList extends JFrame {
 		}
 		catch (Exception e) 
 		{
-			
 			e.printStackTrace();
 		}
 	}
@@ -144,6 +143,7 @@ public class DealerList extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
+				//show dealer's details
 				DefaultTableModel model=(DefaultTableModel)tblDealers.getModel();
 				int i=tblDealers.getSelectedRow();
 				 String s=model.getValueAt(i,0).toString();
@@ -169,15 +169,12 @@ public class DealerList extends JFrame {
 							lblPaid.setText(Paid_Amount);
 							String Pending_Amount=rs.getString("Pending_Amount");
 							lblPending.setText(Pending_Amount);
-						}
-						
+						}	
 					}
 					catch (Exception e2) 
-					{
-						
+					{	
 						e2.printStackTrace();
 					}
-				 
 			}
 		});
 		scrollPaneDealers.setViewportView(tblDealers);
@@ -298,6 +295,7 @@ public class DealerList extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//go to the home page on cancel action
 				new HomeShop().setVisible(true);
 			}
 		});

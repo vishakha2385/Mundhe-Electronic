@@ -31,6 +31,7 @@ public class StockListShop extends JFrame {
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
+    
 	/**
 	 * Launch the application.
 	 */
@@ -47,8 +48,6 @@ public class StockListShop extends JFrame {
 		});
 	}
 	
-	
-
 	/**
 	 * Create the frame.
 	 */
@@ -72,6 +71,7 @@ public class StockListShop extends JFrame {
 		btnElectronics.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//show products details according to the Electronics category
 				try {
 					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 					String sql="select *from StockData where Category='Electronics' ORDER BY Product_Name ASC";
@@ -101,6 +101,7 @@ public class StockListShop extends JFrame {
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//go to the home page on cancel action
 				new HomeShop().setVisible(true);
 			}
 		});
@@ -113,6 +114,7 @@ public class StockListShop extends JFrame {
 		btnElectricals.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//show products details according to the Electricals category
 				try {
 					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 					String sql="select *from StockData where Category='Electricals' ORDER BY Product_Name ASC";

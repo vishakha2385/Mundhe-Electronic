@@ -47,14 +47,15 @@ public class LoginShop extends JFrame {
 	
 	
 	protected Component frame;
-    private java.sql.Statement stmt;
-    private ResultSet rs;
     private JButton btnLogin;
     private JButton btnCancel;
     private JButton btnResetPassword;
-    Connection con;
     private JTextField txtUserId;
     private JPasswordField txtPassword;
+    
+    Connection con;
+    java.sql.Statement stmt;
+    ResultSet rs;
 	/**
 	 * Launch the application.
 	 */
@@ -85,8 +86,6 @@ public class LoginShop extends JFrame {
 		{
 			e.printStackTrace();
 		}
-		
-		
 		
 		setTitle("Login");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginShop.class.getResource("/images/plug.png")));
@@ -135,6 +134,7 @@ public class LoginShop extends JFrame {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//fetch login details from database to make login
 				try {
                     String d1, d2;
                     d1 = txtUserId.getText();
@@ -153,10 +153,8 @@ public class LoginShop extends JFrame {
                             txtPassword.setText("");
                         }
                     }
-                    
-
-
-                } catch (Exception ie) {
+               
+				} catch (Exception ie) {
                     ie.printStackTrace();
                 }
 			}
@@ -170,6 +168,7 @@ public class LoginShop extends JFrame {
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//go to the home page on cancel action
 				MundheElectronicsShop window = new MundheElectronicsShop();
 				window.frmWelcome.setVisible(true);
 			}
@@ -183,6 +182,7 @@ public class LoginShop extends JFrame {
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//open reset password page
 				ResetPasswordShop frame = new ResetPasswordShop();
 				frame.setVisible(true);
 			}

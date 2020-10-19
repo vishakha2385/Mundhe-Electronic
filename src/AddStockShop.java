@@ -41,37 +41,23 @@ public class AddStockShop extends JFrame {
 	private JTextField txtQuantity;
 	private JTable table;
 	private JTextField txtSearch;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AddStockShop frame = new AddStockShop();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JTextField ProductSearchtextField;
+	private JTextField txtSerialNo;
+	private JTextField txtModuleNo;
+	private JTextField txtCGST;
+	private JTextField txtSGST;
+	private JTextField txtGST;
+	private JTextField txtActualPrice;
+	private JTextField txtGSTPrice;
+	private JTextField txtSGSTPrice;
+	private JTextField txtCGSTPrice;
+	private JComboBox cbCategory;
 	
 	Connection con;
-	   PreparedStatement ps;
-	   ResultSet rs;
-	   private JTextField ProductSearchtextField;
-	   private JTextField txtSerialNo;
-	   private JTextField txtModuleNo;
-	   private JTextField txtCGST;
-	   private JTextField txtSGST;
-	   private JTextField txtGST;
-	   private JTextField txtActualPrice;
-	   private JTextField txtGSTPrice;
-	   private JTextField txtSGSTPrice;
-	   private JTextField txtCGSTPrice;
-	   
+	PreparedStatement ps;
+	ResultSet rs;
+
+	//create table StockData in database
 	   public void StockData()
 		{
 			try {
@@ -94,6 +80,8 @@ public class AddStockShop extends JFrame {
 			}
 			
 		}
+	   
+	   //fetch data from database of StockData table and show in JTable
 		public void ShowData()
 		{
 			try {
@@ -101,8 +89,7 @@ public class AddStockShop extends JFrame {
 				String sql="select *from StockData ORDER BY Product_Name ASC";
 				ps=con.prepareStatement(sql);
 				rs=ps.executeQuery();
-				table.setModel(DbUtils.resultSetToTableModel(rs));
-				
+				table.setModel(DbUtils.resultSetToTableModel(rs));	
 			}
 			catch (Exception e) 
 			{
@@ -110,6 +97,42 @@ public class AddStockShop extends JFrame {
 				e.printStackTrace();
 			}
 		}
+		
+		//create method clear
+		public void clear()
+		{
+			txtProductName.setText("");
+			cbCategory.setSelectedItem("Electronics");
+			txtPrice.setText("");
+			txtCGSTPrice.setText("");
+			txtCGST.setText("");
+			txtSGSTPrice.setText("");
+			txtSGST.setText("");
+			txtGST.setText("");
+			txtGSTPrice.setText("");
+			txtActualPrice.setText("");
+			txtQuantity.setText("");
+			txtSerialNo.setText("");
+			txtModuleNo.setText("");
+		}
+		
+		/**
+		 * Launch the application.
+		 */
+		public static void main(String[] args) {
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						AddStockShop frame = new AddStockShop();
+						frame.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		}
+		
+		
 
 	/**
 	 * Create the frame.
@@ -186,6 +209,7 @@ public class AddStockShop extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
+				//set JTable data to the JTextFields and JComboBox
 				DefaultTableModel model=(DefaultTableModel)table.getModel();
 				int i=table.getSelectedRow();
 				txtProductName.setText(model.getValueAt(i,0).toString());
@@ -209,6 +233,7 @@ public class AddStockShop extends JFrame {
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//insert data into the StockData in database
 				try 
 				{
 				String sql1="insert into StockData values(?,?,?,?,?,?,?,?,?,?,?,?,?)";	
@@ -230,18 +255,7 @@ public class AddStockShop extends JFrame {
 				ps.setString(13,txtModuleNo.getText());
 				
 				ps.executeUpdate();
-				txtProductName.setText("");
-				txtPrice.setText("");
-				txtCGSTPrice.setText("");
-				txtCGST.setText("");
-				txtSGSTPrice.setText("");
-				txtSGST.setText("");
-				txtGST.setText("");
-				txtGSTPrice.setText("");
-				txtActualPrice.setText("");
-				txtQuantity.setText("");
-				txtSerialNo.setText("");
-				txtModuleNo.setText("");
+				clear();
 				
 				}
 				catch(Exception e1) 
@@ -260,63 +274,29 @@ public class AddStockShop extends JFrame {
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//update data in database
 				try 
 				{
 				String sql3="UPDATE StockData SET Category=?,Price=?,CGST=?,CGST_Price=?,SGST=?,SGST_Price=?,GST=?,GST_Price=?,Actual_Price=?,Quantity=?,Serial_No=?,Module_No=? WHERE Product_Name=?";	
 				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 				ps=con.prepareStatement(sql3);
 				ps.setString(13,txtProductName.getText());
-				
-
 				String s1=(String) cbCategory.getSelectedItem();
 				ps.setString(1,s1);
-				
-
 				ps.setString(2,txtPrice.getText());
-				
-
 				ps.setString(3,txtCGST.getText());
-				
-
 				ps.setString(4,txtCGSTPrice.getText());
-				
-
-				ps.setString(5,txtSGST.getText());
-				
+				ps.setString(5,txtSGST.getText());	
 				ps.setString(6,txtSGSTPrice.getText());
-				
-
 				ps.setString(7,txtGST.getText());
-				
-
 				ps.setString(8,txtGSTPrice.getText());
-				
-
 				ps.setString(9,txtActualPrice.getText());
-				
-
-				ps.setString(10,txtQuantity.getText());
-				
+				ps.setString(10,txtQuantity.getText());	
 				ps.setString(11,txtSerialNo.getText());
-				
 				ps.setString(12,txtModuleNo.getText());
-				
-				
 				ps.executeUpdate();
 				JOptionPane.showMessageDialog(null,"Product updated succefully!");
-
-				txtProductName.setText("");
-				txtPrice.setText("");
-				txtCGSTPrice.setText("");
-				txtCGST.setText("");
-				txtSGSTPrice.setText("");
-				txtSGST.setText("");
-				txtGST.setText("");
-				txtGSTPrice.setText("");
-				txtActualPrice.setText("");
-				txtQuantity.setText("");
-				txtSerialNo.setText("");
-				txtModuleNo.setText("");
+				clear();
 				}
 				catch(Exception e1) {}
 				ShowData();
@@ -331,6 +311,7 @@ public class AddStockShop extends JFrame {
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//delete data from database
 				int a=JOptionPane.showConfirmDialog(null,"Are you sure you want to delete this Product?","Delete this Record?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 			    if(a==JOptionPane.YES_OPTION)
 			    {
@@ -342,18 +323,7 @@ public class AddStockShop extends JFrame {
 				ps.setString(1,txtProductName.getText());
 				ps.executeUpdate();
 				JOptionPane.showMessageDialog(null,"Product deleted succefully!");
-				txtProductName.setText("");
-				txtPrice.setText("");
-				txtCGSTPrice.setText("");
-				txtCGST.setText("");
-				txtSGSTPrice.setText("");
-				txtSGST.setText("");
-				txtGST.setText("");
-				txtGSTPrice.setText("");
-				txtActualPrice.setText("");
-				txtQuantity.setText("");
-				txtSerialNo.setText("");
-				txtModuleNo.setText("");
+				clear();
 				}
 				catch(Exception e1) {}
 			    }
@@ -369,6 +339,7 @@ public class AddStockShop extends JFrame {
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//go to the home page on cancel action
 				new HomeShop().setVisible(true);
 			}
 		});
@@ -394,6 +365,7 @@ public class AddStockShop extends JFrame {
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//search data from database and fetch data then show in JTextFields and JComboBox
 				try 
 				{
 					String sql5="select *from StockData where Product_Name=?";
@@ -428,7 +400,6 @@ public class AddStockShop extends JFrame {
 						txtSerialNo.setText(SerialNo);
 						String ModuleNo=rs.getString("Module_No");
 						txtModuleNo.setText(ModuleNo);
-						
 					}
 					else
 					{
@@ -437,10 +408,7 @@ public class AddStockShop extends JFrame {
 						JOptionPane.showMessageDialog(null,msg);
 					}
 				} 
-				catch(Exception e2)
-				{
-					
-				}
+				catch(Exception e2){}
 			}
 		});
 		btnSearch.setForeground(new Color(0, 0, 128));
@@ -497,6 +465,7 @@ public class AddStockShop extends JFrame {
 			@Override
 			public void keyReleased(KeyEvent e)
 			{
+				//show automated CGST,SGST and Total GST
 				String price=txtPrice.getText();
 				float Price1=Float.parseFloat(price);
 				txtSGST.setText(txtCGST.getText());
@@ -625,6 +594,7 @@ public class AddStockShop extends JFrame {
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//open new fresh page for adding new product purpose
 			new	AddStockShop().setVisible(true);
 			}
 		});
@@ -634,7 +604,6 @@ public class AddStockShop extends JFrame {
 		contentPane.add(btnReset);
 		
 		ShowData();
-		
 		StockData();
 		
 		JLabel lblNewLabel_3 = new JLabel("New label");

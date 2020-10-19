@@ -42,12 +42,12 @@ public class DeleteBillShop extends JFrame {
 	private JTextField txtPaidAmmount;
 	private JTextField txtPendingAmmount;
 	private JTable table;
+	private JTable tblCustomer;
 	Connection con;
 	PreparedStatement ps;
 	ResultSet rs;
-	private JTable tblCustomer;
 	
-	
+	//show customer's invoice data
 	public void ShowDataInvoiceNo()
 	{
 		try {
@@ -64,6 +64,7 @@ public class DeleteBillShop extends JFrame {
 		}
 	}
 	
+	//show customers list in JTable
 	public void ShowCustomerInvoices()
 	{
 		try {
@@ -125,6 +126,7 @@ public class DeleteBillShop extends JFrame {
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//search data from database
 				ShowCustomerInvoices();
 				try {
 					
@@ -280,6 +282,7 @@ public class DeleteBillShop extends JFrame {
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//delete customer from database
 				int a=JOptionPane.showConfirmDialog(null,"Are you sure you want to delete this Invoice","Delete this Record?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 			    if(a==JOptionPane.YES_OPTION)
 			    {
@@ -303,6 +306,7 @@ public class DeleteBillShop extends JFrame {
 					}
 					catch(Exception e1) {}
 			    	
+			    	//delete invoice from ProductsData table
 			    	try 
 					{
 					String sql2="DELETE FROM ProductsData WHERE Invoice_No=?";	
@@ -314,6 +318,7 @@ public class DeleteBillShop extends JFrame {
 					}
 					catch(Exception e1) {}
 			    	
+			    	//delete invoice from BillsData 
 			    	try 
 					{
 					String sql2="DELETE FROM BillsData WHERE Invoice_No=?";	
@@ -338,6 +343,7 @@ public class DeleteBillShop extends JFrame {
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//go to the home page on cancel action
 				new HomeShop().setVisible(true);
 			}
 		});
@@ -361,6 +367,7 @@ public class DeleteBillShop extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
+				//set table data to the JTextFields
 				DefaultTableModel model=(DefaultTableModel)tblCustomer.getModel();
 				int i=tblCustomer.getSelectedRow();
 				txtInvoiceNo.setText(model.getValueAt(i,0).toString());
@@ -375,6 +382,7 @@ public class DeleteBillShop extends JFrame {
 				
 				ShowDataInvoiceNo();
 				
+				//set data to the JTextFeilds to the JTextfields
 				try {
 					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 					String s="select *from ProductsData where Invoice_No=?";
@@ -420,6 +428,7 @@ public class DeleteBillShop extends JFrame {
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//clear all JTextFields  
 				new DeleteBillShop().setVisible(true);
 			}
 		});
@@ -428,7 +437,7 @@ public class DeleteBillShop extends JFrame {
 		contentPane.add(btnReset);
 	
 		ShowCustomerInvoices();
-		JLabel lblNewLabel_3 = new JLabel("New label");
+		JLabel lblNewLabel_3 = new JLabel("Background image");
 		lblNewLabel_3.setIcon(new ImageIcon(LoginShop.class.getResource("/images/wallpaper2test.jpg")));
 		lblNewLabel_3.setBounds(0,0,1366,768);
 		contentPane.add(lblNewLabel_3);

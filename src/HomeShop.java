@@ -57,6 +57,7 @@ public class HomeShop extends JFrame {
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//open create invoice page
 				new CreateBillShop().setVisible(true);
 			}
 		});
@@ -66,6 +67,7 @@ public class HomeShop extends JFrame {
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//open update payment page
 				new UpdateBill().setVisible(true);
 			}
 		});
@@ -75,6 +77,7 @@ public class HomeShop extends JFrame {
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//open delete invoice page
 				new DeleteBillShop().setVisible(true);
 			}
 		});
@@ -83,6 +86,7 @@ public class HomeShop extends JFrame {
 		mntmNewMenuItem_10.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//open bill status page
 				new BillStatus().setVisible(true);
 			}
 		});
@@ -96,6 +100,7 @@ public class HomeShop extends JFrame {
 		mntmNewMenuItem_13.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//open create custom invoice page
 				new CustomInvoce().setVisible(true);
 			}
 		});
@@ -105,6 +110,7 @@ public class HomeShop extends JFrame {
 		mntmNewMenuItem_14.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//open Custom invoices list page
 				new CustomInvoicesList().setVisible(true);
 			}
 		});
@@ -117,6 +123,7 @@ public class HomeShop extends JFrame {
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//open add stock page
 				new AddStockShop().setVisible(true);
 			}
 		});
@@ -126,6 +133,7 @@ public class HomeShop extends JFrame {
 		mntmNewMenuItem_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//open stock list page
 				new StockListShop().setVisible(true);
 			}
 		});
@@ -138,6 +146,7 @@ public class HomeShop extends JFrame {
 		mntmNewMenuItem_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//open add dealer page
 				new AddInvoice().setVisible(true);
 			}
 		});
@@ -147,6 +156,7 @@ public class HomeShop extends JFrame {
 		mntmNewMenuItem_11.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//open dealer payment status page
 				new DealerBillStatus().setVisible(true);
 			}
 		});
@@ -155,6 +165,7 @@ public class HomeShop extends JFrame {
 		mntmNewMenuItem_12.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//open dealer list page
 				new DealerList().setVisible(true);
 			}
 		});
@@ -168,6 +179,7 @@ public class HomeShop extends JFrame {
 		mntmNewMenuItem_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//open add complaints page
 				new AddComplaintsShop().setVisible(true);
 			}
 		});
@@ -180,6 +192,7 @@ public class HomeShop extends JFrame {
 		mntmNewMenuItem_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//open income page
 				new IncomeShop().setVisible(true);
 			}
 		});
@@ -189,6 +202,7 @@ public class HomeShop extends JFrame {
 		mntmNewMenuItem_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//open reset password page
 				new ResetPasswordShop().setVisible(true);
 			}
 		});
@@ -198,6 +212,7 @@ public class HomeShop extends JFrame {
 		mntmNewMenuItem_9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//for logout
 				new LoginShop().setVisible(true);
 			}
 		});

@@ -33,12 +33,13 @@ public class ResetPasswordShop extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtNewPassword;
-    Connection con;
     private JTextField txtExistingPassword;
     private JLabel lblUserId;
-    PreparedStatement ps;
     private JButton btnCancel;
     private JButton btnReset;
+    
+    Connection con;
+    PreparedStatement ps;
 	/**
 	 * Launch the application.
 	 */
@@ -60,7 +61,7 @@ public class ResetPasswordShop extends JFrame {
 	 */
 	public ResetPasswordShop() {
 		
-		
+		//make connection to the database
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
@@ -96,6 +97,7 @@ public class ResetPasswordShop extends JFrame {
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//update password for the reset password purpose
 				int a=JOptionPane.showConfirmDialog(null,"Are you sure you want to reset your Password?","Confirm Reset Password",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 			    if(a==JOptionPane.YES_OPTION)
 			    {
@@ -137,8 +139,8 @@ public class ResetPasswordShop extends JFrame {
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//close the reset password frame
 				ResetPasswordShop.this.dispose();
-			//	new HomeShop().setVisible(true);
 			}
 		});
 		btnCancel.setForeground(new Color(0, 0, 128));

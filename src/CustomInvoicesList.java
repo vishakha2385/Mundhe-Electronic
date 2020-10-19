@@ -48,6 +48,38 @@ public class CustomInvoicesList extends JFrame {
 	private JTextField txtPendingAmmount;
 	private JTable table;
 
+	Connection con;
+	PreparedStatement ps;
+	ResultSet rs;
+	
+	//show CustomInvoicesData
+	public void ShowData()
+	{
+		try {
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+			String sql="select *from CustomInvoicesData";
+			ps=con.prepareStatement(sql);
+			rs=ps.executeQuery();
+			table.setModel(DbUtils.resultSetToTableModel(rs));
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void clear()
+	{
+		txtCustomerName.setText("");
+		txtAddress.setText("");
+		txtContact.setText("");
+		txtTotalAmmount.setText("");
+		txtPaidAmmount.setText("");
+		txtPendingAmmount.setText("");
+		txtInvoiceNo.setText("");
+		txtDate.setText("");
+		txtTime.setText("");
+	}
 	/**
 	 * Launch the application.
 	 */
@@ -62,24 +94,6 @@ public class CustomInvoicesList extends JFrame {
 				}
 			}
 		});
-	}
-	Connection con;
-	PreparedStatement ps;
-	ResultSet rs;
-	
-	public void ShowData()
-	{
-		try {
-			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-			String sql="select *from CustomInvoicesData";
-			ps=con.prepareStatement(sql);
-			rs=ps.executeQuery();
-			table.setModel(DbUtils.resultSetToTableModel(rs));
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	/**
@@ -203,6 +217,7 @@ public class CustomInvoicesList extends JFrame {
 			@Override
 			public void keyReleased(KeyEvent e)
 			{
+				//find pending amount
 				String p1=txtPaidAmmount.getText();
 				double paid=Double.parseDouble(p1);
 				String t5=txtTotalAmmount.getText();
@@ -246,6 +261,7 @@ public class CustomInvoicesList extends JFrame {
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//update Data
 				try 
 				{
 				String sql3="UPDATE CustomInvoicesData SET Invoice_No=?,Date=?,Time=?,Customer_Name=?,Address=?,Contact=?,Total_amount=?,Paid_Amount=?,Pending_Amount=? WHERE Customer_Name=?";	
@@ -265,20 +281,10 @@ public class CustomInvoicesList extends JFrame {
 				
 				ps.executeUpdate();
 				JOptionPane.showMessageDialog(null,"Invoice updated successfully!");
-				txtCustomerName.setText("");
-				txtAddress.setText("");
-				txtContact.setText("");
-				txtTotalAmmount.setText("");
-				txtPaidAmmount.setText("");
-				txtPendingAmmount.setText("");
-				txtInvoiceNo.setText("");
-				txtDate.setText("");
-				txtTime.setText("");
-
 				}
 				catch(Exception e1) {}
-
 				ShowData();
+				clear();
 			}
 		});
 		btnAdd.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
@@ -289,6 +295,7 @@ public class CustomInvoicesList extends JFrame {
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//delete Product
 				int a=JOptionPane.showConfirmDialog(null,"Are you sure you want to delete this Complaint?","Delete this Record?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 			    if(a==JOptionPane.YES_OPTION)
 			    {
@@ -300,16 +307,7 @@ public class CustomInvoicesList extends JFrame {
 					ps.setString(1,txtCustomerName.getText());
 					ps.executeUpdate();
 					JOptionPane.showMessageDialog(null,"Invoice deleted successfully!");
-
-					txtCustomerName.setText("");
-					txtAddress.setText("");
-					txtContact.setText("");
-					txtTotalAmmount.setText("");
-					txtPaidAmmount.setText("");
-					txtPendingAmmount.setText("");
-					txtInvoiceNo.setText("");
-					txtDate.setText("");
-					txtTime.setText("");
+                    clear();
 					}
 					catch(Exception e1) {}
 			    }
@@ -325,6 +323,7 @@ public class CustomInvoicesList extends JFrame {
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//go to the home page on cancel operation
 				new HomeShop().setVisible(true);
 			}
 		});
@@ -341,6 +340,7 @@ public class CustomInvoicesList extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) 
 			{
+				//set table data to the JTextFields
 				DefaultTableModel model=(DefaultTableModel)table.getModel();
 				int i=table.getSelectedRow();
 				
@@ -362,6 +362,7 @@ public class CustomInvoicesList extends JFrame {
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//search data from database
 				try 
 				{
 					String sql5="select *from CustomInvoicesData where Customer_Name=?";
@@ -399,9 +400,8 @@ public class CustomInvoicesList extends JFrame {
 				} 
 				catch(Exception e1)
 				{
-					
+			//		JOptionPane.showMessageDialog(null,e1);
 				}
-		
 			}
 		});
 		btnSearch.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
@@ -412,6 +412,7 @@ public class CustomInvoicesList extends JFrame {
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//clear all JTextFields
 				new CustomInvoicesList().setVisible(true);
 			}
 		});

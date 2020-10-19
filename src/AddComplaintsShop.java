@@ -1,16 +1,12 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
 import net.proteanit.sql.DbUtils;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JTextField;
@@ -43,16 +39,17 @@ public class AddComplaintsShop extends JFrame {
 	private JTextField txtSearch;
 	private JTable table;
     private JComboBox CategorycomboBox;
-   private JComboBox cbCategory;
+    private JComboBox cbCategory;
+    private JTextField txtComplaintNo;
 	
-	Connection con;
-	   PreparedStatement ps;
-	   ResultSet rs;
-	   private JTextField txtComplaintNo;
-	   String search;
-	 
-	   
-	   public void ComplaintsData()
+    Connection con;
+	PreparedStatement ps;
+	ResultSet rs; 
+	String search;
+	
+	// create table ComplaintsData in MySql Database where database name is MundheElectronics1 
+
+	public void CreateTableComplaintsData()
 		{
 			try {
 				DatabaseMetaData d=con.getMetaData();
@@ -74,6 +71,8 @@ public class AddComplaintsShop extends JFrame {
 			}
 			
 		}
+	
+	// fetch data from ComplaintsData table from database and show that data in JTable
 	   
 		public void ShowData()
 		{
@@ -88,6 +87,20 @@ public class AddComplaintsShop extends JFrame {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+		
+		//create method clear() for clear the JTextField on particular actions
+		
+		public void clear()
+		{
+			txtCustomerName.setText("");
+			txtAddress.setText("");
+			txtContact.setText("");
+			txtProduct.setText("");
+			txtSerialNo.setText("");
+			txtModuleNo.setText("");
+			txtComplaintNo.setText("");
+			CategorycomboBox.setSelectedItem("Sent");
 		}
 	
 	
@@ -112,18 +125,12 @@ public class AddComplaintsShop extends JFrame {
 	 */
 	public AddComplaintsShop()
 	{
-		
-		
-			try 
+		try 
 			{
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-				
+				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");	
 			} 
-			catch(Exception e)
-			{
-				
-			}
+			catch(Exception e) {}
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AddComplaintsShop.class.getResource("/images/plug.png")));
 		setTitle("Complaints");
@@ -244,21 +251,16 @@ public class AddComplaintsShop extends JFrame {
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
-				
+				// search data from database
 				try 
 				{  
 					String sql="select *from ComplaintsData where Customer_Name=?";
 					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 					PreparedStatement ps=con.prepareStatement(sql);
-					ps.setString(1,txtSearch.getText());
-					
-					ResultSet rs=ps.executeQuery();
-					
+					ps.setString(1,txtSearch.getText());	
+					ResultSet rs=ps.executeQuery();	
 					if(rs.next())
 					{
-						
-						
-						
 						String Customer_Name=rs.getString("Customer_Name");
 						txtCustomerName.setText(Customer_Name);
 						String Address=rs.getString("Address");
@@ -274,8 +276,7 @@ public class AddComplaintsShop extends JFrame {
 						String Complaint_No=rs.getString("Complaint_No");
 						txtComplaintNo.setText(Complaint_No);
 						String Category=rs.getString("Category");
-						CategorycomboBox.setSelectedItem(Category);
-						
+						CategorycomboBox.setSelectedItem(Category);	
 					}
 					else
 					{
@@ -284,12 +285,8 @@ public class AddComplaintsShop extends JFrame {
 						JOptionPane.showMessageDialog(null,msg);
 					}
 				} 
-				catch(Exception e1)
-				{
-					
+				catch(Exception e1){}
 				}
-		
-			}
 		});
 		btnSearch.setForeground(new Color(0, 0, 128));
 		btnSearch.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
@@ -300,10 +297,9 @@ public class AddComplaintsShop extends JFrame {
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
-try 
-				
+				//add data to the ComplaintsData table in database
+                try 
 				{
-				
 				String sql1="insert into ComplaintsData values(?,?,?,?,?,?,?,?)";	
 				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
 				ps=con.prepareStatement(sql1);
@@ -324,20 +320,12 @@ try
 		//		System.out.println(Category);
 				ps.setString(8,Category);
 				ps.executeUpdate();
+				clear();
 				
-				txtCustomerName.setText("");
-				txtAddress.setText("");
-				txtContact.setText("");
-				txtProduct.setText("");
-				txtSerialNo.setText("");
-				txtModuleNo.setText("");
-				txtComplaintNo.setText("");
-				CategorycomboBox.setSelectedItem("Sent");
 				}
-				
 				catch(Exception e1) 
 				{
-			//		JOptionPane.showMessageDialog(null,e1);	
+					JOptionPane.showMessageDialog(null,e1);	
 				}
 	
 				ShowData();
@@ -352,6 +340,7 @@ try
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//Update data in database
 				try 
 				{
 				String sql3="UPDATE ComplaintsData SET Customer_Name=?,Address=?,Contact=?,Product=?,Serial_No=?,Module_No=?,Complaint_No=?,Category=? WHERE Customer_Name=?";	
@@ -370,17 +359,9 @@ try
 				
 				ps.executeUpdate();
 				JOptionPane.showMessageDialog(null,"Complaint updated successfully!");
-				txtCustomerName.setText("");
-				txtAddress.setText("");
-				txtContact.setText("");
-				txtProduct.setText("");
-				txtModuleNo.setText("");
-				txtSerialNo.setText("");
-				txtComplaintNo.setText("");
-				CategorycomboBox.setSelectedItem("Sent");
+				clear();
 				}
 				catch(Exception e1) {}
-
 				ShowData();
 			}
 		});
@@ -393,6 +374,7 @@ try
 		Delete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//delete data from database
 				int a=JOptionPane.showConfirmDialog(null,"Are you sure you want to delete this Complaint?","Delete this Record?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 			    if(a==JOptionPane.YES_OPTION)
 			    {
@@ -405,18 +387,10 @@ try
 					ps.executeUpdate();
 					JOptionPane.showMessageDialog(null,"Complaint deleted successfully!");
 
-					txtCustomerName.setText("");
-					txtAddress.setText("");
-					txtContact.setText("");
-					txtSerialNo.setText("");
-					txtModuleNo.setText("");
-					txtProduct.setText("");
-					txtComplaintNo.setText("");
-					CategorycomboBox.setSelectedItem("Sent");
+					clear();
 					}
 					catch(Exception e1) {}
 			    }
-			
 				ShowData();
 			}
 		});
@@ -429,6 +403,7 @@ try
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//go to the home page on cancel action
 				new HomeShop().setVisible(true);
 			}
 		});
@@ -445,6 +420,8 @@ try
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
+				//set JTable to the JTextFields
+				
 				DefaultTableModel model=(DefaultTableModel)table.getModel();
 				int i=table.getSelectedRow();
 				
@@ -477,6 +454,7 @@ try
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//open the new fresh page
 				new AddComplaintsShop().setVisible(true);
 			}
 		});
@@ -485,32 +463,10 @@ try
 		btnReset.setBounds(581, 349, 103, 28);
 		contentPane.add(btnReset);
 		
-				try 
-				{
-					String sql="select Customer_Name from ComplaintsData";
-					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-					PreparedStatement ps=con.prepareStatement(sql);
-					
-					ResultSet rs=ps.executeQuery();
-					
-					while(rs.next())
-					{
-					String a=rs.getString(1);
-					cbCategory.addItem(a);
-					
-					}
-					
-				} 
-				catch(Exception e)
-				{
-					
-				}
-		
-		
-		ComplaintsData();
+	    CreateTableComplaintsData();
 		ShowData();
 		
-		JLabel lblNewLabel_3 = new JLabel("New label");
+		JLabel lblNewLabel_3 = new JLabel("Background image");
 		lblNewLabel_3.setIcon(new ImageIcon(LoginShop.class.getResource("/images/wallpaper2test.jpg")));
 		lblNewLabel_3.setBounds(0,0,1366,768);
 		contentPane.add(lblNewLabel_3);

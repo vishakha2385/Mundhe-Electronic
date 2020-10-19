@@ -46,29 +46,21 @@ import java.awt.event.KeyEvent;
 public class AddInvoice extends JFrame {
 
 	private JPanel contentPane;
+	private JTextField txtDate;
+	private JTextField txtDealer;
+	private JTextField txtPaymentId;
+	private JTextField txtTotalAmmount;
+	private JTextField txtPaidAmmount;
+	private JTextField txtPendingAmmount;
+	private JTable table;
+    private final ButtonGroup buttonGroup = new ButtonGroup();
+    
     String filename;
     Connection con;
     PreparedStatement ps;
-  
-    private final ButtonGroup buttonGroup = new ButtonGroup();
+    ResultSet rs;
     
-    public void ShowDealersPaymentData()
-	{
-		try {
-			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-			String sql="select *from DealersPaymentData ORDER BY Dealer ASC";
-			ps=con.prepareStatement(sql);
-			rs=ps.executeQuery();
-			table.setModel(DbUtils.resultSetToTableModel(rs));
-			
-		}
-		catch (Exception e) 
-		{
-			
-			e.printStackTrace();
-		}
-	}
- 
+    //create table DealersPaymentData in database
     
     public void DealersPaymentData()
 	{
@@ -101,9 +93,25 @@ public class AddInvoice extends JFrame {
 		
 	}
     
+    //fetch data from DealersPaymentData and show in JTable 
     
-    
-	/**
+    public void ShowDealersPaymentData()
+	{
+		try {
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+			String sql="select *from DealersPaymentData ORDER BY Dealer ASC";
+			ps=con.prepareStatement(sql);
+			rs=ps.executeQuery();
+			table.setModel(DbUtils.resultSetToTableModel(rs));
+			
+		}
+		catch (Exception e) 
+		{
+			
+			e.printStackTrace();
+		}
+	}
+ 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
@@ -118,17 +126,7 @@ public class AddInvoice extends JFrame {
 			}
 		});
 	}
-	ResultSet rs;
-	private JTextField txtDate;
-	private JTextField txtDealer;
-	private JTextField txtPaymentId;
-	private JTextField txtTotalAmmount;
-	private JTextField txtPaidAmmount;
-	private JTextField txtPendingAmmount;
-	private JTable table;
-	
-
-	/**
+		/**
 	 * Create the frame.
 	 */
 	public AddInvoice() {
@@ -150,6 +148,7 @@ public class AddInvoice extends JFrame {
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				// insert data into DealersPaymentData table
 				try
                 {
                 	String sql1="insert into DealersPaymentData values(?,?,?,?,?,?,?)";	
@@ -163,7 +162,6 @@ public class AddInvoice extends JFrame {
     					JRadioButton jrd=(JRadioButton) bg.nextElement();
     					if(jrd.isSelected())
     					{
-    				
     						String f=jrd.getText();
     	    				ps.setString(3,f);
     	    		//		System.out.println(f);
@@ -312,6 +310,7 @@ public class AddInvoice extends JFrame {
 			@Override
 			public void keyReleased(KeyEvent e)
 			{
+				//show automated pending amount
 				String p1=txtPaidAmmount.getText();
 				int paid=Integer.parseInt(p1);
 				String t5=txtTotalAmmount.getText();
@@ -324,7 +323,6 @@ public class AddInvoice extends JFrame {
 		txtPaidAmmount.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtPaidAmmount.setColumns(10);
 		txtPaidAmmount.setBounds(223, 215, 144, 25);
-		
 		contentPane.add(txtPaidAmmount);
 		
 		JLabel lblRs = new JLabel("Rs");
@@ -367,6 +365,7 @@ public class AddInvoice extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) 
 			{
+				//set table data to the JTextFields and JRadioButtons
 				DefaultTableModel model=(DefaultTableModel)table.getModel();
 				int i=table.getSelectedRow();
 				txtDealer.setText(model.getValueAt(i,0).toString());
@@ -396,6 +395,7 @@ public class AddInvoice extends JFrame {
 		btnNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//Prepare frame for adding a new invoice
 				txtDealer.setText("");
 				txtDate.setText("");
 				txtPaymentId.setText("cash");
@@ -415,6 +415,7 @@ public class AddInvoice extends JFrame {
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//update data in database
 				try 
 				{
 				String sql3="UPDATE DealersPaymentData SET Dealer=?,Date=?,Type_of_Payment=?,Payment_Id=?,Total_Amount=?,Paid_Amount=?,Pending_Amount=? WHERE Dealer=?";	
@@ -455,9 +456,11 @@ public class AddInvoice extends JFrame {
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//delete data from database
 				int a=JOptionPane.showConfirmDialog(null,"Are you sure you want to delete this Invoice?","Delete this Record?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 			    if(a==JOptionPane.YES_OPTION)
 			    {
+			    	
 				try 
 				{
 				String sql2="DELETE FROM DealersPaymentData WHERE Dealer=?";	
@@ -489,6 +492,7 @@ public class AddInvoice extends JFrame {
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//go to the home page on cancel action
 				new HomeShop().setVisible(true);
 			}
 		});
@@ -501,6 +505,7 @@ public class AddInvoice extends JFrame {
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				//opens the new fresh page for the adding new invoice purpose
 				new AddInvoice().setVisible(true);
 			}
 		});
