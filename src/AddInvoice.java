@@ -62,7 +62,7 @@ public class AddInvoice extends JFrame {
     
     //create table DealersPaymentData in database
     
-    public void DealersPaymentData()
+    public void dealersPaymentData()
 	{
 		try {
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
@@ -95,7 +95,7 @@ public class AddInvoice extends JFrame {
     
     //fetch data from DealersPaymentData and show in JTable 
     
-    public void ShowDealersPaymentData()
+    public void showDealersPaymentData()
 	{
 		try {
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
@@ -172,7 +172,7 @@ public class AddInvoice extends JFrame {
     				ps.setString(6,txtPaidAmmount.getText());
     				ps.setString(7,txtPendingAmmount.getText());
     				ps.executeUpdate();
-    				ShowDealersPaymentData();
+    				showDealersPaymentData();
     		//		JOptionPane.showMessageDialog(null,"inserted");
                 }catch(Exception e3){}	
 			}
@@ -441,7 +441,7 @@ public class AddInvoice extends JFrame {
 				ps.setString(6,txtPaidAmmount.getText());
 				ps.setString(7,txtPendingAmmount.getText());
 				ps.executeUpdate();
-				ShowDealersPaymentData();
+				showDealersPaymentData();
 				JOptionPane.showMessageDialog(null,"Dealer updated successfully!");
             	}
 				catch(Exception e1) {}
@@ -468,7 +468,7 @@ public class AddInvoice extends JFrame {
 				ps=con.prepareStatement(sql2);
 				ps.setString(1,txtDealer.getText());
 				ps.executeUpdate();
-				ShowDealersPaymentData();
+				showDealersPaymentData();
 				JOptionPane.showMessageDialog(null,"Dealer deleted successfully!");
 				txtDealer.setText("");
 				txtDate.setText("");
@@ -514,8 +514,8 @@ public class AddInvoice extends JFrame {
 		btnReset.setBounds(775, 280, 128, 30);
 		contentPane.add(btnReset);
 		
-		DealersPaymentData();
-		ShowDealersPaymentData();
+		dealersPaymentData();
+		showDealersPaymentData();
 		
 		JLabel lblNewLabel_3 = new JLabel("New label");
 		lblNewLabel_3.setIcon(new ImageIcon(LoginShop.class.getResource("/images/wallpaper2test.jpg")));

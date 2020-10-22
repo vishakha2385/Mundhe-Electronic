@@ -49,7 +49,7 @@ public class AddComplaintsShop extends JFrame {
 	
 	// create table ComplaintsData in MySql Database where database name is MundheElectronics1 
 
-	public void CreateTableComplaintsData()
+	public void createTableComplaintsData()
 		{
 			try {
 				DatabaseMetaData d=con.getMetaData();
@@ -74,7 +74,7 @@ public class AddComplaintsShop extends JFrame {
 	
 	// fetch data from ComplaintsData table from database and show that data in JTable
 	   
-		public void ShowData()
+		public void showData()
 		{
 			try {
 				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
@@ -328,7 +328,7 @@ public class AddComplaintsShop extends JFrame {
 					JOptionPane.showMessageDialog(null,e1);	
 				}
 	
-				ShowData();
+				showData();
 			}
 		});
 		btnAdd.setForeground(new Color(0, 0, 128));
@@ -362,7 +362,7 @@ public class AddComplaintsShop extends JFrame {
 				clear();
 				}
 				catch(Exception e1) {}
-				ShowData();
+				showData();
 			}
 		});
 		btnUpdate.setForeground(new Color(0, 0, 128));
@@ -391,7 +391,7 @@ public class AddComplaintsShop extends JFrame {
 					}
 					catch(Exception e1) {}
 			    }
-				ShowData();
+				showData();
 			}
 		});
 		Delete.setForeground(new Color(0, 0, 128));
@@ -463,8 +463,8 @@ public class AddComplaintsShop extends JFrame {
 		btnReset.setBounds(581, 349, 103, 28);
 		contentPane.add(btnReset);
 		
-	    CreateTableComplaintsData();
-		ShowData();
+	    createTableComplaintsData();
+		showData();
 		
 		JLabel lblNewLabel_3 = new JLabel("Background image");
 		lblNewLabel_3.setIcon(new ImageIcon(LoginShop.class.getResource("/images/wallpaper2test.jpg")));

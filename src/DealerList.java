@@ -71,7 +71,7 @@ public class DealerList extends JFrame {
 	String s;
 	
 	//show details of dealer's payment
-	public void ShowDealers()
+	public void showDealers()
 	{
 		try {
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
@@ -86,23 +86,6 @@ public class DealerList extends JFrame {
 		}
 	}
 	
-	//show dealer's invoice details
-	public void ShowInvoices()
-	{
-		try {
-			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
-			String sql="select Invoice_No,Date,Pending_Ammount from DealerInvoicesData where Dealer=? ORDER BY Dealer ASC";
-			ps=con.prepareStatement(sql);
-			ps.setString(1, s);
-			rs=ps.executeQuery();
-			tblDealers.setModel(DbUtils.resultSetToTableModel(rs));
-			
-		}
-		catch (Exception e) 
-		{
-			e.printStackTrace();
-		}
-	}
 	
 	/**
 	 * Launch the application.
@@ -304,7 +287,7 @@ public class DealerList extends JFrame {
 		btnNewButton.setBounds(524, 367, 137, 30);
 		contentPane.add(btnNewButton);
 		
-		ShowDealers();
+		showDealers();
 		
 		JLabel lblNewLabel_3 = new JLabel("New label");
 		lblNewLabel_3.setIcon(new ImageIcon(LoginShop.class.getResource("/images/wallpaper2test.jpg")));

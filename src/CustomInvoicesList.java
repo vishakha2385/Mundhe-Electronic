@@ -53,7 +53,7 @@ public class CustomInvoicesList extends JFrame {
 	ResultSet rs;
 	
 	//show CustomInvoicesData
-	public void ShowData()
+	public void showData()
 	{
 		try {
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
@@ -283,7 +283,7 @@ public class CustomInvoicesList extends JFrame {
 				JOptionPane.showMessageDialog(null,"Invoice updated successfully!");
 				}
 				catch(Exception e1) {}
-				ShowData();
+				showData();
 				clear();
 			}
 		});
@@ -312,7 +312,7 @@ public class CustomInvoicesList extends JFrame {
 					catch(Exception e1) {}
 			    }
 			
-				ShowData();
+				showData();
 			}
 		});
 		btnDelete.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
@@ -420,7 +420,7 @@ public class CustomInvoicesList extends JFrame {
 		btnReset.setBounds(443, 300, 117, 28);
 		contentPane.add(btnReset);
 		
-		ShowData();
+		showData();
 		
 		JLabel lblNewLabel_3 = new JLabel("New label");
 		lblNewLabel_3.setIcon(new ImageIcon(LoginShop.class.getResource("/images/wallpaper2test.jpg")));

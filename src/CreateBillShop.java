@@ -103,7 +103,7 @@ public class CreateBillShop extends JFrame {
     String word;
     
     //create table CustomerData in database to store details of Customers and payments
-    public void CustomerData()
+    public void customerData()
 	{
 		try {
 			DatabaseMetaData d=con.getMetaData();
@@ -127,7 +127,7 @@ public class CreateBillShop extends JFrame {
 	}
     
     //create table ProductsData in database to store the details of products which are sold
-    public void ProductsData()
+    public void productsData()
 	{
 		try {
 			DatabaseMetaData d=con.getMetaData();
@@ -175,7 +175,7 @@ public class CreateBillShop extends JFrame {
 	}
     
     //create table BillsData in database to store the Products No according to the Invoice No
-    public void BillsData()
+    public void billsData()
 	{
 		try {
 			DatabaseMetaData d=con.getMetaData();
@@ -244,7 +244,7 @@ public class CreateBillShop extends JFrame {
     }
   
     //create automated Invoice No
-	public void InvoiceNo()
+	public void invoiceNo()
 	{
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -271,7 +271,7 @@ public class CreateBillShop extends JFrame {
 	}
 	
 	//create automated Product No
-	public void ProductNo()
+	public void productNo()
 	{
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -300,7 +300,7 @@ public class CreateBillShop extends JFrame {
 	//create clear and method to clear the JTextFields and JComboBox on particular actions
 	private void clear()
     {
-		ProductNo();
+		productNo();
 		cbCategory.setSelectedItem("Electronics");
 		txtSrNo.setText("");
 		txtSerialNo.setText("");
@@ -687,7 +687,7 @@ public class BillPrintable implements Printable {
 	}  
    
     //show data of products which are sold
-	public void ShowDataInvoiceNo()
+	public void showDataInvoiceNo()
 	{
 		try {
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
@@ -1368,7 +1368,7 @@ public class BillPrintable implements Printable {
 			//		JOptionPane.showMessageDialog(null,e2);
 				}
 			
-				ShowDataInvoiceNo();
+				showDataInvoiceNo();
 				total();
 				
 				//converts total amount into word format and set to the JTextFields
@@ -1386,7 +1386,7 @@ public class BillPrintable implements Printable {
 				}
 				
 				totalDiscount();
-				ProductNo();
+				productNo();
 				totalCGST();
 				totalSGST();
 				totalCGSTPrice();
@@ -1615,7 +1615,7 @@ public class BillPrintable implements Printable {
 							}	
 						} 
 						catch(Exception e5) {}
-					ProductNo();
+					productNo();
 					clear();
 					}
 					catch(Exception e1) {}
@@ -1630,7 +1630,7 @@ public class BillPrintable implements Printable {
 					ps.executeUpdate();
 	//				JOptionPane.showMessageDialog(null,"deleted from BillsData");
 					
-					ProductNo();
+					productNo();
 					txtSrNo.setText(null);
 				    cbCategory.setSelectedItem("Electronics");
 					txtSerialNo.setText(null);
@@ -1649,8 +1649,8 @@ public class BillPrintable implements Printable {
 			    }
   
 				total();
-				ShowDataInvoiceNo();
-			    ProductNo();
+				showDataInvoiceNo();
+			    productNo();
 			}
 		});
 		btnDiscard.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
@@ -1662,7 +1662,7 @@ public class BillPrintable implements Printable {
 			public void actionPerformed(ActionEvent e) 
 			{
 				//clear the JTextFields which are related to the products
-				ProductNo();
+				productNo();
 				clear();
 			}
 		});
@@ -2001,11 +2001,11 @@ public class BillPrintable implements Printable {
 
 		clock();
 		date();
-		InvoiceNo();
-		CustomerData();
-		ProductNo();
-		ProductsData();
-		BillsData();
+		invoiceNo();
+		customerData();
+		productNo();
+		productsData();
+		billsData();
 	
 		JLabel lblNewLabel_3 = new JLabel("New label");
 		lblNewLabel_3.setIcon(new ImageIcon(LoginShop.class.getResource("/images/wallpaper2test.jpg")));

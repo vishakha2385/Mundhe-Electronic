@@ -59,7 +59,7 @@ public class UpdateBill extends JFrame {
     ResultSet rs;
    
    //show data of products according to the invoice no 
-	public void ShowDataInvoiceNo()
+	public void showDataInvoiceNo()
 	{
 		try {
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
@@ -76,7 +76,7 @@ public class UpdateBill extends JFrame {
 	}
 	
 	//set customer data to the table ordered by ascending
-	public void ShowCustomerInvoices()
+	public void showCustomerInvoices()
 	{
 		try {
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
@@ -280,13 +280,13 @@ public class UpdateBill extends JFrame {
 				ps.setString(8,txtPendingAmmount.getText());
 
 				ps.executeUpdate();
-				ShowCustomerInvoices();
+				showCustomerInvoices();
 				JOptionPane.showMessageDialog(null,"Payment updated succefully!");
 				
 				}
 				catch(Exception e1) {}
-				ShowDataInvoiceNo();
-				ShowCustomerInvoices();
+				showDataInvoiceNo();
+				showCustomerInvoices();
 			}
 		});
 		btnUpdate.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
@@ -316,7 +316,7 @@ public class UpdateBill extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				//set customer invoices according to the customer name to the JTable
-				ShowCustomerInvoices();
+				showCustomerInvoices();
 				try {
 					
 					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
@@ -417,8 +417,8 @@ public class UpdateBill extends JFrame {
 					// TODO Auto-generated catch block
 					e3.printStackTrace();
 				}
-				ShowDataInvoiceNo();
-				ShowCustomerInvoices();
+				showDataInvoiceNo();
+				showCustomerInvoices();
 			}
 		});
 		scrollPaneCustomer.setViewportView(tblCustomer);
@@ -435,7 +435,7 @@ public class UpdateBill extends JFrame {
 		contentPane.add(btnReset);
 		
 		//ShowDataCustomer();
-		ShowCustomerInvoices();
+		showCustomerInvoices();
 		
 		JLabel lblNewLabel_3 = new JLabel("New label");
 		lblNewLabel_3.setIcon(new ImageIcon(LoginShop.class.getResource("/images/wallpaper2test.jpg")));

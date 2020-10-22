@@ -48,7 +48,7 @@ public class DeleteBillShop extends JFrame {
 	ResultSet rs;
 	
 	//show customer's invoice data
-	public void ShowDataInvoiceNo()
+	public void showDataInvoiceNo()
 	{
 		try {
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
@@ -65,7 +65,7 @@ public class DeleteBillShop extends JFrame {
 	}
 	
 	//show customers list in JTable
-	public void ShowCustomerInvoices()
+	public void showCustomerInvoices()
 	{
 		try {
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
@@ -127,7 +127,7 @@ public class DeleteBillShop extends JFrame {
 			public void actionPerformed(ActionEvent e)
 			{
 				//search data from database
-				ShowCustomerInvoices();
+				showCustomerInvoices();
 				try {
 					
 					con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
@@ -331,8 +331,8 @@ public class DeleteBillShop extends JFrame {
 					catch(Exception e1) {}
 			    }
 				
-			    ShowDataInvoiceNo();
-			    ShowCustomerInvoices();
+			    showDataInvoiceNo();
+			    showCustomerInvoices();
 			}
 		});
 		btnDelete.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
@@ -380,7 +380,7 @@ public class DeleteBillShop extends JFrame {
 				txtPaidAmmount.setText(model.getValueAt(i,5).toString());
 				txtPendingAmmount.setText(model.getValueAt(i,6).toString());
 				
-				ShowDataInvoiceNo();
+				showDataInvoiceNo();
 				
 				//set data to the JTextFeilds to the JTextfields
 				try {
@@ -419,7 +419,7 @@ public class DeleteBillShop extends JFrame {
 					// TODO Auto-generated catch block
 					e3.printStackTrace();
 				}
-				ShowDataInvoiceNo();
+				showDataInvoiceNo();
 			}
 		});
 		scrollPaneCustomer.setViewportView(tblCustomer);
@@ -436,7 +436,7 @@ public class DeleteBillShop extends JFrame {
 		btnReset.setBounds(316, 299, 117, 28);
 		contentPane.add(btnReset);
 	
-		ShowCustomerInvoices();
+		showCustomerInvoices();
 		JLabel lblNewLabel_3 = new JLabel("Background image");
 		lblNewLabel_3.setIcon(new ImageIcon(LoginShop.class.getResource("/images/wallpaper2test.jpg")));
 		lblNewLabel_3.setBounds(0,0,1366,768);

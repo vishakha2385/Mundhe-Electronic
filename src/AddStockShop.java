@@ -58,7 +58,7 @@ public class AddStockShop extends JFrame {
 	ResultSet rs;
 
 	//create table StockData in database
-	   public void StockData()
+	   public void stockData()
 		{
 			try {
 				DatabaseMetaData d=con.getMetaData();
@@ -82,7 +82,7 @@ public class AddStockShop extends JFrame {
 		}
 	   
 	   //fetch data from database of StockData table and show in JTable
-		public void ShowData()
+		public void showData()
 		{
 			try {
 				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
@@ -262,7 +262,7 @@ public class AddStockShop extends JFrame {
 				{
 					JOptionPane.showMessageDialog(null,e1);	
 				}
-				ShowData();
+				showData();
 			}
 		});
 		btnAdd.setForeground(new Color(0, 0, 128));
@@ -299,7 +299,7 @@ public class AddStockShop extends JFrame {
 				clear();
 				}
 				catch(Exception e1) {}
-				ShowData();
+				showData();
 			}
 		});
 		btnUpdate.setForeground(new Color(0, 0, 128));
@@ -327,7 +327,7 @@ public class AddStockShop extends JFrame {
 				}
 				catch(Exception e1) {}
 			    }
-				ShowData();
+				showData();
 			}
 		});
 		btnDelete.setForeground(new Color(0, 0, 128));
@@ -603,8 +603,8 @@ public class AddStockShop extends JFrame {
 		btnReset.setBounds(505, 324, 100, 28);
 		contentPane.add(btnReset);
 		
-		ShowData();
-		StockData();
+		showData();
+		stockData();
 		
 		JLabel lblNewLabel_3 = new JLabel("New label");
 		lblNewLabel_3.setIcon(new ImageIcon(LoginShop.class.getResource("/images/wallpaper2test.jpg")));
