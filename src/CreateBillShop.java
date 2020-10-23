@@ -18,6 +18,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+
 import java.util.Scanner;
 
 import net.proteanit.sql.DbUtils;
@@ -301,7 +304,6 @@ public class CreateBillShop extends JFrame {
 	private void clear()
     {
 		productNo();
-		cbCategory.setSelectedItem("Electronics");
 		txtSrNo.setText("");
 		txtSerialNo.setText("");
 		txtModuleNo.setText("");
@@ -318,6 +320,7 @@ public class CreateBillShop extends JFrame {
 		txtGST.setText("");
 		txtGSTPrice.setText("");
 		txtActualPrice.setText("");
+		cbCategory.setSelectedItem("Electronics");
     }   
 
 //create code for Printing the Invoice using 2D Grahics	
@@ -402,8 +405,11 @@ public class BillPrintable implements Printable {
             g2d.drawLine(570,317,570,647);
             g2d.drawLine(640,317,640,647);
             g2d.drawLine(710,317,710,647);
+           
+            //horizontal lines
             g2d.drawLine(780,50,780,1150);
             g2d.drawLine(50,1150,780,1150);
+            
       
             
             g2d.setFont(new Font("Century 20",Font.PLAIN,13));
@@ -920,6 +926,7 @@ public class BillPrintable implements Printable {
 		contentPane.add(lblProductName);
 		
 		JComboBox cbName = new JComboBox();
+		AutoCompleteDecorator.decorate(cbName);
 		cbName.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
@@ -1309,7 +1316,7 @@ public class BillPrintable implements Printable {
 			        ActualPrice.add(txtActualPrice.getText());
 			        totalAmount = totalAmount+ Double.valueOf(txtTotal.getText());
 			        txtTotalAmmount.setText(totalAmount+"");
-			         clear();
+			   //      clear();
 				}catch(Exception e4) {}
 				
 				
@@ -1345,7 +1352,7 @@ public class BillPrintable implements Printable {
 				ps.setString(22,txtTotal.getText());
 				ps.executeUpdate();
 	//			JOptionPane.showMessageDialog(null,"inserted into ProductsData");
-				clear();
+		//		clear();
 			    }
 				catch(Exception e1) 
 				{
@@ -1392,7 +1399,8 @@ public class BillPrintable implements Printable {
 				totalCGSTPrice();
 				totalSGSTPrice();
 				totalGST();
-				totalGSTPrice();	
+				totalGSTPrice();
+				clear();
 			}
 		});
 		btnAdd.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));

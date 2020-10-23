@@ -102,7 +102,7 @@ public class AddStockShop extends JFrame {
 		public void clear()
 		{
 			txtProductName.setText("");
-			cbCategory.setSelectedItem("Electronics");
+		//	cbCategory.setSelectedItem("Electronics");
 			txtPrice.setText("");
 			txtCGSTPrice.setText("");
 			txtCGST.setText("");
@@ -260,9 +260,10 @@ public class AddStockShop extends JFrame {
 				}
 				catch(Exception e1) 
 				{
-					JOptionPane.showMessageDialog(null,e1);	
+			//		JOptionPane.showMessageDialog(null,e1);	
 				}
 				showData();
+				clear();
 			}
 		});
 		btnAdd.setForeground(new Color(0, 0, 128));
