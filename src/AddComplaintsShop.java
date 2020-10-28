@@ -26,6 +26,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class AddComplaintsShop extends JFrame {
 
@@ -148,6 +150,16 @@ public class AddComplaintsShop extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		txtCustomerName = new JTextField();
+		txtCustomerName.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtAddress.requestFocus();
+				}
+			}
+		});
 		txtCustomerName.setBounds(242, 31, 426, 25);
 		txtCustomerName.setForeground(new Color(0, 0, 128));
 		txtCustomerName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
@@ -155,6 +167,16 @@ public class AddComplaintsShop extends JFrame {
 		txtCustomerName.setColumns(10);
 		
 		txtAddress = new JTextField();
+		txtAddress.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtContact.requestFocus();
+				}
+			}
+		});
 		txtAddress.setBounds(242, 70, 426, 25);
 		txtAddress.setForeground(new Color(0, 0, 128));
 		txtAddress.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
@@ -168,6 +190,16 @@ public class AddComplaintsShop extends JFrame {
 		contentPane.add(lblAddress);
 		
 		txtContact = new JTextField();
+		txtContact.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) 
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtProduct.requestFocus();
+				}
+			}
+		});
 		txtContact.setBounds(242, 109, 183, 25);
 		txtContact.setForeground(new Color(0, 0, 128));
 		txtContact.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
@@ -181,7 +213,17 @@ public class AddComplaintsShop extends JFrame {
 		contentPane.add(lblContact);
 		
 		txtProduct = new JTextField();
-		txtProduct.setBounds(242, 146, 183, 25);
+		txtProduct.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) 
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtSerialNo.requestFocus();
+				}
+			}
+		});
+		txtProduct.setBounds(242, 146, 426, 25);
 		txtProduct.setForeground(new Color(0, 0, 128));
 		txtProduct.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtProduct.setColumns(10);
@@ -194,7 +236,17 @@ public class AddComplaintsShop extends JFrame {
 		contentPane.add(lblProductName);
 		
 		txtSerialNo = new JTextField();
-		txtSerialNo.setBounds(242, 183, 183, 25);
+		txtSerialNo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) 
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtModuleNo.requestFocus();
+				}
+			}
+		});
+		txtSerialNo.setBounds(242, 183, 426, 25);
 		txtSerialNo.setForeground(new Color(0, 0, 128));
 		txtSerialNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtSerialNo.setColumns(10);
@@ -207,7 +259,17 @@ public class AddComplaintsShop extends JFrame {
 		contentPane.add(lblSerialNo);
 		
 		txtModuleNo = new JTextField();
-		txtModuleNo.setBounds(242, 220, 183, 25);
+		txtModuleNo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtComplaintNo.requestFocus();
+				}
+			}
+		});
+		txtModuleNo.setBounds(242, 220, 426, 25);
 		txtModuleNo.setForeground(new Color(0, 0, 128));
 		txtModuleNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtModuleNo.setColumns(10);
@@ -220,13 +282,13 @@ public class AddComplaintsShop extends JFrame {
 		contentPane.add(lblModuleNo);
 		
 		JLabel lblCategory = new JLabel("Category:");
-		lblCategory.setBounds(30, 301, 144, 29);
+		lblCategory.setBounds(30, 294, 144, 29);
 		lblCategory.setForeground(Color.WHITE);
 		lblCategory.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		contentPane.add(lblCategory);
 		
 		CategorycomboBox = new JComboBox();
-		CategorycomboBox.setBounds(242, 305, 183, 25);
+		CategorycomboBox.setBounds(242, 298, 183, 25);
 		CategorycomboBox.setForeground(new Color(0, 0, 128));
 		CategorycomboBox.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		CategorycomboBox.addItem("Send");
@@ -293,7 +355,7 @@ public class AddComplaintsShop extends JFrame {
 		contentPane.add(btnSearch);
 		
 		JButton btnAdd = new JButton("Add");
-		btnAdd.setBounds(242, 349, 103, 28);
+		btnAdd.setBounds(242, 335, 103, 28);
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
@@ -336,7 +398,7 @@ public class AddComplaintsShop extends JFrame {
 		contentPane.add(btnAdd);
 		
 		JButton btnUpdate = new JButton("Update");
-		btnUpdate.setBounds(355, 349, 103, 28);
+		btnUpdate.setBounds(355, 335, 103, 28);
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
@@ -370,7 +432,7 @@ public class AddComplaintsShop extends JFrame {
 		contentPane.add(btnUpdate);
 		
 		JButton Delete = new JButton("Delete");
-		Delete.setBounds(468, 349, 103, 28);
+		Delete.setBounds(468, 335, 103, 28);
 		Delete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
@@ -399,7 +461,7 @@ public class AddComplaintsShop extends JFrame {
 		contentPane.add(Delete);
 		
 		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setBounds(695, 349, 103, 28);
+		btnCancel.setBounds(695, 335, 103, 28);
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
@@ -412,7 +474,7 @@ public class AddComplaintsShop extends JFrame {
 		contentPane.add(btnCancel);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(30, 387, 1292, 334);
+		scrollPane.setBounds(30, 373, 1292, 348);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -438,13 +500,13 @@ public class AddComplaintsShop extends JFrame {
 		scrollPane.setViewportView(table);
 		
 		JLabel lblComplaintNo = new JLabel("Complaint No:");
-		lblComplaintNo.setBounds(30, 262, 246, 29);
+		lblComplaintNo.setBounds(30, 255, 246, 29);
 		lblComplaintNo.setForeground(Color.WHITE);
 		lblComplaintNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		contentPane.add(lblComplaintNo);
 		
 		txtComplaintNo = new JTextField();
-		txtComplaintNo.setBounds(242, 264, 183, 25);
+		txtComplaintNo.setBounds(242, 257, 183, 25);
 		txtComplaintNo.setForeground(new Color(0, 0, 128));
 		txtComplaintNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtComplaintNo.setColumns(10);
@@ -460,7 +522,7 @@ public class AddComplaintsShop extends JFrame {
 		});
 		btnReset.setForeground(new Color(0, 0, 128));
 		btnReset.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnReset.setBounds(581, 349, 103, 28);
+		btnReset.setBounds(581, 335, 103, 28);
 		contentPane.add(btnReset);
 		
 	    createTableComplaintsData();

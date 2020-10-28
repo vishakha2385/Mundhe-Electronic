@@ -441,6 +441,16 @@ public class BillPrintable implements Printable {
 		contentPane_1.add(lblCustomerName);
 		
 		txtCustomerName = new JTextField();
+		txtCustomerName.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtAddress.requestFocus();
+				}
+			}
+		});
 		txtCustomerName.setForeground(new Color(0, 0, 128));
 		txtCustomerName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtCustomerName.setColumns(10);
@@ -454,6 +464,16 @@ public class BillPrintable implements Printable {
 		contentPane_1.add(lblAddress);
 		
 		txtAddress = new JTextField();
+		txtAddress.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtContact.requestFocus();
+				}
+			}
+		});
 		txtAddress.setForeground(new Color(0, 0, 128));
 		txtAddress.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtAddress.setColumns(10);
@@ -467,6 +487,16 @@ public class BillPrintable implements Printable {
 		contentPane_1.add(lblContact);
 		
 		txtContact = new JTextField();
+		txtContact.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtProductName.requestFocus();
+				}
+			}
+		});
 		txtContact.setForeground(new Color(0, 0, 128));
 		txtContact.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtContact.setColumns(10);
@@ -498,6 +528,16 @@ public class BillPrintable implements Printable {
 		contentPane_1.add(lblSerialNo);
 		
 		txtSerialNo = new JTextField();
+		txtSerialNo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) 
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtModuleNo.requestFocus();
+				}
+			}
+		});
 		txtSerialNo.setForeground(new Color(0, 0, 128));
 		txtSerialNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtSerialNo.setColumns(10);
@@ -511,6 +551,16 @@ public class BillPrintable implements Printable {
 		contentPane_1.add(lblModuleNo);
 		
 		txtModuleNo = new JTextField();
+		txtModuleNo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtRateRs.requestFocus();
+				}
+			}
+		});
 		txtModuleNo.setForeground(new Color(0, 0, 128));
 		txtModuleNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtModuleNo.setColumns(10);
@@ -524,6 +574,16 @@ public class BillPrintable implements Printable {
 		contentPane_1.add(lblRateRs);
 		
 		txtRateRs = new JTextField();
+		txtRateRs.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtDiscount.requestFocus();
+				}
+			}
+		});
 		txtRateRs.setForeground(new Color(0, 0, 128));
 		txtRateRs.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtRateRs.setColumns(10);
@@ -564,6 +624,14 @@ public class BillPrintable implements Printable {
 					{
 			//			JOptionPane.showMessageDialog(null,e2);
 					}
+			}
+			@Override
+			public void keyPressed(KeyEvent e) 
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtQuantity.requestFocus();
+				}
 			}
 		});
 		txtDiscount.setForeground(new Color(0, 0, 128));
@@ -864,6 +932,16 @@ public class BillPrintable implements Printable {
 		contentPane_1.add(btnPrint);
 		
 		txtProductName = new JTextField();
+		txtProductName.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtSerialNo.requestFocus();
+				}
+			}
+		});
 		txtProductName.setForeground(new Color(0, 0, 128));
 		txtProductName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtProductName.setColumns(10);

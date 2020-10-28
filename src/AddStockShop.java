@@ -181,6 +181,16 @@ public class AddStockShop extends JFrame {
 		contentPane.add(lblPrice);
 		
 		txtPrice = new JTextField();
+		txtPrice.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtCGST.requestFocus();
+				}
+			}
+		});
 		txtPrice.setForeground(new Color(0, 0, 128));
 		txtPrice.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtPrice.setColumns(10);
@@ -188,6 +198,16 @@ public class AddStockShop extends JFrame {
 		contentPane.add(txtPrice);
 		
 		txtQuantity = new JTextField();
+		txtQuantity.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtSerialNo.requestFocus();
+				}
+			}
+		});
 		txtQuantity.setForeground(new Color(0, 0, 128));
 		txtQuantity.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtQuantity.setColumns(10);
@@ -436,6 +456,16 @@ public class AddStockShop extends JFrame {
 		contentPane.add(lblSerialNo);
 		
 		txtSerialNo = new JTextField();
+		txtSerialNo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) 
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtModuleNo.requestFocus();
+				}
+			}
+		});
 		txtSerialNo.setForeground(new Color(0, 0, 128));
 		txtSerialNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtSerialNo.setColumns(10);
@@ -481,6 +511,14 @@ public class AddStockShop extends JFrame {
 				txtSGSTPrice.setText(String.valueOf(CgstPrice));
 				float ActualPrice=Price1-GSTPrice;
 				txtActualPrice.setText(String.valueOf(ActualPrice));
+			}
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtQuantity.requestFocus();
+				}
 			}
 		});
 		txtCGST.setForeground(new Color(0, 0, 128));

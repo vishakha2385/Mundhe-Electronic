@@ -841,6 +841,16 @@ public class BillPrintable implements Printable {
 		contentPane.add(lblCustomerName);
 		
 		txtCustomerName = new JTextField();
+		txtCustomerName.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtAddress.requestFocus();
+				}
+			}
+		});
 		txtCustomerName.setForeground(new Color(0, 0, 128));
 		txtCustomerName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtCustomerName.setColumns(10);
@@ -854,6 +864,16 @@ public class BillPrintable implements Printable {
 		contentPane.add(lblAddress);
 		
 		txtAddress = new JTextField();
+		txtAddress.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) 
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					Contact.requestFocus();
+				}
+			}
+		});
 		txtAddress.setForeground(new Color(0, 0, 128));
 		txtAddress.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtAddress.setColumns(10);
@@ -867,6 +887,16 @@ public class BillPrintable implements Printable {
 		contentPane.add(lblContact);
 		
 		Contact = new JTextField();
+		Contact.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtSrNo.requestFocus();
+				}
+			}
+		});
 		Contact.setForeground(new Color(0, 0, 128));
 		Contact.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		Contact.setColumns(10);
@@ -905,6 +935,16 @@ public class BillPrintable implements Printable {
 		contentPane.add(lblSrno);
 		
 		txtSrNo = new JTextField();
+		txtSrNo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) 
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtQuantity.requestFocus();
+				}
+			}
+		});
 		txtSrNo.setForeground(new Color(0, 0, 128));
 		txtSrNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtSrNo.setColumns(10);
@@ -1152,6 +1192,14 @@ public class BillPrintable implements Printable {
 		    	}
 				catch(Exception e1) {}
 			}
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtDiscount.requestFocus();
+				}
+			}
 		});
 		txtQuantity.setForeground(new Color(0, 0, 128));
 		txtQuantity.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
@@ -1320,7 +1368,7 @@ public class BillPrintable implements Printable {
 				}catch(Exception e4) {}
 				
 				
-				//insert details of products which are sold into the database 
+				//insert details of products into the database which are sold 
 				try 
 				{
 				String sql1="insert into ProductsData values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";	
@@ -1638,7 +1686,18 @@ public class BillPrintable implements Printable {
 					ps.executeUpdate();
 	//				JOptionPane.showMessageDialog(null,"deleted from BillsData");
 					
+					
+					
 					productNo();
+					totalDiscount();
+					totalCGST();
+					totalSGST();
+					totalCGSTPrice();
+					totalSGSTPrice();
+					totalGST();
+					totalGSTPrice();
+					clear();
+					
 					txtSrNo.setText(null);
 				    cbCategory.setSelectedItem("Electronics");
 					txtSerialNo.setText(null);
@@ -1649,13 +1708,23 @@ public class BillPrintable implements Printable {
 				    txtDiscountPrice.setText(null);
 					txtTotal.setText(null);
 					txtDis.setText("");
+					txtCGST.setText(null);
+					txtSGST.setText(null);
+					txtGST.setText(null);
+					txtCGSTPrice.setText(null);
+					txtSGSTPrice.setText(null);
+					txtGSTPrice.setText(null);
+					txtActualPrice.setText(null);
+					
 					}
 					catch(Exception e1)
 			    	{
-						JOptionPane.showMessageDialog(null,e1);
+				//		JOptionPane.showMessageDialog(null,e1);
 			    	}	
 			    }
-  
+                totalCGST();
+                totalSGST();
+                totalGST();
 				total();
 				showDataInvoiceNo();
 			    productNo();
@@ -1816,13 +1885,13 @@ public class BillPrintable implements Printable {
 		txtActualPrice.setForeground(new Color(0, 0, 128));
 		txtActualPrice.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtActualPrice.setColumns(10);
-		txtActualPrice.setBounds(656, 200, 65, 25);
+		txtActualPrice.setBounds(656, 200, 172, 25);
 		contentPane.add(txtActualPrice);
 		
 		JLabel lblRs_4_2 = new JLabel("Rs");
 		lblRs_4_2.setForeground(Color.WHITE);
 		lblRs_4_2.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs_4_2.setBounds(722, 200, 33, 26);
+		lblRs_4_2.setBounds(830, 199, 33, 26);
 		contentPane.add(lblRs_4_2);
 		
 		JLabel lblCgst_1 = new JLabel("Total CGST:");

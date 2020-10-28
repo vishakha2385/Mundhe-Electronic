@@ -33,8 +33,11 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -56,6 +59,50 @@ public class LoginShop extends JFrame {
     Connection con;
     java.sql.Statement stmt;
     ResultSet rs;
+    PreparedStatement ps;
+    
+    //create table LoginData
+    public void createTableLoginData()
+	{
+		try {
+			DatabaseMetaData d=con.getMetaData();
+			ResultSet rs=d.getTables(null,null,"LoginData",null);
+			if(rs.next())
+			{
+			//	JOptionPane.showMessageDialog(null,"LoginData table exist");
+			}
+			else 
+			{
+				String Create_Table="create table LoginData(id varchar(50),Password varchar(50))";
+				PreparedStatement ps=con.prepareStatement(Create_Table);
+				ps.executeUpdate();
+			//	JOptionPane.showMessageDialog(null,"LoginData created successfully!");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+    
+    //insert id and password into LoginData table
+    public void insertLoginData()
+    {
+    	try 
+		{
+		String sql1="insert into LoginData values(?,?)";	
+		con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+		ps=con.prepareStatement(sql1);
+		ps.setString(1,"ME");	
+		ps.setString(2,"ME");	
+		ps.executeUpdate();
+//		JOptionPane.showMessageDialog(null,"inserted");
+		}
+		catch(Exception e1) 
+		{
+	//		JOptionPane.showMessageDialog(null,e1);	
+		}
+    }
 	/**
 	 * Launch the application.
 	 */
@@ -114,6 +161,16 @@ public class LoginShop extends JFrame {
 		contentPane.add(lblNewLabel_1_1);
 		
 		txtUserId = new JTextField();
+		txtUserId.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtPassword.requestFocus();
+				}
+			}
+		});
 		txtUserId.setForeground(new Color(0, 0, 128));
 		txtUserId.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtUserId.setBounds(636, 332, 260, 28);
@@ -203,6 +260,7 @@ public class LoginShop extends JFrame {
 		lblNewLabel_3.setBounds(0,0,1366,768);
 		contentPane.add(lblNewLabel_3);
 		
-		
+		createTableLoginData();
+		insertLoginData();
 	}
 }

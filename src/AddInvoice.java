@@ -203,6 +203,16 @@ public class AddInvoice extends JFrame {
 		contentPane.add(lblDealer);
 		
 		txtDealer = new JTextField();
+		txtDealer.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) 
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtDate.requestFocus();
+				}
+			}
+		});
 		txtDealer.setForeground(new Color(0, 0, 128));
 		txtDealer.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtDealer.setColumns(10);
@@ -279,6 +289,16 @@ public class AddInvoice extends JFrame {
 		contentPane.add(lblPaymentId);
 		
 		txtPaymentId = new JTextField();
+		txtPaymentId.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtTotalAmmount.requestFocus();
+				}
+			}
+		});
 		txtPaymentId.setText("cash");
 		txtPaymentId.setForeground(new Color(0, 0, 128));
 		txtPaymentId.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
@@ -293,6 +313,16 @@ public class AddInvoice extends JFrame {
 		contentPane.add(lblTotalAmmount);
 		
 		txtTotalAmmount = new JTextField();
+		txtTotalAmmount.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtPaidAmmount.requestFocus();
+				}
+			}
+		});
 		txtTotalAmmount.setForeground(new Color(0, 0, 128));
 		txtTotalAmmount.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtTotalAmmount.setColumns(10);

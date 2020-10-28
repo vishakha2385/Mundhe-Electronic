@@ -29,6 +29,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 public class ResetPasswordShop extends JFrame {
 
 	private JPanel contentPane;
@@ -74,7 +76,7 @@ public class ResetPasswordShop extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ResetPasswordShop.class.getResource("/images/passowrd iconShop.jpg")));
 		setTitle("Change Password");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(325, 200, 690, 229);
+		setBounds(400, 270, 690, 229);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -123,6 +125,16 @@ public class ResetPasswordShop extends JFrame {
 		contentPane.add(btnReset);
 		
 		txtExistingPassword = new JTextField();
+		txtExistingPassword.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtNewPassword.requestFocus();
+				}
+			}
+		});
 		txtExistingPassword.setForeground(new Color(0, 0, 128));
 		txtExistingPassword.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtExistingPassword.setColumns(10);

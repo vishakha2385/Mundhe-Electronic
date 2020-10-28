@@ -116,6 +116,16 @@ public class CustomInvoicesList extends JFrame {
 		contentPane.add(lblCustomerName);
 		
 		txtCustomerName = new JTextField();
+		txtCustomerName.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) 
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtInvoiceNo.requestFocus();
+				}
+			}
+		});
 		txtCustomerName.setForeground(new Color(0, 0, 128));
 		txtCustomerName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtCustomerName.setColumns(10);
@@ -151,14 +161,24 @@ public class CustomInvoicesList extends JFrame {
 		JLabel lblInvoiceNo = new JLabel("Invoice No:");
 		lblInvoiceNo.setForeground(Color.WHITE);
 		lblInvoiceNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblInvoiceNo.setBounds(22, 89, 106, 24);
+		lblInvoiceNo.setBounds(22, 85, 106, 24);
 		contentPane.add(lblInvoiceNo);
 		
 		txtInvoiceNo = new JTextField();
+		txtInvoiceNo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtAddress.requestFocus();
+				}
+			}
+		});
 		txtInvoiceNo.setForeground(new Color(0, 0, 128));
 		txtInvoiceNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtInvoiceNo.setColumns(10);
-		txtInvoiceNo.setBounds(189, 89, 133, 27);
+		txtInvoiceNo.setBounds(189, 85, 133, 27);
 		contentPane.add(txtInvoiceNo);
 		
 		JLabel lblAddress = new JLabel("Address:");
@@ -168,6 +188,16 @@ public class CustomInvoicesList extends JFrame {
 		contentPane.add(lblAddress);
 		
 		txtAddress = new JTextField();
+		txtAddress.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtContact.requestFocus();
+				}
+			}
+		});
 		txtAddress.setForeground(new Color(0, 0, 128));
 		txtAddress.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtAddress.setColumns(10);
@@ -181,6 +211,16 @@ public class CustomInvoicesList extends JFrame {
 		contentPane.add(lblContact);
 		
 		txtContact = new JTextField();
+		txtContact.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtTotalAmmount.requestFocus();
+				}
+			}
+		});
 		txtContact.setForeground(new Color(0, 0, 128));
 		txtContact.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtContact.setColumns(10);
@@ -194,6 +234,16 @@ public class CustomInvoicesList extends JFrame {
 		contentPane.add(lblTotalAmmount);
 		
 		txtTotalAmmount = new JTextField();
+		txtTotalAmmount.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtPaidAmmount.requestFocus();
+				}
+			}
+		});
 		txtTotalAmmount.setForeground(new Color(0, 0, 128));
 		txtTotalAmmount.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtTotalAmmount.setColumns(10);
@@ -241,20 +291,20 @@ public class CustomInvoicesList extends JFrame {
 		JLabel lblPendingAmmount = new JLabel("Pending Amount:");
 		lblPendingAmmount.setForeground(Color.WHITE);
 		lblPendingAmmount.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblPendingAmmount.setBounds(22, 259, 171, 24);
+		lblPendingAmmount.setBounds(22, 262, 171, 24);
 		contentPane.add(lblPendingAmmount);
 		
 		txtPendingAmmount = new JTextField();
 		txtPendingAmmount.setForeground(new Color(0, 0, 128));
 		txtPendingAmmount.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtPendingAmmount.setColumns(10);
-		txtPendingAmmount.setBounds(188, 259, 104, 25);
+		txtPendingAmmount.setBounds(188, 262, 104, 25);
 		contentPane.add(txtPendingAmmount);
 		
 		JLabel lblRs_3 = new JLabel("Rs");
 		lblRs_3.setForeground(Color.WHITE);
 		lblRs_3.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		lblRs_3.setBounds(296, 259, 26, 24);
+		lblRs_3.setBounds(296, 262, 26, 24);
 		contentPane.add(lblRs_3);
 		
 		JButton btnAdd = new JButton("Update");
@@ -288,7 +338,7 @@ public class CustomInvoicesList extends JFrame {
 			}
 		});
 		btnAdd.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnAdd.setBounds(189, 300, 117, 28);
+		btnAdd.setBounds(188, 311, 117, 28);
 		contentPane.add(btnAdd);
 		
 		JButton btnDelete = new JButton("Delete");
@@ -316,7 +366,7 @@ public class CustomInvoicesList extends JFrame {
 			}
 		});
 		btnDelete.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnDelete.setBounds(316, 300, 117, 28);
+		btnDelete.setBounds(315, 311, 117, 28);
 		contentPane.add(btnDelete);
 		
 		JButton btnCancel = new JButton("Cancel");
@@ -328,11 +378,11 @@ public class CustomInvoicesList extends JFrame {
 			}
 		});
 		btnCancel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnCancel.setBounds(570, 300, 117, 28);
+		btnCancel.setBounds(569, 311, 117, 28);
 		contentPane.add(btnCancel);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(22, 344, 1309, 361);
+		scrollPane.setBounds(22, 358, 1309, 347);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -417,7 +467,7 @@ public class CustomInvoicesList extends JFrame {
 			}
 		});
 		btnReset.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-		btnReset.setBounds(443, 300, 117, 28);
+		btnReset.setBounds(442, 311, 117, 28);
 		contentPane.add(btnReset);
 		
 		showData();

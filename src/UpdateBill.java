@@ -134,6 +134,16 @@ public class UpdateBill extends JFrame {
 		contentPane.add(lblTime);
 		
 		txtTime = new JTextField();
+		txtTime.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtInvoiceNo.requestFocus();
+				}
+			}
+		});
 		txtTime.setForeground(new Color(0, 0, 128));
 		txtTime.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtTime.setColumns(10);
@@ -153,6 +163,16 @@ public class UpdateBill extends JFrame {
 		contentPane.add(lblCustomerName);
 		
 		txtSearch = new JTextField();
+		txtSearch.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtDate.requestFocus();
+				}
+			}
+		});
 		txtSearch.setForeground(new Color(0, 0, 128));
 		txtSearch.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtSearch.setColumns(10);
@@ -166,6 +186,16 @@ public class UpdateBill extends JFrame {
 		contentPane.add(lblAddress);
 		
 		txtAddress = new JTextField();
+		txtAddress.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) 
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtContact.requestFocus();
+				}
+			}
+		});
 		txtAddress.setForeground(new Color(0, 0, 128));
 		txtAddress.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtAddress.setColumns(10);
@@ -179,6 +209,16 @@ public class UpdateBill extends JFrame {
 		contentPane.add(lblContact);
 		
 		txtContact = new JTextField();
+		txtContact.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) 
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtTotalAmmount.requestFocus();
+				}
+			}
+		});
 		txtContact.setForeground(new Color(0, 0, 128));
 		txtContact.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtContact.setColumns(10);
@@ -192,6 +232,16 @@ public class UpdateBill extends JFrame {
 		contentPane.add(lblTotalAmmount);
 		
 		txtTotalAmmount = new JTextField();
+		txtTotalAmmount.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtPaidAmmount.requestFocus();
+				}
+			}
+		});
 		txtTotalAmmount.setForeground(new Color(0, 0, 128));
 		txtTotalAmmount.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtTotalAmmount.setColumns(10);
@@ -225,6 +275,14 @@ public class UpdateBill extends JFrame {
 					txtPendingAmmount.setText(String.valueOf(pending));
 					}
 					catch(NumberFormatException e5) {}
+			}
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtPendingAmmount.requestFocus();
+				}
 			}
 		});
 		
@@ -345,6 +403,16 @@ public class UpdateBill extends JFrame {
 		contentPane.add(btnSearch);
 		
 		txtInvoiceNo = new JTextField();
+		txtInvoiceNo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtAddress.requestFocus();
+				}
+			}
+		});
 		txtInvoiceNo.setForeground(new Color(0, 0, 128));
 		txtInvoiceNo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtInvoiceNo.setBounds(188, 87, 133, 27);
@@ -352,6 +420,16 @@ public class UpdateBill extends JFrame {
 		txtInvoiceNo.setColumns(10);
 		
 		txtDate = new JTextField();
+		txtDate.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					txtTime.requestFocus();
+				}
+			}
+		});
 		txtDate.setForeground(new Color(0, 0, 128));
 		txtDate.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
 		txtDate.setBounds(81, 57, 100, 25);
