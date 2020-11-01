@@ -169,6 +169,7 @@ public class CreateBillShop extends JFrame {
 				PreparedStatement ps=con.prepareStatement(Create_Table1);
 				ps.executeUpdate();
 		//		JOptionPane.showMessageDialog(null,"ProductsData created successfully!");
+				
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -271,6 +272,56 @@ public class CreateBillShop extends JFrame {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	//method for first invoice no
+	public void invoiceNoForFirstInvoice()
+	{
+		try
+		{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+//			JOptionPane.showMessageDialog(null,"connected");
+			String sql1="select count(*) from CustomerData";
+			ps=con.prepareStatement(sql1);
+			rs=ps.executeQuery();
+		    while(rs.next())
+			{
+				String c=rs.getString(1);
+			//	JOptionPane.showMessageDialog(null,c);
+				int c1=Integer.parseInt(c);
+				if(c1==0)
+				{
+					txtInvoiceNo.setText("1");
+				}
+				
+			}
+		}catch(Exception e) {}
+	}
+	
+	//method for first Product
+	public void invoiceNoForFirstProduct()
+	{
+		try
+		{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/MundheElectronics1","root","vishakha");
+//			JOptionPane.showMessageDialog(null,"connected");
+			String sql1="select count(*) from ProductsData";
+			ps=con.prepareStatement(sql1);
+			rs=ps.executeQuery();
+		    while(rs.next())
+			{
+				String c=rs.getString(1);
+			//	JOptionPane.showMessageDialog(null,c);
+				int c1=Integer.parseInt(c);
+				if(c1==0)
+				{
+					txtProductNo.setText("1");
+				}
+				
+			}
+		}catch(Exception e) {}
 	}
 	
 	//create automated Product No
@@ -445,7 +496,8 @@ public class BillPrintable implements Printable {
             for(int s=0; s<r; s++)
             {g2d.setFont(new Font("Century 20",Font.BOLD,15));
             g2d.drawString(" "+itemName.get(s),50,388);g2d.setFont(new Font("Century 20",Font.PLAIN,13));g2d.drawString(quantity.get(s),350,388);g2d.drawString(Discount.get(s)+"%",430,388);g2d.drawString(itemPrice.get(s),510,388);g2d.drawString(CGSTInPer.get(s)+"%",580,388);g2d.drawString(SGSTInPer.get(s)+"%",650,388);g2d.drawString(subtotal.get(s),715,388);y+=yShift;
-            g2d.drawString(" "+SerialNo.get(s),50,403);g2d.drawString(" "+CGSTInRs.get(s)+" Rs",575,403);g2d.drawString(" "+SGSTInRs.get(s)+" Rs",645,403);g2d.drawString(" "+DiscountInRs.get(s)+" Rs",427,403);y+=yShift;
+            g2d.drawString(" "+SerialNo.get(s),50,403);
+           // g2d.drawString(" "+CGSTInRs.get(s)+" Rs",575,403);g2d.drawString(" "+SGSTInRs.get(s)+" Rs",645,403);g2d.drawString(" "+DiscountInRs.get(s)+" Rs",427,403);y+=yShift;
             g2d.drawString(" "+ModuleNo.get(s),50,415);y+=yShift;
             g2d.drawString("                                                                           ",50,478);y+=headerRectHeight;
 
@@ -1353,7 +1405,7 @@ public class BillPrintable implements Printable {
 			        DiscountInRs.add(txtDis.getText());
 			        SerialNo.add(txtSerialNo.getText());
 			        ModuleNo.add(txtModuleNo.getText());
-			        itemPrice.add(txtDiscountPrice.getText());
+			        itemPrice.add(txtActualPrice.getText());
 			        subtotal.add(txtTotal.getText());
 			        CGSTInPer.add(txtCGST.getText());
 			        CGSTInRs.add(txtCGSTPrice.getText());
@@ -2083,6 +2135,8 @@ public class BillPrintable implements Printable {
 		productNo();
 		productsData();
 		billsData();
+		invoiceNoForFirstInvoice();
+		invoiceNoForFirstProduct();
 	
 		JLabel lblNewLabel_3 = new JLabel("New label");
 		lblNewLabel_3.setIcon(new ImageIcon(LoginShop.class.getResource("/images/wallpaper2test.jpg")));
